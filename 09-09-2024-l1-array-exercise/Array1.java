@@ -17,16 +17,57 @@ class Array1 {
         InitializeArray(array);
         enterFromKeyboard(array);
 
-        // System.out.println("Enter a target:");
-        // Search(array, scanner.nextInt());
-
         while (true) {
-            System.out.println("Please select a task below:");
+            System.out.println("0:\tExit");
             System.out.println("1:\tCalculate and display the number of whole integers");
             System.out.println("2.\tDisplay the list of inputted integers in the order entered");
             System.out.println("3.\tDisplay the list of inputted integer in reverse order entered");
             System.out.println("4.\tDisplay the sum of all inputted integers");
             System.out.println("5.\tDisplay the average of all inputted integers, rounded to 1 decimal place");
+            System.out.println("6.\tDisplay the maximum integer");
+            System.out.println("7.\tDisplay the minimum integer");
+            System.out.println("8.\tDisplay positions (indices) of a target integer");
+
+            System.out.println("Please select a task above:");
+
+            switch (scanner.nextInt()) {
+                case 1:
+                    countWhole(array);
+                    break;
+
+                case 2:
+                    display(array);
+                    break;
+
+                case 3:
+                    displayReverse(array);
+                    break;
+
+                case 4:
+                    sum(array);
+                    break;
+
+                case 5:
+                    Average(array);
+                    break;
+
+                case 6:
+                    FindMax(array);
+                    break;
+
+                case 7:
+                    FindMin(array);
+                    break;
+
+                case 8:
+                    System.out.println("Please enter the target integer:");
+                    Search(array, scanner.nextInt());
+                    break;
+
+                default:
+                    System.exit(0);
+                    break;
+            }
         }
     }
 
