@@ -284,6 +284,8 @@ class Array1 {
                     list[j + 1] = temp;
                 }
             }
+
+            ++i;
         }
     }
 }
