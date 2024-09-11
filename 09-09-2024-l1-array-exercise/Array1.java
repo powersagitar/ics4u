@@ -3,7 +3,7 @@
  * L1 Array Exercises
  *
  * Author: Mohan Dong
- * Date:   09/09/2024
+ * Date:   09/11/2024
  */
 
 import java.util.Scanner;
@@ -27,6 +27,8 @@ class Array1 {
             System.out.println("6.\tDisplay the maximum integer");
             System.out.println("7.\tDisplay the minimum integer");
             System.out.println("8.\tDisplay positions (indices) of a target integer");
+            System.out.println("9.\tSort array with bubble sort");
+            System.out.println("10.\tSort array with improved bubble sort");
 
             System.out.println("Please select a task above:");
 
@@ -62,6 +64,14 @@ class Array1 {
                 case 8:
                     System.out.println("Please enter the target integer:");
                     Search(array, scanner.nextInt());
+                    break;
+
+                case 9:
+                    Sort(array);
+                    break;
+
+                case 10:
+                    ImprovedBubbleSort(array);
                     break;
 
                 default:
@@ -176,5 +186,36 @@ class Array1 {
         }
 
         System.out.println();
+    }
+
+    private static void Sort(int[] list) {
+        for (int i = 0; i < list.length; ++i) {
+            for (int j = 0; j < list.length - 1 - i; ++j) {
+                if (list[j] > list[j + 1]) {
+                    final int temp = list[j];
+                    list[j] = list[j + 1];
+                    list[j + 1] = temp;
+                }
+            }
+        }
+    }
+
+    private static void ImprovedBubbleSort(int[] list) {
+        int i = 0;
+        boolean swapped = true;
+
+        while (swapped) {
+            swapped = false;
+
+            for (int j = 0; j < list.length - 1 - i; ++j) {
+                if (list[j] > list[j + 1]) {
+                    swapped = true;
+
+                    final int temp = list[j];
+                    list[j] = list[j + 1];
+                    list[j + 1] = temp;
+                }
+            }
+        }
     }
 }
