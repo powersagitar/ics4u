@@ -103,7 +103,7 @@ class Array1 {
         int wholeNumbersCount = 0;
 
         for (final int num : array) {
-            if (num > 0) {
+            if (num >= 0) {
                 ++wholeNumbersCount;
             }
         }
