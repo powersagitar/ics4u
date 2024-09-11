@@ -1,6 +1,7 @@
 
 /**
  * L1 Array Exercises
+ * A program that has a menu of operations to be performed on an array.
  *
  * Author: Mohan Dong
  * Date:   09/11/2024
@@ -9,15 +10,19 @@
 import java.util.Scanner;
 
 class Array1 {
+    // global Scanner instance for input handling
     static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
+        // the array to be operated
         int[] array = new int[10];
 
+        // initialize array to user inputs
         InitializeArray(array);
         enterFromKeyboard(array);
 
         while (true) {
+            // the menu presented to user
             System.out.println("0:\tExit");
             System.out.println("1:\tCalculate and display the number of whole integers");
             System.out.println("2.\tDisplay the list of inputted integers in the order entered");
@@ -32,6 +37,7 @@ class Array1 {
 
             System.out.println("Please select a task above:");
 
+            // map user inputs to operations
             switch (scanner.nextInt()) {
                 case 1:
                     countWhole(array);
@@ -81,12 +87,22 @@ class Array1 {
         }
     }
 
+    /**
+     * Initialize every element in array to (int) -1
+     *
+     * @param array to be initialized
+     */
     private static void InitializeArray(int[] array) {
         for (int i = 0; i < array.length; ++i) {
             array[i] = -1;
         }
     }
 
+    /**
+     * Prompt user to enter 10 integers, which are assigned to array
+     *
+     * @param array to be manipulated
+     */
     private static void enterFromKeyboard(int[] array) {
         if (array.length < 10) {
             System.out.println("Array has to be at least 10 elements long");
@@ -99,6 +115,11 @@ class Array1 {
         }
     }
 
+    /**
+     * Find and print the number of whole numbers (>=0) in array
+     *
+     * @param array to be searched
+     */
     private static void countWhole(int[] array) {
         int wholeNumbersCount = 0;
 
@@ -111,6 +132,11 @@ class Array1 {
         System.out.println("Whole numbers count: " + wholeNumbersCount);
     }
 
+    /**
+     * Print every element in array
+     *
+     * @param array to be printed
+     */
     private static void display(int[] array) {
         System.out.println("Inputted values are:");
 
@@ -119,6 +145,11 @@ class Array1 {
         }
     }
 
+    /**
+     * Print every element in array reversely
+     *
+     * @param array to be printed
+     */
     private static void displayReverse(int[] array) {
         System.out.println("Inputted values in reverse order are:");
 
@@ -127,6 +158,12 @@ class Array1 {
         }
     }
 
+    /**
+     * Calculate the sum of all elements in array
+     *
+     * @param arrayNum array to be summed
+     * @return sum of all elements in array
+     */
     private static int sum(int[] arrayNum) {
         int sum = 0;
 
@@ -137,6 +174,11 @@ class Array1 {
         return sum;
     }
 
+    /**
+     * Calculate and print the average of all elements in array
+     *
+     * @param array to be averaged
+     */
     private static void Average(int[] array) {
         final double average = sum(array) / array.length;
         final double averageRounded = ((double) (int) (average * 10.0)) / 10.0;
@@ -144,6 +186,11 @@ class Array1 {
         System.out.println("The average of all entered numbers is: " + averageRounded);
     }
 
+    /**
+     * Find and print the maximum element in array
+     *
+     * @param array to be searched
+     */
     private static void FindMax(int[] array) {
         int currentMax = array[0];
 
@@ -156,6 +203,11 @@ class Array1 {
         System.out.println("The maximum number stored in array is: " + currentMax);
     }
 
+    /**
+     * Find and print the minimum element in array
+     *
+     * @param array to be searched
+     */
     private static void FindMin(int[] array) {
         int currentMin = array[0];
 
@@ -168,6 +220,12 @@ class Array1 {
         System.out.println("The minimum number stored in array is: " + currentMin);
     }
 
+    /**
+     * Find and print a target element's positions in array
+     *
+     * @param array  to be searched
+     * @param target to be searched for
+     */
     private static void Search(int[] array, int target) {
         int[] pos = new int[array.length];
         int posIdx = 0;
@@ -188,6 +246,11 @@ class Array1 {
         System.out.println();
     }
 
+    /**
+     * Bubble sort to sort array in ascending order
+     *
+     * @param list to be sorted
+     */
     private static void Sort(int[] list) {
         for (int i = 0; i < list.length; ++i) {
             for (int j = 0; j < list.length - 1 - i; ++j) {
@@ -200,6 +263,11 @@ class Array1 {
         }
     }
 
+    /**
+     * Bubble sort to sort array in ascending order, with improved time complexity
+     *
+     * @param list to be sorted
+     */
     private static void ImprovedBubbleSort(int[] list) {
         int i = 0;
         boolean swapped = true;
