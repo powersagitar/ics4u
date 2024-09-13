@@ -252,7 +252,7 @@ class Array1 {
      * @param list to be sorted
      */
     private static void Sort(int[] list) {
-        for (int i = 0; i < list.length; ++i) {
+        for (int i = 0; i < list.length - 1; ++i) {
             for (int j = 0; j < list.length - 1 - i; ++j) {
                 if (list[j] > list[j + 1]) {
                     final int temp = list[j];
