@@ -26,6 +26,8 @@ public class Array411 {
      */
     static int[][] initializeArrayFile() throws FileNotFoundException {
         // program working directory upon execution is /workspaces/ICS4U1
+        // file absolute path is
+        // /workspaces/ICS4U1/09-16-2024-2d-array-exercises/Matrix1.txt
         Scanner matrix = new Scanner(new File("09-16-2024-2d-array-exercises/Matrix1.txt"));
 
         final int ROWS = matrix.nextInt();
