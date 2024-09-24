@@ -24,3 +24,8 @@ hs_err_pid*
 replay_pid*
 
 /tmp
+
+
+# Added by cargo
+
+/target

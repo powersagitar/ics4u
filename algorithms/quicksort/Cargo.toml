@@ -1,0 +1,8 @@
+[package]
+name = "quicksort"
+edition.workspace = true
+version.workspace = true
+
+[lib]
+name = "quicksort"
+path = "src/quicksort.rs"
