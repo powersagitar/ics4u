@@ -1,0 +1,10 @@
+[package]
+name = "improved-bubble-sort"
+edition.workspace = true
+version.workspace = true
+
+[dependencies]
+
+[lib]
+name = "improved_bubble_sort"
+path = "src/improved_bubble_sort.rs"

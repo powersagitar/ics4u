@@ -3,5 +3,9 @@
 version = 3
 
 [[package]]
+name = "improved-bubble-sort"
+version = "0.1.0"
+
+[[package]]
 name = "quicksort"
 version = "0.1.0"
