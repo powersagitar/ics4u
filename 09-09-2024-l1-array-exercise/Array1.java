@@ -34,6 +34,7 @@ class Array1 {
             System.out.println("8.\tDisplay positions (indices) of a target integer");
             System.out.println("9.\tSort array with bubble sort");
             System.out.println("10.\tSort array with improved bubble sort");
+            System.out.println("11.\tSort array with insertion sort");
 
             System.out.println("Please select a task above:");
 
@@ -78,6 +79,10 @@ class Array1 {
 
                 case 10:
                     ImprovedBubbleSort(array);
+                    break;
+
+                case 11:
+                    insertionSort_Ascending(array);
                     break;
 
                 default:
@@ -286,6 +291,22 @@ class Array1 {
             }
 
             ++i;
+        }
+    }
+
+    private static void insertionSort_Ascending(final int[] list) {
+        for (int firstUnsortedElementIdx = 1; firstUnsortedElementIdx < list.length; ++firstUnsortedElementIdx) {
+            final int toBeSwapped = list[firstUnsortedElementIdx];
+
+            int comparisonIdx = firstUnsortedElementIdx - 1;
+
+            for (; comparisonIdx >= 0 && list[comparisonIdx] > toBeSwapped; --comparisonIdx) {
+                int temp = list[comparisonIdx];
+                list[comparisonIdx] = list[comparisonIdx + 1];
+                list[comparisonIdx + 1] = temp;
+            }
+
+            list[comparisonIdx + 1] = toBeSwapped;
         }
     }
 }
