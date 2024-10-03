@@ -35,6 +35,7 @@ class Array1 {
             System.out.println("9.\tSort array with bubble sort");
             System.out.println("10.\tSort array with improved bubble sort");
             System.out.println("11.\tSort array with insertion sort");
+            System.out.println("12.\tSort array with selection sort");
 
             System.out.println("Please select a task above:");
 
@@ -83,6 +84,10 @@ class Array1 {
 
                 case 11:
                     insertionSort_Ascending(array);
+                    break;
+
+                case 12:
+                    selectionSort_Ascending(array);
                     break;
 
                 default:
@@ -307,6 +312,23 @@ class Array1 {
             }
 
             list[comparisonIdx + 1] = toBeSwapped;
+        }
+    }
+
+    private static void selectionSort_Ascending(final int[] list) {
+        for (int firstUnsortedElementIdx = 0; firstUnsortedElementIdx < list.length - 1; ++firstUnsortedElementIdx) {
+            int smallestValueIdx = firstUnsortedElementIdx;
+
+            for (int i = firstUnsortedElementIdx + 1; i < list.length; ++i) {
+                if (list[i] < list[smallestValueIdx]) {
+                    smallestValueIdx = i;
+                }
+            }
+
+            // swap
+            final int temp = list[smallestValueIdx];
+            list[smallestValueIdx] = list[firstUnsortedElementIdx];
+            list[firstUnsortedElementIdx] = temp;
         }
     }
 }
