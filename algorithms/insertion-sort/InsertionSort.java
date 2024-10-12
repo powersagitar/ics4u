@@ -16,18 +16,20 @@ public class InsertionSort {
     }
 
     static void insertionSort(final int[] arr) {
-        for (int firstUnsortedElementIdx = 1; firstUnsortedElementIdx < arr.length; ++firstUnsortedElementIdx) {
-            final int toBeSwapped = arr[firstUnsortedElementIdx];
+        if (arr.length < 2) {
+            return;
+        }
 
-            int comparisonIdx = firstUnsortedElementIdx - 1;
+        for (int i = 1; i < arr.length; ++i) {
+            final int currVal = arr[i];
+            int j = i - 1;
 
-            for (; comparisonIdx >= 0 && arr[comparisonIdx] > toBeSwapped; --comparisonIdx) {
-                int temp = arr[comparisonIdx];
-                arr[comparisonIdx] = arr[comparisonIdx + 1];
-                arr[comparisonIdx + 1] = temp;
+            while (j >= 0 && arr[j] > currVal) {
+                arr[j + 1] = arr[j];
+                --j;
             }
 
-            arr[comparisonIdx + 1] = toBeSwapped;
+            arr[j + 1] = currVal;
         }
     }
 }
