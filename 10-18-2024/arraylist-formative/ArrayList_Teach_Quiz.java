@@ -4,6 +4,9 @@
  *
  * Author: Mohan Dong
  * Date: 10/18/2024
+ *
+ * Marks:
+ * 12 A, 4 K, 2 C
  */
 
 import java.util.Scanner;
@@ -74,6 +77,7 @@ public class ArrayList_Teach_Quiz {
  * Pros:
  * - More utility methods for manipulating the data structure
  * - Dynamic, size is no longer fixed after definition
+ * - Easier to print
  * Cons:
  * - Slower than normal arrays
  * - Primitive types are not supported
