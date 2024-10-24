@@ -49,6 +49,7 @@ public class DongMohanSnowPlowAlgorithm {
 
     static void print(final int[][] grid, final String caption, final boolean clearScreen) {
         if (clearScreen) {
+            // https://stackoverflow.com/a/32295974/20143641
             System.out.print("\033[H\033[2J");
         }
 
