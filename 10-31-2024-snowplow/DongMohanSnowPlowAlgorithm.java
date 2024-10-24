@@ -5,7 +5,7 @@ public class DongMohanSnowPlowAlgorithm {
     static final int N_ROWS = 8;
     static final int N_COLS = N_ROWS;
 
-    static final long CLEAR_INTERVAL_MILLIS = 1000;
+    static final long CLEAR_INTERVAL_MILLIS = 700;
 
     // https://stackoverflow.com/a/5762502/20143641
     static final String ANSI_RESET = "\u001B[0m";
@@ -18,7 +18,7 @@ public class DongMohanSnowPlowAlgorithm {
 
     public static void main(String[] args) throws InterruptedException {
         var grid = init();
-        print(grid, "Generated grid", true);
+        print(grid, "Generated grid");
 
         final int firstPlowable = indexOf(grid[0], 1);
         if (firstPlowable < 0) {
@@ -30,7 +30,7 @@ public class DongMohanSnowPlowAlgorithm {
 
         clear(grid, 0, firstPlowable);
 
-        print(grid, "Plowed grid", true);
+        print(grid, "Plowed grid");
     }
 
     static int[][] init() {
@@ -47,11 +47,10 @@ public class DongMohanSnowPlowAlgorithm {
         return grid;
     }
 
-    static void print(final int[][] grid, final String caption, final boolean clearScreen) {
-        if (clearScreen) {
-            // https://stackoverflow.com/a/32295974/20143641
-            System.out.print("\033[H\033[2J");
-        }
+    static void print(final int[][] grid, final String caption) {
+        // clear screen
+        // https://stackoverflow.com/a/32295974/20143641
+        System.out.print("\033[H\033[2J");
 
         System.out.println(caption);
 
@@ -87,7 +86,7 @@ public class DongMohanSnowPlowAlgorithm {
 
         grid[row][col] = 0;
 
-        print(grid, "Turning row " + row + " col " + col, true);
+        print(grid, "Turning row " + row + " col " + col);
 
         Thread.sleep(CLEAR_INTERVAL_MILLIS);
 
