@@ -17,12 +17,14 @@ public class ArrayList_Teach_Quiz {
 
   public static void main(String[] args) {
 
+    @SuppressWarnings("resource")
     Scanner kb = new Scanner(System.in);
 
     // Declare an arrayList called a1 that can store items Quiz / 12
 
     ArrayList<String> a1 = new ArrayList<String>();// Generic declaration /2
 
+    @SuppressWarnings("unused")
     String input;
 
     // Fill in the answers for the blanks below
