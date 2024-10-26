@@ -18,6 +18,8 @@ public class RecursionExercises {
         gcf();
 
         pow();
+
+        sum();
     }
 
     /**
@@ -101,6 +103,33 @@ public class RecursionExercises {
             return base * _pow(base, exp - 1);
         } else {
             return 1.0 / _pow(base, -exp);
+        }
+    }
+
+    /**
+     * Additional recursion application 1:
+     * Recursively finding the sum of all integers between 0 and a given number
+     * (≥ 0).
+     */
+    static void sum() {
+        System.out.println("Please enter an integer number:");
+
+        final int input = scanner.nextInt();
+
+        System.out.println("The sum of all integers between 0 and " + input + " is: " + _sum(input));
+    }
+
+    /**
+     * Recursively calculates the sum of all integers between 0 and {@code x}.
+     *
+     * @param x the upper bound integer (≥ 0)
+     * @return the sum of all integers between 0 and {@code x}
+     */
+    static int _sum(final int x) {
+        if (x == 0) {
+            return 0;
+        } else {
+            return x + _sum(x - 1);
         }
     }
 }
