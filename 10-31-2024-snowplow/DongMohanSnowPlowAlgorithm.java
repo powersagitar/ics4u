@@ -1,11 +1,12 @@
 import java.util.Random;
+import java.util.Scanner;
 
 public class DongMohanSnowPlowAlgorithm {
 
     static final int N_ROWS = 8;
     static final int N_COLS = N_ROWS;
 
-    static final long CLEAR_INTERVAL_MILLIS = 700;
+    static final long CLEAR_INTERVAL_MILLIS = 300;
 
     // https://stackoverflow.com/a/5762502/20143641
     static final String ANSI_RESET = "\u001B[0m";
@@ -16,21 +17,33 @@ public class DongMohanSnowPlowAlgorithm {
     // index 0 = number 0, index 1 = number 1, etc.
     static final String[] NUM_COLOR = { ANSI_GREEN, ANSI_YELLOW, ANSI_RED };
 
+    static Scanner scanner = new Scanner(System.in);
+
     public static void main(String[] args) throws InterruptedException {
-        var grid = init();
-        print(grid, "Generated grid");
+        boolean exit = false;
 
-        final int firstPlowable = indexOf(grid[0], 1);
-        if (firstPlowable < 0) {
-            System.out.println("1 is not present in the first row. PLow is not used.");
-            System.exit(0);
+        while (!exit) {
+            var grid = init();
+            print(grid, "Generated grid");
+
+            final int firstPlowable = indexOf(grid[0], 1);
+
+            if (firstPlowable < 0) {
+                System.out.println("1 is not present in the first row. PLow is not used.");
+            } else {
+                Thread.sleep(CLEAR_INTERVAL_MILLIS);
+
+                clear(grid, 0, firstPlowable);
+
+                print(grid, "Plowed grid");
+            }
+
+            System.out.println("Do you want to re-run the program?");
+            System.out.print("\"Y\" for yes and any other key for no.[Y/n]: ");
+            if (!scanner.nextLine().trim().toLowerCase().equals("y")) {
+                exit = true;
+            }
         }
-
-        Thread.sleep(CLEAR_INTERVAL_MILLIS);
-
-        clear(grid, 0, firstPlowable);
-
-        print(grid, "Plowed grid");
     }
 
     static int[][] init() {
