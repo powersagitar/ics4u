@@ -20,6 +20,8 @@ public class RecursionExercises {
         pow();
 
         sum();
+
+        fib();
     }
 
     /**
@@ -130,6 +132,33 @@ public class RecursionExercises {
             return 0;
         } else {
             return x + _sum(x - 1);
+        }
+    }
+
+    /**
+     * Additional recursion application 2:
+     * Recursively finding the fibonacci number.
+     */
+    static void fib() {
+        System.out.println("Please enter an integer number:");
+
+        final int input = scanner.nextInt();
+
+        System.out.println("The " + input + "th number in the fibonacci sequence has value: " + _fib(input));
+    }
+
+    /**
+     * Recursively finds the value of {@code x}th number in the fibonacci sequence,
+     * using 1-based indexing.
+     *
+     * @param x the 1-based index of the value in the fibonacci sequence to be found
+     * @return the {@code x}th number in the fibonacci sequence
+     */
+    static int _fib(final int x) {
+        if (x == 1 || x == 2) {
+            return 1;
+        } else {
+            return _fib(x - 1) + _fib(x - 2);
         }
     }
 }
