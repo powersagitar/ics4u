@@ -1,10 +1,8 @@
 import java.util.Random;
 import java.util.Scanner;
+import java.util.function.Function;
 
 public class DongMohanSnowPlowAlgorithm {
-
-    static final int N_ROWS = 8;
-    static final int N_COLS = N_ROWS;
 
     static final long CLEAR_INTERVAL_MILLIS = 300;
 
@@ -23,7 +21,11 @@ public class DongMohanSnowPlowAlgorithm {
         boolean exit = false;
 
         while (!exit) {
-            var grid = init();
+            final int rows = readInt("Please enter a natural number for the number of rows (input > 0):", x -> x > 0);
+            final int cols = readInt("Please enter a natural number for the number of cols (input > 0):", x -> x > 0);
+
+            var grid = init(rows, cols);
+
             print(grid, "Generated grid");
 
             final int firstPlowable = indexOf(grid[0], 1);
@@ -46,12 +48,37 @@ public class DongMohanSnowPlowAlgorithm {
         }
     }
 
-    static int[][] init() {
-        var grid = new int[N_ROWS][N_COLS];
+    static int readInt(final String prompt, Function<Integer, Boolean> validator) {
+        clearScreen();
+
+        while (true) {
+            System.out.println(prompt);
+
+            final int input = scanner.nextInt();
+
+            if (!validator.apply(input)) {
+                System.out.println("Invalid input. Please try again.");
+            } else {
+                // consume line feed to prevent errors
+                scanner.nextLine();
+
+                return input;
+            }
+        }
+    }
+
+    static void clearScreen() {
+        // clear screen
+        // https://stackoverflow.com/a/32295974/20143641
+        System.out.print("\033[H\033[2J");
+    }
+
+    static int[][] init(final int rows, final int cols) {
+        var grid = new int[rows][cols];
         final var random = new Random();
 
-        for (int row = 0; row < N_ROWS; ++row) {
-            for (int col = 0; col < N_COLS; ++col) {
+        for (int row = 0; row < rows; ++row) {
+            for (int col = 0; col < cols; ++col) {
                 final int randomNum = random.nextInt(2) + 1;
                 grid[row][col] = randomNum;
             }
@@ -61,9 +88,7 @@ public class DongMohanSnowPlowAlgorithm {
     }
 
     static void print(final int[][] grid, final String caption) {
-        // clear screen
-        // https://stackoverflow.com/a/32295974/20143641
-        System.out.print("\033[H\033[2J");
+        clearScreen();
 
         System.out.println(caption);
 
