@@ -1,20 +1,41 @@
+
+/**
+ * Snow Plow Algorithm
+ * A minesweeper-like algorithm that recursively turns all 1 and adjacent 1s to 0s.
+ *
+ * Author: Mohan Dong
+ * Date: 10/31/2024
+ */
+
 import java.util.Random;
 import java.util.Scanner;
 import java.util.function.Function;
 
 public class DongMohanSnowPlowAlgorithm {
 
+    /**
+     * The clear interval in milliseconds.
+     */
     static final long CLEAR_INTERVAL_MILLIS = 300;
 
-    // https://stackoverflow.com/a/5762502/20143641
+    /**
+     * ANSI color codes for console output.
+     * https://stackoverflow.com/a/5762502/20143641
+     */
     static final String ANSI_RESET = "\u001B[0m";
     static final String ANSI_GREEN = "\u001B[32m";
     static final String ANSI_YELLOW = "\u001B[33m";
     static final String ANSI_RED = "\u001B[31m";
 
-    // index 0 = number 0, index 1 = number 1, etc.
+    /**
+     * ANSI color codes for numbers in the console.
+     * index 0 = number 0, index 1 = number 1, etc.
+     */
     static final String[] NUM_COLOR = { ANSI_GREEN, ANSI_YELLOW, ANSI_RED };
 
+    /**
+     * Scanner for reading input from the console.
+     */
     static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) throws InterruptedException {
@@ -24,7 +45,7 @@ public class DongMohanSnowPlowAlgorithm {
             final int rows = readInt("Please enter a natural number for the number of rows (input > 0):", x -> x > 0);
             final int cols = readInt("Please enter a natural number for the number of cols (input > 0):", x -> x > 0);
 
-            var grid = init(rows, cols);
+            int[][] grid = init(rows, cols);
 
             print(grid, "Generated grid");
 
@@ -48,9 +69,16 @@ public class DongMohanSnowPlowAlgorithm {
         }
     }
 
+    /**
+     * Initializes a 2D grid with random numbers between 1 and 2.
+     *
+     * @param rows the number of rows
+     * @param cols the number of columns
+     * @return a 2D grid with random numbers between 1 and 2
+     */
     static int[][] init(final int rows, final int cols) {
-        var grid = new int[rows][cols];
-        final var random = new Random();
+        int[][] grid = new int[rows][cols];
+        final Random random = new Random();
 
         for (int row = 0; row < rows; ++row) {
             for (int col = 0; col < cols; ++col) {
@@ -62,6 +90,13 @@ public class DongMohanSnowPlowAlgorithm {
         return grid;
     }
 
+    /**
+     * Reads an integer from the console with a prompt and a validator.
+     *
+     * @param prompt    the prompt to display
+     * @param validator the validator to check if the input is valid
+     * @return the integer read from the console
+     */
     static int readInt(final String prompt, Function<Integer, Boolean> validator) {
         clearScreen();
 
@@ -81,6 +116,13 @@ public class DongMohanSnowPlowAlgorithm {
         }
     }
 
+    /**
+     * Returns the index of the key in the array.
+     *
+     * @param arr the array to search
+     * @param key the key to search for
+     * @return the index of the key in the array or -1 if not found
+     */
     static int indexOf(final int[] arr, final int key) {
         for (int i = 0; i < arr.length; ++i) {
             if (arr[i] == key) {
@@ -91,11 +133,20 @@ public class DongMohanSnowPlowAlgorithm {
         return -1;
     }
 
+    /**
+     * Clears the console screen.
+     */
     static void clearScreen() {
         // https://stackoverflow.com/a/32295974/20143641
         System.out.print("\033[H\033[2J");
     }
 
+    /**
+     * Prints the 2D grid with a caption.
+     *
+     * @param grid    the 2D grid to print
+     * @param caption the caption to display
+     */
     static void print(final int[][] grid, final String caption) {
         clearScreen();
 
@@ -109,6 +160,14 @@ public class DongMohanSnowPlowAlgorithm {
         }
     }
 
+    /**
+     * Checks if the row and column are valid indices in the 2D array.
+     *
+     * @param arr the 2D array
+     * @param row the row index
+     * @param col the column index
+     * @return true if the row and column are valid indices in the 2D array
+     */
     static boolean isValidIdx(final int[][] arr, final int row, final int col) {
         final boolean isValidRow = row > -1 && row < arr.length;
         final boolean isValidCol = col > -1 && isValidRow && col < arr[row].length;
@@ -116,6 +175,14 @@ public class DongMohanSnowPlowAlgorithm {
         return isValidRow && isValidCol;
     }
 
+    /**
+     * Clears the grid recursively. If grid[row][col] == 1, it will turn it to 0.
+     *
+     * @param grid the 2D grid to clear
+     * @param row  the row index
+     * @param col  the column index
+     * @throws InterruptedException
+     */
     static void clear(int[][] grid, final int row, final int col) throws InterruptedException {
         if (!isValidIdx(grid, row, col) || grid[row][col] != 1) {
             return;
