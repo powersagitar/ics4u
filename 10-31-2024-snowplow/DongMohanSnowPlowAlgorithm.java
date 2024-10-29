@@ -48,6 +48,20 @@ public class DongMohanSnowPlowAlgorithm {
         }
     }
 
+    static int[][] init(final int rows, final int cols) {
+        var grid = new int[rows][cols];
+        final var random = new Random();
+
+        for (int row = 0; row < rows; ++row) {
+            for (int col = 0; col < cols; ++col) {
+                final int randomNum = random.nextInt(2) + 1;
+                grid[row][col] = randomNum;
+            }
+        }
+
+        return grid;
+    }
+
     static int readInt(final String prompt, Function<Integer, Boolean> validator) {
         clearScreen();
 
@@ -67,24 +81,19 @@ public class DongMohanSnowPlowAlgorithm {
         }
     }
 
-    static void clearScreen() {
-        // clear screen
-        // https://stackoverflow.com/a/32295974/20143641
-        System.out.print("\033[H\033[2J");
-    }
-
-    static int[][] init(final int rows, final int cols) {
-        var grid = new int[rows][cols];
-        final var random = new Random();
-
-        for (int row = 0; row < rows; ++row) {
-            for (int col = 0; col < cols; ++col) {
-                final int randomNum = random.nextInt(2) + 1;
-                grid[row][col] = randomNum;
+    static int indexOf(final int[] arr, final int key) {
+        for (int i = 0; i < arr.length; ++i) {
+            if (arr[i] == key) {
+                return i;
             }
         }
 
-        return grid;
+        return -1;
+    }
+
+    static void clearScreen() {
+        // https://stackoverflow.com/a/32295974/20143641
+        System.out.print("\033[H\033[2J");
     }
 
     static void print(final int[][] grid, final String caption) {
@@ -105,16 +114,6 @@ public class DongMohanSnowPlowAlgorithm {
         final boolean isValidCol = col > -1 && isValidRow && col < arr[row].length;
 
         return isValidRow && isValidCol;
-    }
-
-    static int indexOf(final int[] arr, final int key) {
-        for (int i = 0; i < arr.length; ++i) {
-            if (arr[i] == key) {
-                return i;
-            }
-        }
-
-        return -1;
     }
 
     static void clear(int[][] grid, final int row, final int col) throws InterruptedException {
