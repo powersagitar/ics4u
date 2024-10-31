@@ -8,6 +8,7 @@
  * Version: v0.1
  */
 
+import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.function.Function;
@@ -104,16 +105,30 @@ public class DongMohanSnowPlowAlgorithm {
         while (true) {
             System.out.println(prompt);
 
-            final int input = scanner.nextInt();
+            final int input;
+
+            try {
+                input = scanner.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please try again.");
+                System.out.println("Please make sure the input is not too big either.");
+
+                // consume token to prevent infinite loop
+                // https://stackoverflow.com/q/3572160
+                scanner.nextLine();
+
+                continue;
+            }
 
             if (!validator.apply(input)) {
                 System.out.println("Invalid input. Please try again.");
-            } else {
-                // consume line feed to prevent errors
-                scanner.nextLine();
-
-                return input;
+                continue;
             }
+
+            // consume line feed to prevent errors
+            scanner.nextLine();
+
+            return input;
         }
     }
 
