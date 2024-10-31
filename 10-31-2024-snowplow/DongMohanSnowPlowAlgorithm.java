@@ -5,7 +5,7 @@
  *
  * Author: Mohan Dong
  * Date: 10/31/2024
- * Version: v0.1
+ * Version: v0.1.1
  */
 
 import java.util.InputMismatchException;
@@ -44,13 +44,17 @@ public class DongMohanSnowPlowAlgorithm {
         boolean exit = false;
 
         while (!exit) {
+            // prompt user for number of rows and columns
             final int rows = readInt("Please enter a natural number for the number of rows (input > 0):", x -> x > 0);
             final int cols = readInt("Please enter a natural number for the number of cols (input > 0):", x -> x > 0);
 
+            // initialize grid
             int[][] grid = init(rows, cols);
 
+            // print generated grid
             print(grid, "Generated grid");
 
+            // try to find first 1 in the first row
             final int firstPlowable = indexOf(grid[0], 1);
 
             if (firstPlowable < 0) {
@@ -58,8 +62,10 @@ public class DongMohanSnowPlowAlgorithm {
             } else {
                 Thread.sleep(CLEAR_INTERVAL_MILLIS);
 
+                // recursively clear the grid
                 clear(grid, 0, firstPlowable);
 
+                // print the final plowed grid
                 print(grid, "Plowed grid");
             }
 
