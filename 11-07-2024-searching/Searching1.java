@@ -1,3 +1,15 @@
+
+/**
+ * Searching1
+ *
+ * Prompt the user to enter 5 names and their respective phone numbers and store
+ * them in two arrays (name and phone array). Sort the names in alphabetical
+ * order (use any method of your choice) and save it.
+ *
+ * Author: Mohan Dong
+ * Date: 11/07/2024
+ */
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -14,6 +26,10 @@ public class Searching1 {
         initNamesPhoneNumbers(names, phoneNumbers, NUMBER_OF_NAMES);
         sortNamesPhoneNumbers(names, phoneNumbers);
 
+        System.out.println("Sorted phone book");
+        System.out.println("names: " + names);
+        System.out.println("numbers: " + phoneNumbers);
+
         System.out.println("Please enter a name to search for in the array:");
         final String target = scanner.nextLine().trim();
         final int targetIdx = binarySearch(names, target);
@@ -24,11 +40,17 @@ public class Searching1 {
             System.out.println(target + " does not exist in array");
         }
 
-        // System.out.println(names);
-        // System.out.println(phoneNumbers);
-
     }
 
+    /**
+     * Initializes the provided lists with names and phone numbers.
+     * Prompts the user to enter a name and a corresponding phone number
+     * for a specified number of entries.
+     *
+     * @param names        the list to store the names
+     * @param phoneNumbers the list to store the phone numbers
+     * @param n            the number of entries to be added to the lists
+     */
     static void initNamesPhoneNumbers(ArrayList<String> names, ArrayList<Integer> phoneNumbers, final int n) {
         for (int i = 0; i < n; ++i) {
             System.out.println("Please enter a name:");
@@ -42,8 +64,16 @@ public class Searching1 {
         }
     }
 
+    /**
+     * Sorts the given lists of names and phone numbers in alphabetical order of
+     * names using insertion sort.
+     * The phone numbers are rearranged to maintain the association with their
+     * respective names.
+     *
+     * @param names        the list of names to be sorted
+     * @param phoneNumbers the list of phone numbers associated with the names
+     */
     static void sortNamesPhoneNumbers(ArrayList<String> names, ArrayList<Integer> phoneNumbers) {
-        // insertion sort
         for (int i = 1; i < names.size(); ++i) {
             final String currentName = names.get(i);
             final int currentPhoneNumber = phoneNumbers.get(i);
@@ -61,6 +91,14 @@ public class Searching1 {
         }
     }
 
+    /**
+     * Performs a binary search on a sorted ArrayList of Strings to find the target
+     * string.
+     *
+     * @param arr    the sorted ArrayList of Strings to search
+     * @param target the string to search for
+     * @return the index of the target string if found, otherwise -1
+     */
     static int binarySearch(final ArrayList<String> arr, final String target) {
         int low = 0;
         int high = arr.size() - 1;
