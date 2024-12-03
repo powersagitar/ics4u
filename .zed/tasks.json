@@ -4,7 +4,7 @@
     "command": "javac $ZED_FILE && cd $ZED_DIRNAME && java $ZED_STEM"
   },
   {
-    "label": "run default makefile target in current directory",
+    "label": "make current directory",
     "command": "make",
     "cwd": "$ZED_DIRNAME"
   }

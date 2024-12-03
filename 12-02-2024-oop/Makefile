@@ -1,10 +1,10 @@
 .PHONY: run
 
-run: Main_Toy.class Toy.class
-	java Main_Toy
+run: MainToy.class Toy.class
+	java MainToy
 
-Main_Toy.class: Main_Toy.java
-	javac Main_Toy.java
+MainToy.class: MainToy.java
+	javac MainToy.java
 
 Toy.class: Toy.java
 	javac Toy.java
