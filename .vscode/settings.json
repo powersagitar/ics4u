@@ -1,6 +1,7 @@
 {
     "cSpell.words": [
         "curr",
+        "javac",
         "Mohan"
     ],
     "rust-analyzer.runnables.extraEnv": {
