@@ -1,3 +1,15 @@
+
+/**
+ * TestShapes
+ * Exercise on polymorphism.
+ *
+ * Shape is the superclass of Circle, Square, and Triangle,
+ * with abstract methods draw() and erase().
+ *
+ * Author: Mohan Dong
+ * Date:   12-09-2024
+ */
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
