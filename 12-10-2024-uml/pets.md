@@ -14,8 +14,8 @@ classDiagram
 
 House "1" -- "*" Pet
 
-Dog ..|> Pet
-Cat ..|> Pet
+Dog --|> Pet
+Cat --|> Pet
 
 class House {
 -name: String
@@ -47,5 +47,17 @@ class Pet {
 +makeNoise()*: void
 +eat()*: void
 +sleep()*: void
+}
+
+class Dog {
++makeNoise(): void
++eat(): void
++sleep(): void
+}
+
+class Cat {
++makeNoise(): void
++eat(): void
++sleep(): void
 }
 ```
