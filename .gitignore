@@ -29,3 +29,6 @@ replay_pid*
 # Added by cargo
 
 /target
+
+# macOS files
+.DS_Store

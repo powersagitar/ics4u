@@ -11,3 +11,6 @@ MastermindSolver.class: MastermindSolver.java
 
 Code.class: Code.java
 	javac Code.java
+
+MathUtil.class: MathUtil.java
+	javac MathUtil.java
