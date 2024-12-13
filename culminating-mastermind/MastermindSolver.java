@@ -7,20 +7,34 @@
  */
 
 import java.util.HashSet;
+import java.util.Optional;
+import java.lang.IllegalArgumentException;
 
 public class MastermindSolver {
     private final int NUM_COLORS;
     private final int CODE_LENGTH;
-    private HashSet<Code.Color[]> permutations;
+    private final int MAX_ATTEMPTS;
 
-    public MastermindSolver(final int numColors, final int codeLength) {
+    private HashSet<Code.Color[]> permutations;
+    private int attempt = 0;
+
+    public MastermindSolver(final int numColors, final int codeLength, final int maxAttempts) {
         NUM_COLORS = numColors;
         CODE_LENGTH = codeLength;
+        MAX_ATTEMPTS = maxAttempts;
         // step 1 of the five-guess algorithm
         permutations = permutePossibleCodes();
     }
 
-    public void solve() {
+    public Optional<Code.Color[]> attempt() {
+        if (attempt >= MAX_ATTEMPTS) {
+            return Optional.empty();
+        } else if (attempt == 0) {
+            // step 2 of the five-guess algorithm
+            return Optional.of(Code.senaryToColors(new int[] { 0, 0, 1, 1 }));
+        } else {
+            throw new IllegalArgumentException("Please use this overload of attempt() only for the first guess.");
+        }
     }
 
     private HashSet<Code.Color[]> permutePossibleCodes() {

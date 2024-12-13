@@ -9,8 +9,8 @@ public class Mastermind {
     }
 
     private static void solve() {
-        MastermindSolver solver = new MastermindSolver(NUM_COLOR, CODE_LENGTH);
-        solver.solve();
+        MastermindSolver solver = new MastermindSolver(NUM_COLOR, CODE_LENGTH, MAX_GUESSES);
+        solver.attempt();
     }
 
     private static Code.Color[] generateSecretCode() {
