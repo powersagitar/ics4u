@@ -45,7 +45,7 @@ public class MastermindSolver {
         return new Tuple<>(Status.Continue, guess);
     }
 
-    public Tuple<Status, Code.Color[]> attempt(Code.KeyPeg[] validation) {
+    public Tuple<Status, Code.Color[]> attempt(final Code.KeyPeg[] validation) {
         if (attempt >= MAX_ATTEMPTS) {
             return new Tuple<>(Status.Lose, null);
         } else if (attempt == 0) {
@@ -59,9 +59,10 @@ public class MastermindSolver {
 
         ++attempt;
 
-        // todo: step 5 of the five-guess algorithm
+        // step 5 of the five-guess algorithm
         // remove from S any code that would not give that response of colored and white
         // pegs
+        removeInvalidPermutations(validation);
 
         return new Tuple<>(Status.Continue, null);
     }
@@ -76,5 +77,26 @@ public class MastermindSolver {
         }
 
         return permutations;
+    }
+
+    private void removeInvalidPermutations(final Code.KeyPeg[] validation) {
+        // this handles colored pegs
+        eliminateColorMismatches(validation);
+        // todo: might also have to handle white pegs
+    }
+
+    private void eliminateColorMismatches(final Code.KeyPeg[] validation) {
+        final int[] correctIndices = ArrayUtil.findIndices(validation,
+                Code.KeyPeg.Colored);
+
+        permutations.removeIf(code -> {
+            for (int index : correctIndices) {
+                if (!code[index].equals(previousGuess[index])) {
+                    return true;
+                }
+            }
+
+            return false;
+        });
     }
 }
