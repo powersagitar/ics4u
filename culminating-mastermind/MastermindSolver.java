@@ -19,6 +19,7 @@ public class MastermindSolver {
     private final int MAX_ATTEMPTS;
 
     private HashSet<Code.Color[]> permutations;
+    private Code.Color[] previousGuess;
     private int attempt = 0;
 
     public MastermindSolver(final int numColors, final int codeLength, final int maxAttempts) {
@@ -30,6 +31,19 @@ public class MastermindSolver {
     }
 
     public Tuple<Status, Code.Color[]> attempt() {
+        if (attempt >= MAX_ATTEMPTS) {
+            return new Tuple<>(Status.Lose, null);
+        } else if (attempt > 0) {
+            throw new IllegalArgumentException("Please use this overload of attempt() only for the first guess.");
+        }
+
+        // step 2 & 3 of the five-guess algorithm
+        final Code.Color[] guess = Code.senaryToColors(new int[] { 0, 0, 1, 1 });
+        previousGuess = guess;
+        return new Tuple<>(Status.Continue, guess);
+    }
+
+    public Tuple<Status, Code.Color[]> attempt(Code.KeyPeg[] validation) {
         if (attempt >= MAX_ATTEMPTS) {
             return new Tuple<>(Status.Lose, null);
         } else if (attempt == 0) {
