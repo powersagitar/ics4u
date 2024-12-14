@@ -4,7 +4,7 @@ public class Code {
     }
 
     public enum KeyPeg {
-        Colored, White
+        Colored, White, None
     }
 
     public static Color[] senaryToColors(int[] senary) {

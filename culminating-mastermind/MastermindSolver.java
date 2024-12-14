@@ -7,6 +7,7 @@
  */
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.lang.IllegalArgumentException;
 
 public class MastermindSolver {
@@ -26,20 +27,18 @@ public class MastermindSolver {
         NUM_COLORS = numColors;
         CODE_LENGTH = codeLength;
         MAX_ATTEMPTS = maxAttempts;
-        // step 1 of the five-guess algorithm
-        permutations = permutePossibleCodes();
+        permutations = generatePermutations();
     }
 
     public Tuple<Status, Code.Color[]> attempt() {
         if (attempt >= MAX_ATTEMPTS) {
             return new Tuple<>(Status.Lose, null);
         } else if (attempt > 0) {
-            throw new IllegalArgumentException("Please use this overload of attempt() only for the first guess.");
+            throw new IllegalArgumentException("Please use this method only for the first guess.");
         }
 
-        ++attempt;
+        attempt++;
 
-        // step 2 & 3 of the five-guess algorithm
         final Code.Color[] guess = Code.senaryToColors(new int[] { 0, 0, 1, 1 });
         previousGuess = guess;
         return new Tuple<>(Status.Continue, guess);
@@ -49,29 +48,26 @@ public class MastermindSolver {
         if (attempt >= MAX_ATTEMPTS) {
             return new Tuple<>(Status.Lose, null);
         } else if (attempt == 0) {
-            throw new IllegalArgumentException("Please use this overload of attempt() only after the first guess.");
+            throw new IllegalArgumentException("Please use this method only after the first guess.");
         }
 
         if (ArrayUtil.count(validation, Code.KeyPeg.Colored) == CODE_LENGTH) {
-            // step 4 of the five-guess algorithm
-            return new Tuple<>(Status.Win, null);
+            return new Tuple<>(Status.Win, previousGuess);
         }
 
-        ++attempt;
+        attempt++;
 
-        // step 5 of the five-guess algorithm
-        // remove from S any code that would not give that response of colored and white
-        // pegs
-        removeInvalidPermutations(validation);
+        filterPermutations(validation);
+        previousGuess = calculateNextGuess();
 
-        return new Tuple<>(Status.Continue, null);
+        return new Tuple<>(Status.Continue, previousGuess);
     }
 
-    private HashSet<Code.Color[]> permutePossibleCodes() {
+    private HashSet<Code.Color[]> generatePermutations() {
         final int possibilities = (int) Math.pow(NUM_COLORS, CODE_LENGTH);
         HashSet<Code.Color[]> permutations = new HashSet<>();
 
-        for (int i = 0; i < possibilities; ++i) {
+        for (int i = 0; i < possibilities; i++) {
             int[] digits = MathUtil.digitsFromBase(i, NUM_COLORS, CODE_LENGTH);
             permutations.add(Code.senaryToColors(digits));
         }
@@ -79,24 +75,76 @@ public class MastermindSolver {
         return permutations;
     }
 
-    private void removeInvalidPermutations(final Code.KeyPeg[] validation) {
-        // this handles colored pegs
-        eliminateColorMismatches(validation);
-        // todo: might also have to handle white pegs
+    private void filterPermutations(final Code.KeyPeg[] validation) {
+        Iterator<Code.Color[]> iterator = permutations.iterator();
+
+        while (iterator.hasNext()) {
+            Code.Color[] code = iterator.next();
+            if (!isValidCode(previousGuess, code, validation)) {
+                iterator.remove();
+            }
+        }
     }
 
-    private void eliminateColorMismatches(final Code.KeyPeg[] validation) {
-        final int[] correctIndices = ArrayUtil.findIndices(validation,
-                Code.KeyPeg.Colored);
+    private boolean isValidCode(Code.Color[] guess, Code.Color[] code, Code.KeyPeg[] validation) {
+        Tuple<Integer, Integer> score = calculateScore(guess, code);
+        int coloredPegs = score.getFirst();
+        int whitePegs = score.getSecond();
 
-        permutations.removeIf(code -> {
-            for (int index : correctIndices) {
-                if (!code[index].equals(previousGuess[index])) {
-                    return true;
-                }
+        int expectedColored = ArrayUtil.count(validation, Code.KeyPeg.Colored);
+        int expectedWhite = ArrayUtil.count(validation, Code.KeyPeg.White);
+
+        return coloredPegs == expectedColored && whitePegs == expectedWhite;
+    }
+
+    private Code.Color[] calculateNextGuess() {
+        Code.Color[] bestGuess = null;
+        int bestScore = Integer.MAX_VALUE;
+
+        for (Code.Color[] guess : permutations) {
+            int worstScore = 0;
+
+            for (Code.Color[] code : permutations) {
+                Tuple<Integer, Integer> score = calculateScore(guess, code);
+                int unfitCodes = permutations.size() - (score.getFirst() + score.getSecond());
+                worstScore = Math.max(worstScore, unfitCodes);
             }
 
-            return false;
-        });
+            if (worstScore < bestScore) {
+                bestGuess = guess;
+                bestScore = worstScore;
+            }
+        }
+
+        return bestGuess;
+    }
+
+    private Tuple<Integer, Integer> calculateScore(final Code.Color[] guess, final Code.Color[] code) {
+        int coloredPegs = 0;
+        int whitePegs = 0;
+        boolean[] usedCode = new boolean[CODE_LENGTH];
+        boolean[] usedGuess = new boolean[CODE_LENGTH];
+
+        for (int i = 0; i < CODE_LENGTH; i++) {
+            if (guess[i].equals(code[i])) {
+                coloredPegs++;
+                usedCode[i] = true;
+                usedGuess[i] = true;
+            }
+        }
+
+        for (int i = 0; i < CODE_LENGTH; i++) {
+            if (!usedGuess[i]) {
+                for (int j = 0; j < CODE_LENGTH; j++) {
+                    if (!usedCode[j] && guess[i].equals(code[j])) {
+                        whitePegs++;
+                        usedCode[j] = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        return new Tuple<>(coloredPegs, whitePegs);
     }
 }
