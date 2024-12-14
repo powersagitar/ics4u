@@ -37,6 +37,8 @@ public class MastermindSolver {
             throw new IllegalArgumentException("Please use this overload of attempt() only for the first guess.");
         }
 
+        ++attempt;
+
         // step 2 & 3 of the five-guess algorithm
         final Code.Color[] guess = Code.senaryToColors(new int[] { 0, 0, 1, 1 });
         previousGuess = guess;
@@ -47,12 +49,21 @@ public class MastermindSolver {
         if (attempt >= MAX_ATTEMPTS) {
             return new Tuple<>(Status.Lose, null);
         } else if (attempt == 0) {
-            // step 2 & 3 of the five-guess algorithm
-            final Code.Color[] guess = Code.senaryToColors(new int[] { 0, 0, 1, 1 });
-            return new Tuple<>(Status.Continue, guess);
-        } else {
-            throw new IllegalArgumentException("Please use this overload of attempt() only for the first guess.");
+            throw new IllegalArgumentException("Please use this overload of attempt() only after the first guess.");
         }
+
+        if (ArrayUtil.count(validation, Code.KeyPeg.Colored) == CODE_LENGTH) {
+            // step 4 of the five-guess algorithm
+            return new Tuple<>(Status.Win, null);
+        }
+
+        ++attempt;
+
+        // todo: step 5 of the five-guess algorithm
+        // remove from S any code that would not give that response of colored and white
+        // pegs
+
+        return new Tuple<>(Status.Continue, null);
     }
 
     private HashSet<Code.Color[]> permutePossibleCodes() {

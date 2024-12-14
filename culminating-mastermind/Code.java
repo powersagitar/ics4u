@@ -3,6 +3,10 @@ public class Code {
         Green, Red, Blue, Yellow, Orange, Purple
     }
 
+    public enum KeyPeg {
+        Colored, White
+    }
+
     public static Color[] senaryToColors(int[] senary) {
         Color[] colors = new Color[senary.length];
 
