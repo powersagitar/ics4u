@@ -53,6 +53,10 @@ public class MastermindSolver {
      *         guess.
      */
     public Tuple<Status, Code> guess(final Response response) {
+        if (attempts <= 0) {
+            throw new IllegalCallerException("guess(Response) is meant for subsequent guesses.");
+        }
+
         final Tuple<ArrayList<Integer>, ArrayList<Integer>> validation = response.validate();
         final ArrayList<Integer> correctIndices = validation.first;
         final ArrayList<Integer> misplacedIndices = validation.second;
