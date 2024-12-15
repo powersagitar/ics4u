@@ -1,17 +1,9 @@
 public class Tuple<T, U> {
-    private T first;
-    private U second;
+    public final T first;
+    public final U second;
 
-    public Tuple(T first, U second) {
+    public Tuple(final T first, final U second) {
         this.first = first;
         this.second = second;
-    }
-
-    public T getFirst() {
-        return first;
-    }
-
-    public U getSecond() {
-        return second;
     }
 }

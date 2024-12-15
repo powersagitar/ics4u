@@ -1,19 +1,27 @@
+import java.util.ArrayList;
+
 public class Code {
     public enum Color {
-        Green, Red, Blue, Yellow, Orange, Purple
+        Green, Red, Blue, Yellow, Orange, Purple;
+
+        public static Color fromIndex(final int index) {
+            return Color.values()[index];
+        }
     }
 
-    public enum KeyPeg {
-        Colored, White, None
-    }
+    private final ArrayList<Color> code;
 
-    public static Color[] senaryToColors(int[] senary) {
-        Color[] colors = new Color[senary.length];
+    public Code(final ArrayList<Integer> code) {
+        ArrayList<Color> codeBuilder = new ArrayList<>(4);
 
-        for (int i = 0; i < senary.length; ++i) {
-            colors[i] = Color.values()[senary[i]];
+        for (final int color : code) {
+            codeBuilder.add(Color.fromIndex(color));
         }
 
-        return colors;
+        this.code = codeBuilder;
+    }
+
+    public Color getColor(final int index) {
+        return code.get(index);
     }
 }

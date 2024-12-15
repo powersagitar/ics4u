@@ -1,150 +1,114 @@
-
-/**
- * MastermindSolver.java
- *
- * This class implements the five-guess algorithm.
- * https://en.wikipedia.org/wiki/Mastermind_(board_game)#Worst_case:_Five-guess_algorithm
- */
-
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Iterator;
-import java.lang.IllegalArgumentException;
 
 public class MastermindSolver {
     public enum Status {
         Win, Lose, Continue
     }
 
-    private final int NUM_COLORS;
-    private final int CODE_LENGTH;
-    private final int MAX_ATTEMPTS;
+    private HashSet<Code> permutations;
+    private int attempts = 0;
+    private Code previousGuess;
 
-    private HashSet<Code.Color[]> permutations;
-    private Code.Color[] previousGuess;
-    private int attempt = 0;
-
-    public MastermindSolver(final int numColors, final int codeLength, final int maxAttempts) {
-        NUM_COLORS = numColors;
-        CODE_LENGTH = codeLength;
-        MAX_ATTEMPTS = maxAttempts;
-        permutations = generatePermutations();
+    public MastermindSolver() {
+        generatePermutations();
     }
 
-    public Tuple<Status, Code.Color[]> attempt() {
-        if (attempt >= MAX_ATTEMPTS) {
-            return new Tuple<>(Status.Lose, null);
-        } else if (attempt > 0) {
-            throw new IllegalArgumentException("Please use this method only for the first guess.");
+    /**
+     * Step 1
+     * Generates all possible permutations of the secret code.
+     */
+    private void generatePermutations() {
+        final int possibilities = (int) Math.pow(Mastermind.TOTAL_COLORS, Mastermind.CODE_LENGTH);
+        permutations = new HashSet<>(possibilities);
+
+        for (int i = 0; i < possibilities; ++i) {
+            final ArrayList<Integer> codeInDigits = MathUtil.digitsFromBase(i, Mastermind.TOTAL_COLORS,
+                    Mastermind.CODE_LENGTH);
+            final Code code = new Code(codeInDigits);
+            permutations.add(code);
         }
-
-        attempt++;
-
-        final Code.Color[] guess = Code.senaryToColors(new int[] { 0, 0, 1, 1 });
-        previousGuess = guess;
-        return new Tuple<>(Status.Continue, guess);
     }
 
-    public Tuple<Status, Code.Color[]> attempt(final Code.KeyPeg[] validation) {
-        if (attempt >= MAX_ATTEMPTS) {
-            return new Tuple<>(Status.Lose, null);
-        } else if (attempt == 0) {
-            throw new IllegalArgumentException("Please use this method only after the first guess.");
+    /**
+     * Step 2
+     * Initial guess
+     */
+    public Code guess() {
+        if (attempts > 0) {
+            throw new IllegalCallerException("guess() is meant for the first guess.");
         }
 
-        if (ArrayUtil.count(validation, Code.KeyPeg.Colored) == CODE_LENGTH) {
+        ++attempts;
+
+        return new Code((ArrayList<Integer>) Arrays.asList(0, 0, 1, 1));
+    }
+
+    /**
+     * Step 3-6
+     *
+     * @param response The response/validation from the previous guess.
+     * @return (status, code) where status is the game status and code is the next
+     *         guess.
+     */
+    public Tuple<Status, Code> guess(final Response response) {
+        final Tuple<ArrayList<Integer>, ArrayList<Integer>> validation = response.validate();
+        final ArrayList<Integer> correctIndices = validation.first;
+        final ArrayList<Integer> misplacedIndices = validation.second;
+
+        if (correctIndices.size() >= Mastermind.CODE_LENGTH) {
             return new Tuple<>(Status.Win, previousGuess);
+        } else if (attempts >= Mastermind.MAX_GUESSES) {
+            return new Tuple<>(Status.Lose, previousGuess);
         }
 
-        attempt++;
+        reducePermutations(correctIndices, misplacedIndices);
 
-        filterPermutations(validation);
-        previousGuess = calculateNextGuess();
+        ++attempts;
 
-        return new Tuple<>(Status.Continue, previousGuess);
+        return null;
     }
 
-    private HashSet<Code.Color[]> generatePermutations() {
-        final int possibilities = (int) Math.pow(NUM_COLORS, CODE_LENGTH);
-        HashSet<Code.Color[]> permutations = new HashSet<>();
-
-        for (int i = 0; i < possibilities; i++) {
-            int[] digits = MathUtil.digitsFromBase(i, NUM_COLORS, CODE_LENGTH);
-            permutations.add(Code.senaryToColors(digits));
-        }
-
-        return permutations;
-    }
-
-    private void filterPermutations(final Code.KeyPeg[] validation) {
-        Iterator<Code.Color[]> iterator = permutations.iterator();
-
-        while (iterator.hasNext()) {
-            Code.Color[] code = iterator.next();
-            if (!isValidCode(previousGuess, code, validation)) {
-                iterator.remove();
-            }
-        }
-    }
-
-    private boolean isValidCode(Code.Color[] guess, Code.Color[] code, Code.KeyPeg[] validation) {
-        Tuple<Integer, Integer> score = calculateScore(guess, code);
-        int coloredPegs = score.getFirst();
-        int whitePegs = score.getSecond();
-
-        int expectedColored = ArrayUtil.count(validation, Code.KeyPeg.Colored);
-        int expectedWhite = ArrayUtil.count(validation, Code.KeyPeg.White);
-
-        return coloredPegs == expectedColored && whitePegs == expectedWhite;
-    }
-
-    private Code.Color[] calculateNextGuess() {
-        Code.Color[] bestGuess = null;
-        int bestScore = Integer.MAX_VALUE;
-
-        for (Code.Color[] guess : permutations) {
-            int worstScore = 0;
-
-            for (Code.Color[] code : permutations) {
-                Tuple<Integer, Integer> score = calculateScore(guess, code);
-                int unfitCodes = permutations.size() - (score.getFirst() + score.getSecond());
-                worstScore = Math.max(worstScore, unfitCodes);
-            }
-
-            if (worstScore < bestScore) {
-                bestGuess = guess;
-                bestScore = worstScore;
-            }
-        }
-
-        return bestGuess;
-    }
-
-    private Tuple<Integer, Integer> calculateScore(final Code.Color[] guess, final Code.Color[] code) {
-        int coloredPegs = 0;
-        int whitePegs = 0;
-        boolean[] usedCode = new boolean[CODE_LENGTH];
-        boolean[] usedGuess = new boolean[CODE_LENGTH];
-
-        for (int i = 0; i < CODE_LENGTH; i++) {
-            if (guess[i].equals(code[i])) {
-                coloredPegs++;
-                usedCode[i] = true;
-                usedGuess[i] = true;
-            }
-        }
-
-        for (int i = 0; i < CODE_LENGTH; i++) {
-            if (!usedGuess[i]) {
-                for (int j = 0; j < CODE_LENGTH; j++) {
-                    if (!usedCode[j] && guess[i].equals(code[j])) {
-                        whitePegs++;
-                        usedCode[j] = true;
-                        break;
-                    }
+    /**
+     * Step 5
+     * Remove from permutations any code that would not give the same response.
+     *
+     * Rules:
+     * Given the secret codeword: x1 x2 x3 x4,
+     * and the test pattern: y1 y2 y3 y4.
+     *
+     * 1. The number of black hits / KeyPeg.Correct, ie, the number of positions j
+     * such that xj = yj.
+     *
+     * 2. The number of white hits / KeyPeg.Misplaced, ie, the number of positions j
+     * such that xj ≠ yj, but xj = yk for some k and yk has not been used in another
+     * hit.
+     *
+     * @param correctIndices
+     * @param misplacedIndices
+     */
+    private void reducePermutations(final ArrayList<Integer> correctIndices,
+            final ArrayList<Integer> misplacedIndices) {
+        // remove all permutations that don't have the correct pegs in the correct
+        // indices
+        permutations.removeIf(permutation -> {
+            for (final int index : correctIndices) {
+                if (permutation.getColor(index) != previousGuess.getColor(index)) {
+                    return true;
                 }
             }
-        }
+            return false;
+        });
 
-        return new Tuple<>(coloredPegs, whitePegs);
+        // remove permutations that have the misplaced pegs in the misplaced indices
+        permutations.removeIf(permutation -> {
+            for (final int index : misplacedIndices) {
+                if (permutation.getColor(index) == previousGuess.getColor(index)) {
+                    return true;
+                }
+            }
+            return false;
+        });
     }
 }

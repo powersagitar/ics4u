@@ -1,11 +1,21 @@
-public class MathUtil {
-    public static int[] digitsFromBase(int number, final int base, final int numberOfDigits) {
-        int[] digits = new int[numberOfDigits];
+import java.util.ArrayList;
+import java.util.Collections;
 
-        for (int i = numberOfDigits - 1; i >= 0; --i) {
-            digits[i] = number % base;
+public class MathUtil {
+    public static ArrayList<Integer> digitsFromBase(int number, final int base, final int arrLength) {
+        ArrayList<Integer> digits = new ArrayList<>(arrLength);
+
+        while (number > 0) {
+            final int leastSignificantDigit = number % base;
+            digits.add(leastSignificantDigit);
             number /= base;
         }
+
+        while (digits.size() < arrLength) {
+            digits.add(0);
+        }
+
+        Collections.reverse(digits);
 
         return digits;
     }
