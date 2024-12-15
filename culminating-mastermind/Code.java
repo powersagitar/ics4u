@@ -12,7 +12,7 @@ public class Code {
     private final ArrayList<Color> code;
 
     public Code(final ArrayList<Integer> code) {
-        ArrayList<Color> codeBuilder = new ArrayList<>(4);
+        ArrayList<Color> codeBuilder = new ArrayList<>(Mastermind.CODE_LENGTH);
 
         for (final int color : code) {
             codeBuilder.add(Color.fromIndex(color));

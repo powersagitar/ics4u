@@ -42,7 +42,10 @@ public class MastermindSolver {
 
         ++attempts;
 
-        return new Code((ArrayList<Integer>) Arrays.asList(0, 0, 1, 1));
+        final Code nextGuess = new Code((ArrayList<Integer>) Arrays.asList(0, 0, 1, 1));
+        previousGuess = nextGuess;
+
+        return nextGuess;
     }
 
     /**
