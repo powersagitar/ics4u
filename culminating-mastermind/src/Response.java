@@ -55,26 +55,25 @@ public class Response {
     }
 
     /**
-     * Validates the response.
+     * Validates the response by counting the number of correct and misplaced key
+     * pegs.
      *
-     * @return (indices of correct pegs, indices of misplaced pegs, indices of
-     *         incorrect pegs)
+     * @return a Tuple2 containing two integers:
+     *         - The first integer represents the count of correct key pegs.
+     *         - The second integer represents the count of misplaced key pegs.
      */
-    public Tuple3<ArrayList<Integer>, ArrayList<Integer>, ArrayList<Integer>> validate() {
-        ArrayList<Integer> correctIndices = new ArrayList<>(Mastermind.CODE_LENGTH);
-        ArrayList<Integer> misplacedIndices = new ArrayList<>(Mastermind.CODE_LENGTH);
-        ArrayList<Integer> incorrectIndices = new ArrayList<>(Mastermind.CODE_LENGTH);
+    public Tuple2<Integer, Integer> validate() {
+        int correctCount = 0;
+        int misplacedCount = 0;
 
         for (int i = 0; i < Mastermind.CODE_LENGTH; ++i) {
             if (response.get(i) == KeyPeg.Correct) {
-                correctIndices.add(i);
+                ++correctCount;
             } else if (response.get(i) == KeyPeg.Misplaced) {
-                misplacedIndices.add(i);
-            } else {
-                incorrectIndices.add(i);
+                ++misplacedCount;
             }
         }
 
-        return new Tuple3<>(correctIndices, misplacedIndices, incorrectIndices);
+        return new Tuple2<>(correctCount, misplacedCount);
     }
 }
