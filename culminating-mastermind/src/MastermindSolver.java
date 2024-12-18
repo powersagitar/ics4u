@@ -62,10 +62,9 @@ public class MastermindSolver {
         }
 
         final Tuple2<Integer, Integer> validation = response.validate();
-        final int correctIndices = validation.first;
-        final int misplacedIndices = validation.second;
+        final int correctCount = validation.first;
 
-        if (correctIndices >= Mastermind.CODE_LENGTH) {
+        if (correctCount >= Mastermind.CODE_LENGTH) {
             return new Tuple2<>(Status.Win, previousGuess);
         } else if (attempts >= Mastermind.MAX_GUESSES) {
             return new Tuple2<>(Status.Lose, previousGuess);
@@ -82,55 +81,10 @@ public class MastermindSolver {
         return new Tuple2<>(Status.Continue, nextGuess);
     }
 
-    /**
-     * Step 5
-     * Remove from permutations any code that would not give the same response.
-     *
-     * Rules:
-     * Given the secret codeword: x1 x2 x3 x4,
-     * and the test pattern: y1 y2 y3 y4.
-     *
-     * 1. The number of black hits / KeyPeg.Correct, ie, the number of positions j
-     * such that xj = yj.
-     *
-     * 2. The number of white hits / KeyPeg.Misplaced, ie, the number of positions j
-     * such that xj != yj, but xj = yk for some k and yk has not been used in
-     * another
-     * hit.
-     *
-     * @param correctIndices
-     * @param misplacedIndices
-     */
-    private static void reducePermutations(HashSet<Code> permutations, final Code previousGuess,
-            final ArrayList<Integer> correctIndices,
-            final ArrayList<Integer> misplacedIndices,
-            final ArrayList<Integer> incorrectIndices) {
-        // todo: incorrect logic, not removing permutations correctly
+    private HashSet<Code> possiblePermutations(final Response response) {
+        HashSet<Code> possiblePermutations = (HashSet<Code>) permutations.clone();
 
-        permutations.removeIf(permutation -> {
-            // remove permutations that don't have the correct pegs in the correct indices
-            for (final int index : correctIndices) {
-                if (permutation.getColor(index) != previousGuess.getColor(index)) {
-                    return true;
-                }
-            }
-
-            // remove permutations that have the misplaced pegs in the misplaced indices
-            for (final int index : misplacedIndices) {
-                if (permutation.getColor(index) == previousGuess.getColor(index)) {
-                    return true;
-                }
-            }
-
-            // remove permutations that have the incorrect pegs in the incorrect indices
-            for (final int index : incorrectIndices) {
-                if (permutation.getColor(index) == previousGuess.getColor(index)) {
-                    return true;
-                }
-            }
-
-            return false;
-        });
+        return possiblePermutations;
     }
 
     /**
@@ -142,61 +96,16 @@ public class MastermindSolver {
     private Code findNextGuess() {
         TreeMap<Integer, Code> scores = new TreeMap<>();
 
-        // for (final Code guess : permutations) {
-        // int score = Integer.MIN_VALUE;
+        for (final Code guess : permutations) {
+            int guessScore = Integer.MIN_VALUE;
 
-        // for (final Code assumption : permutations) {
-        // @SuppressWarnings("unchecked")
-        // HashSet<Code> permutationsClone = (HashSet<Code>) permutations.clone();
-
-        // final Response response = new Response(assumption, guess);
-        // final Tuple3<ArrayList<Integer>, ArrayList<Integer>, ArrayList<Integer>>
-        // validation = response
-        // .validate();
-        // final ArrayList<Integer> correctIndices = validation.first;
-        // final ArrayList<Integer> misplacedIndices = validation.second;
-        // final ArrayList<Integer> incorrectIndices = validation.third;
-
-        // reducePermutations(permutationsClone, assumption, correctIndices,
-        // misplacedIndices, incorrectIndices);
-
-        // score = Math.max(score, permutationsClone.size());
-        // }
-
-        // scores.put(score, guess);
-        // }
-
-        // for (final Code codeword : permutations) {
-        // for (final Code testPattern : permutations) {
-        // HashSet<Code> permutationsClone = (HashSet<Code>) permutations.clone();
-
-        // Response response = new Response(codeword, testPattern);
-        // Tuple<ArrayList<Integer>, ArrayList<Integer>> validation =
-        // response.validate();
-        // ArrayList<Integer> correctIndices = validation.first;
-        // ArrayList<Integer> misplacedIndices = validation.second;
-
-        // reducePermutations(permutationsClone, testPattern, correctIndices,
-        // misplacedIndices);
-        // }
-
-        // final HashMap<Code.Color, Integer> codewordOccurrences =
-        // codeword.getOccurrences();
-        // int hits = 0;
-        // int misses = 0;
-
-        // for (final Code testPattern : permutations) {
-        // final HashMap<Code.Color, Integer> testPatternOccurrences =
-        // testPattern.getOccurrences();
-
-        // for (final Code.Color color : Code.Color.values()) {
-        // hits += Math.min(codewordOccurrences.get(color),
-        // testPatternOccurrences.get(color));
-        // misses += Math.max(codewordOccurrences.get(color) -
-        // testPatternOccurrences.get(color), 0);
-        // }
-        // }
-        // }
+            for (final Code assumedCode : permutations) {
+                final Response response = new Response(assumedCode, guess);
+                final HashSet<Code> permutations = possiblePermutations(response);
+                final int responseScore = permutations.size();
+                guessScore = Math.max(guessScore, responseScore);
+            }
+        }
 
         // code with lowest score
         return scores.firstEntry().getValue();
