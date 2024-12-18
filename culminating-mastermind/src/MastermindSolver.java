@@ -61,18 +61,18 @@ public class MastermindSolver {
             throw new IllegalCallerException("guess(Response) is meant for subsequent guesses.");
         }
 
-        final Tuple3<ArrayList<Integer>, ArrayList<Integer>, ArrayList<Integer>> validation = response.validate();
-        final ArrayList<Integer> correctIndices = validation.first;
-        final ArrayList<Integer> misplacedIndices = validation.second;
-        final ArrayList<Integer> incorrectIndices = validation.third;
+        final Tuple2<Integer, Integer> validation = response.validate();
+        final int correctIndices = validation.first;
+        final int misplacedIndices = validation.second;
 
-        if (correctIndices.size() >= Mastermind.CODE_LENGTH) {
+        if (correctIndices >= Mastermind.CODE_LENGTH) {
             return new Tuple2<>(Status.Win, previousGuess);
         } else if (attempts >= Mastermind.MAX_GUESSES) {
             return new Tuple2<>(Status.Lose, previousGuess);
         }
 
-        reducePermutations(permutations, previousGuess, correctIndices, misplacedIndices, incorrectIndices);
+        // reducePermutations(permutations, previousGuess, correctIndices,
+        // misplacedIndices, incorrectIndices);
 
         ++attempts;
 
@@ -142,58 +142,60 @@ public class MastermindSolver {
     private Code findNextGuess() {
         TreeMap<Integer, Code> scores = new TreeMap<>();
 
-        for (final Code guess : permutations) {
-            int score = Integer.MIN_VALUE;
+        // for (final Code guess : permutations) {
+        // int score = Integer.MIN_VALUE;
 
-            for (final Code assumption : permutations) {
-                @SuppressWarnings("unchecked")
-                HashSet<Code> permutationsClone = (HashSet<Code>) permutations.clone();
+        // for (final Code assumption : permutations) {
+        // @SuppressWarnings("unchecked")
+        // HashSet<Code> permutationsClone = (HashSet<Code>) permutations.clone();
 
-                final Response response = new Response(assumption, guess);
-                final Tuple3<ArrayList<Integer>, ArrayList<Integer>, ArrayList<Integer>> validation = response
-                        .validate();
-                final ArrayList<Integer> correctIndices = validation.first;
-                final ArrayList<Integer> misplacedIndices = validation.second;
-                final ArrayList<Integer> incorrectIndices = validation.third;
+        // final Response response = new Response(assumption, guess);
+        // final Tuple3<ArrayList<Integer>, ArrayList<Integer>, ArrayList<Integer>>
+        // validation = response
+        // .validate();
+        // final ArrayList<Integer> correctIndices = validation.first;
+        // final ArrayList<Integer> misplacedIndices = validation.second;
+        // final ArrayList<Integer> incorrectIndices = validation.third;
 
-                reducePermutations(permutationsClone, assumption, correctIndices, misplacedIndices, incorrectIndices);
+        // reducePermutations(permutationsClone, assumption, correctIndices,
+        // misplacedIndices, incorrectIndices);
 
-                score = Math.max(score, permutationsClone.size());
-            }
+        // score = Math.max(score, permutationsClone.size());
+        // }
 
-            scores.put(score, guess);
-        }
+        // scores.put(score, guess);
+        // }
 
         // for (final Code codeword : permutations) {
-        // // for (final Code testPattern : permutations) {
-        // // HashSet<Code> permutationsClone = (HashSet<Code>) permutations.clone();
+        // for (final Code testPattern : permutations) {
+        // HashSet<Code> permutationsClone = (HashSet<Code>) permutations.clone();
 
-        // // Response response = new Response(codeword, testPattern);
-        // // Tuple<ArrayList<Integer>, ArrayList<Integer>> validation =
-        // // response.validate();
-        // // ArrayList<Integer> correctIndices = validation.first;
-        // // ArrayList<Integer> misplacedIndices = validation.second;
+        // Response response = new Response(codeword, testPattern);
+        // Tuple<ArrayList<Integer>, ArrayList<Integer>> validation =
+        // response.validate();
+        // ArrayList<Integer> correctIndices = validation.first;
+        // ArrayList<Integer> misplacedIndices = validation.second;
 
-        // // reducePermutations(permutationsClone, testPattern, correctIndices,
-        // // misplacedIndices);
-        // // }
+        // reducePermutations(permutationsClone, testPattern, correctIndices,
+        // misplacedIndices);
+        // }
 
-        // // final HashMap<Code.Color, Integer> codewordOccurrences =
-        // // codeword.getOccurrences();
-        // // int hits = 0;
-        // // int misses = 0;
+        // final HashMap<Code.Color, Integer> codewordOccurrences =
+        // codeword.getOccurrences();
+        // int hits = 0;
+        // int misses = 0;
 
-        // // for (final Code testPattern : permutations) {
-        // // final HashMap<Code.Color, Integer> testPatternOccurrences =
-        // // testPattern.getOccurrences();
+        // for (final Code testPattern : permutations) {
+        // final HashMap<Code.Color, Integer> testPatternOccurrences =
+        // testPattern.getOccurrences();
 
-        // // for (final Code.Color color : Code.Color.values()) {
-        // // hits += Math.min(codewordOccurrences.get(color),
-        // // testPatternOccurrences.get(color));
-        // // misses += Math.max(codewordOccurrences.get(color) -
-        // // testPatternOccurrences.get(color), 0);
-        // // }
-        // // }
+        // for (final Code.Color color : Code.Color.values()) {
+        // hits += Math.min(codewordOccurrences.get(color),
+        // testPatternOccurrences.get(color));
+        // misses += Math.max(codewordOccurrences.get(color) -
+        // testPatternOccurrences.get(color), 0);
+        // }
+        // }
         // }
 
         // code with lowest score
