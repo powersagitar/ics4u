@@ -3,6 +3,7 @@ package src.mastermind;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.HashMap;
 import java.util.TreeMap;
 
 public class MastermindSolver {
@@ -52,7 +53,7 @@ public class MastermindSolver {
     }
 
     /**
-     * Step 3-6
+     * Steps 3-6
      *
      * @param response The response/validation from the previous guess.
      * @return (status, code) where status is the game status and code is the next
@@ -72,10 +73,9 @@ public class MastermindSolver {
             return new Tuple2<>(Status.Lose, previousGuess);
         }
 
-        // reducePermutations(permutations, previousGuess, correctIndices,
-        // misplacedIndices, incorrectIndices);
-
         ++attempts;
+
+        reducePermutations();
 
         final Code nextGuess = findNextGuess();
         previousGuess = nextGuess;
@@ -83,38 +83,54 @@ public class MastermindSolver {
         return new Tuple2<>(Status.Continue, nextGuess);
     }
 
-    private HashSet<Code> getPossiblePermutations(final Response response) {
-        @SuppressWarnings("unchecked")
-        HashSet<Code> possiblePermutations = (HashSet<Code>) permutations.clone();
-
-        possiblePermutations.removeIf(permutation -> {
-
-        });
-
-        return possiblePermutations;
+    /**
+     * Step 5
+     * Remove from permutations any code that would not give that response of colored and white pegs.
+     */
+    private void reducePermutations() {
+// // TODO: 12/19/24 to be implemented
     }
 
     /**
      * Step 6
      * Find the best guess from the remaining permutations.
      *
+     * <p>
+     * The algorithm implements:
+     * <a href="https://stackoverflow.com/a/62430592/20143641">Stack Overflow Answer</a>
+     * </p>
+     *
      * @return The best guess.
      */
     private Code findNextGuess() {
-        TreeMap<Integer, Code> scores = new TreeMap<>();
+        TreeMap<Integer, Code> guessScores = new TreeMap<>();
 
         for (final Code guess : permutations) {
-            int guessScore = Integer.MIN_VALUE;
+            HashMap<Response, Tuple2<Code, Integer>> responses = new HashMap<>();
 
             for (final Code assumedCode : permutations) {
                 final Response response = new Response(assumedCode, guess);
-                final HashSet<Code> permutations = getPossiblePermutations(response);
-                final int responseScore = permutations.size();
-                guessScore = Math.max(guessScore, responseScore);
+                final int prevOccurrence = responses.getOrDefault(response, new Tuple2<>(null, 0)).second;
+                responses.put(response, new Tuple2<>(assumedCode, prevOccurrence + 1));
             }
+
+            int maxOccurrence = Integer.MIN_VALUE;
+            Code codeWithMaxOccurrence = null;
+
+            for (final Response response : responses.keySet()) {
+                final Tuple2<Code, Integer> codeAndOccurrence = responses.get(response);
+                final Code code = codeAndOccurrence.first;
+                final int occurrence = codeAndOccurrence.second;
+
+                if (occurrence > maxOccurrence) {
+                    maxOccurrence = occurrence;
+                    codeWithMaxOccurrence = code;
+                }
+            }
+
+            guessScores.put(maxOccurrence, codeWithMaxOccurrence);
         }
 
-        // code with lowest score
-        return scores.firstEntry().getValue();
+        return guessScores.firstEntry().getValue();
     }
 }
