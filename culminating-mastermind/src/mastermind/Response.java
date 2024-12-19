@@ -8,19 +8,12 @@ public class Response {
         Correct, Misplaced, Incorrect;
 
         public static KeyPeg fromChar(final char c) {
-            switch (c) {
-                case 'c':
-                    return Correct;
-
-                case 'm':
-                    return Misplaced;
-
-                case 'i':
-                    return Incorrect;
-
-                default:
-                    throw new IllegalArgumentException("Invalid character: " + c);
-            }
+            return switch (c) {
+                case 'c' -> Correct;
+                case 'm' -> Misplaced;
+                case 'i' -> Incorrect;
+                default -> throw new IllegalArgumentException("Invalid character: " + c);
+            };
         }
     }
 
