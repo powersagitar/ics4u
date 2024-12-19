@@ -1,10 +1,6 @@
 package src.mastermind;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.HashMap;
-import java.util.TreeMap;
+import java.util.*;
 
 public class MastermindSolver {
     public enum Status {
@@ -75,7 +71,7 @@ public class MastermindSolver {
 
         ++attempts;
 
-        reducePermutations();
+        reducePermutations(response);
 
         final Code nextGuess = findNextGuess();
         previousGuess = nextGuess;
@@ -87,8 +83,11 @@ public class MastermindSolver {
      * Step 5
      * Remove from permutations any code that would not give that response of colored and white pegs.
      */
-    private void reducePermutations() {
-// // TODO: 12/19/24 to be implemented
+    private void reducePermutations(final Response response) {
+        permutations.removeIf(permutation -> {
+            final Response testResponse = new Response(permutation, this.previousGuess);
+            return !testResponse.equals(response);
+        });
     }
 
     /**

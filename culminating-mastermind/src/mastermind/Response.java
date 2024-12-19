@@ -71,4 +71,8 @@ public class Response {
 
         return new Tuple2<>(correctCount, misplacedCount);
     }
+
+    public boolean equals(Response response) {
+        return this.validate().equals(response.validate());
+    }
 }
