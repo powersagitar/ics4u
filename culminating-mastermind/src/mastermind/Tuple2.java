@@ -1,3 +1,5 @@
+package src.mastermind;
+
 public class Tuple2<T, U> {
     public final T first;
     public final U second;

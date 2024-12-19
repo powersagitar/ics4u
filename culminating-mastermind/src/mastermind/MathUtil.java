@@ -1,3 +1,5 @@
+package src.mastermind;
+
 import java.util.ArrayList;
 import java.util.Collections;
 

@@ -1,3 +1,5 @@
+package src.mastermind;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -26,7 +28,7 @@ public class MastermindSolver {
 
         for (int i = 0; i < possibilities; ++i) {
             final ArrayList<Integer> codeInDigits = MathUtil.digitsFromBase(i, Mastermind.TOTAL_COLORS,
-                    Mastermind.CODE_LENGTH);
+                Mastermind.CODE_LENGTH);
             final Code code = new Code(codeInDigits);
             permutations.add(code);
         }
@@ -54,7 +56,7 @@ public class MastermindSolver {
      *
      * @param response The response/validation from the previous guess.
      * @return (status, code) where status is the game status and code is the next
-     *         guess.
+     * guess.
      */
     public Tuple2<Status, Code> guess(final Response response) {
         if (attempts <= 0) {
@@ -81,8 +83,13 @@ public class MastermindSolver {
         return new Tuple2<>(Status.Continue, nextGuess);
     }
 
-    private HashSet<Code> possiblePermutations(final Response response) {
+    private HashSet<Code> getPossiblePermutations(final Response response) {
+        @SuppressWarnings("unchecked")
         HashSet<Code> possiblePermutations = (HashSet<Code>) permutations.clone();
+
+        possiblePermutations.removeIf(permutation -> {
+
+        });
 
         return possiblePermutations;
     }
@@ -101,7 +108,7 @@ public class MastermindSolver {
 
             for (final Code assumedCode : permutations) {
                 final Response response = new Response(assumedCode, guess);
-                final HashSet<Code> permutations = possiblePermutations(response);
+                final HashSet<Code> permutations = getPossiblePermutations(response);
                 final int responseScore = permutations.size();
                 guessScore = Math.max(guessScore, responseScore);
             }

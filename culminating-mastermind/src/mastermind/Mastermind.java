@@ -1,3 +1,5 @@
+package src.mastermind;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -25,8 +27,8 @@ public class Mastermind {
             System.out.print("Response: ");
 
             ArrayList<Character> chars = (ArrayList<Character>) scanner.nextLine().trim().chars()
-                    .mapToObj(c -> (char) c)
-                    .collect(Collectors.toList());
+                .mapToObj(c -> (char) c)
+                .collect(Collectors.toList());
 
             final Response response = new Response(chars);
 

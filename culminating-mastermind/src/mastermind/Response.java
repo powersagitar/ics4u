@@ -1,3 +1,5 @@
+package src.mastermind;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -59,8 +61,8 @@ public class Response {
      * pegs.
      *
      * @return a Tuple2 containing two integers:
-     *         - The first integer represents the count of correct key pegs.
-     *         - The second integer represents the count of misplaced key pegs.
+     * - The first integer represents the count of correct key pegs.
+     * - The second integer represents the count of misplaced key pegs.
      */
     public Tuple2<Integer, Integer> validate() {
         int correctCount = 0;
