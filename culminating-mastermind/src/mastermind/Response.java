@@ -3,10 +3,6 @@ package src.mastermind;
 import java.util.HashMap;
 
 public class Response {
-    public enum KeyPeg {
-        Correct, Misplaced;
-    }
-
     //    (correct count, misplacement count)
     private final Tuple2<Integer, Integer> response;
 
