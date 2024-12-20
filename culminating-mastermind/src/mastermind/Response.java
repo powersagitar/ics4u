@@ -1,52 +1,34 @@
 package src.mastermind;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Response {
     public enum KeyPeg {
-        Correct, Misplaced, Incorrect;
-
-        public static KeyPeg fromChar(final char c) {
-            return switch (c) {
-                case 'c' -> Correct;
-                case 'm' -> Misplaced;
-                case 'i' -> Incorrect;
-                default -> throw new IllegalArgumentException("Invalid character: " + c);
-            };
-        }
+        Correct, Misplaced;
     }
 
-    private final ArrayList<KeyPeg> response;
+    private final HashMap<KeyPeg, Integer> response;
+
+    public Response(final HashMap<KeyPeg, Integer> response) {
+        this.response = response;
+    }
 
     public Response(final Code code, final Code guess) {
-        ArrayList<KeyPeg> responseBuilder = new ArrayList<>(Mastermind.CODE_LENGTH);
+        HashMap<KeyPeg, Integer> responseBuilder = new HashMap<>(KeyPeg.values().length);
         HashMap<Code.Color, Integer> codeOccurrences = code.getOccurrences();
 
         for (int i = 0; i < Mastermind.CODE_LENGTH; ++i) {
             final Code.Color color = guess.getColor(i);
 
             if (code.getColor(i) == color) {
-                responseBuilder.add(KeyPeg.Correct);
+                responseBuilder.put(KeyPeg.Correct, responseBuilder.getOrDefault(KeyPeg.Correct, 0) + 1);
             } else if (codeOccurrences.get(color) > 0) {
-                responseBuilder.add(KeyPeg.Misplaced);
+                responseBuilder.put(KeyPeg.Misplaced, responseBuilder.getOrDefault(KeyPeg.Misplaced, 0) + 1);
                 codeOccurrences.put(color, codeOccurrences.get(color) - 1);
-            } else {
-                responseBuilder.add(KeyPeg.Incorrect);
             }
         }
 
         response = responseBuilder;
-    }
-
-    public Response(final ArrayList<Character> response) {
-        ArrayList<KeyPeg> responseBuilder = new ArrayList<>(Mastermind.CODE_LENGTH);
-
-        for (final char peg : response) {
-            responseBuilder.add(KeyPeg.fromChar(peg));
-        }
-
-        this.response = responseBuilder;
     }
 
     /**
@@ -57,22 +39,30 @@ public class Response {
      * - The first integer represents the count of correct key pegs.
      * - The second integer represents the count of misplaced key pegs.
      */
-    public Tuple2<Integer, Integer> validate() {
-        int correctCount = 0;
-        int misplacedCount = 0;
-
-        for (int i = 0; i < Mastermind.CODE_LENGTH; ++i) {
-            if (response.get(i) == KeyPeg.Correct) {
-                ++correctCount;
-            } else if (response.get(i) == KeyPeg.Misplaced) {
-                ++misplacedCount;
-            }
-        }
+    public Tuple2<Integer, Integer> getResponse() {
+        final int correctCount = this.response.getOrDefault(KeyPeg.Correct, 0);
+        final int misplacedCount = this.response.getOrDefault(KeyPeg.Misplaced, 0);
 
         return new Tuple2<>(correctCount, misplacedCount);
     }
 
-    public boolean equals(Response response) {
-        return this.validate().equals(response.validate());
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj == null || obj.getClass() != this.getClass()) {
+            return false;
+        }
+
+        final Response otherResponse = (Response) obj;
+
+        return this.response.equals(otherResponse.response);
+    }
+
+    @Override
+    public int hashCode() {
+        return this.response.hashCode();
     }
 }

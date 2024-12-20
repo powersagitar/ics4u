@@ -1,10 +1,7 @@
 package src.mastermind;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Random;
 import java.util.Scanner;
-import java.util.stream.Collectors;
+import java.util.HashMap;
 
 public class Mastermind {
     public final static int TOTAL_COLORS = 6;
@@ -26,11 +23,21 @@ public class Mastermind {
             System.out.println("Guess: " + guess.getColors());
             System.out.print("Response: ");
 
-            ArrayList<Character> chars = (ArrayList<Character>) scanner.nextLine().trim().chars()
-                .mapToObj(c -> (char) c)
-                .collect(Collectors.toList());
+            HashMap<Response.KeyPeg, Integer> responseBuilder = new HashMap<>(Response.KeyPeg.values().length);
 
-            final Response response = new Response(chars);
+            for (final char c : scanner.nextLine().trim().toCharArray()) {
+                switch (c) {
+                    case 'c':
+                        responseBuilder.put(Response.KeyPeg.Correct, responseBuilder.getOrDefault(Response.KeyPeg.Correct, 0) + 1);
+                        break;
+
+                    case 'm':
+                        responseBuilder.put(Response.KeyPeg.Misplaced, responseBuilder.getOrDefault(Response.KeyPeg.Misplaced, 0) + 1);
+                        break;
+                }
+            }
+
+            final Response response = new Response(responseBuilder);
 
             final Tuple2<MastermindSolver.Status, Code> result = solver.guess(response);
             status = result.first;

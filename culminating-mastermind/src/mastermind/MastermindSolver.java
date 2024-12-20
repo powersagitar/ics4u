@@ -60,7 +60,7 @@ public class MastermindSolver {
             throw new IllegalCallerException("guess(Response) is meant for subsequent guesses.");
         }
 
-        final Tuple2<Integer, Integer> validation = response.validate();
+        final Tuple2<Integer, Integer> validation = response.getResponse();
         final int correctCount = validation.first;
 
         if (correctCount >= Mastermind.CODE_LENGTH) {

@@ -9,7 +9,19 @@ public class Tuple2<T, U> {
         this.second = second;
     }
 
-    public boolean equals(Tuple2<T, U> tuple) {
-        return first.equals(tuple.first) && second.equals(tuple.second);
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj == null || obj.getClass() != this.getClass()) {
+            return false;
+        }
+
+        @SuppressWarnings("unchecked") final Tuple2<T, U> otherTuple = (Tuple2<T, U>) obj;
+
+        return this.first.equals(otherTuple.first) && this.second.equals(otherTuple.second);
+
     }
 }
