@@ -7,28 +7,31 @@ public class Response {
         Correct, Misplaced;
     }
 
-    private final HashMap<KeyPeg, Integer> response;
+    //    (correct count, misplacement count)
+    private final Tuple2<Integer, Integer> response;
 
-    public Response(final HashMap<KeyPeg, Integer> response) {
+    public Response(final Tuple2<Integer, Integer> response) {
         this.response = response;
     }
 
     public Response(final Code code, final Code guess) {
-        HashMap<KeyPeg, Integer> responseBuilder = new HashMap<>(KeyPeg.values().length);
+        int correctCount = 0;
+        int misplacementCount = 0;
+
         HashMap<Code.Color, Integer> codeOccurrences = code.getOccurrences();
 
         for (int i = 0; i < Mastermind.CODE_LENGTH; ++i) {
             final Code.Color color = guess.getColor(i);
 
             if (code.getColor(i) == color) {
-                responseBuilder.put(KeyPeg.Correct, responseBuilder.getOrDefault(KeyPeg.Correct, 0) + 1);
+                ++correctCount;
             } else if (codeOccurrences.get(color) > 0) {
-                responseBuilder.put(KeyPeg.Misplaced, responseBuilder.getOrDefault(KeyPeg.Misplaced, 0) + 1);
+                ++misplacementCount;
                 codeOccurrences.put(color, codeOccurrences.get(color) - 1);
             }
         }
 
-        response = responseBuilder;
+        response = new Tuple2<>(correctCount, misplacementCount);
     }
 
     /**
@@ -40,10 +43,7 @@ public class Response {
      * - The second integer represents the count of misplaced key pegs.
      */
     public Tuple2<Integer, Integer> getResponse() {
-        final int correctCount = this.response.getOrDefault(KeyPeg.Correct, 0);
-        final int misplacedCount = this.response.getOrDefault(KeyPeg.Misplaced, 0);
-
-        return new Tuple2<>(correctCount, misplacedCount);
+        return this.response;
     }
 
     @Override

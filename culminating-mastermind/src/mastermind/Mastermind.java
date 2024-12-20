@@ -8,7 +8,7 @@ public class Mastermind {
     public final static int CODE_LENGTH = 4;
     public final static int MAX_GUESSES = 10;
 
-    private static Scanner scanner = new Scanner(System.in);
+    private static final Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
         solve();
@@ -23,21 +23,22 @@ public class Mastermind {
             System.out.println("Guess: " + guess.getColors());
             System.out.print("Response: ");
 
-            HashMap<Response.KeyPeg, Integer> responseBuilder = new HashMap<>(Response.KeyPeg.values().length);
+            int correctCount = 0;
+            int misplacementCount = 0;
 
             for (final char c : scanner.nextLine().trim().toCharArray()) {
                 switch (c) {
                     case 'c':
-                        responseBuilder.put(Response.KeyPeg.Correct, responseBuilder.getOrDefault(Response.KeyPeg.Correct, 0) + 1);
+                        ++correctCount;
                         break;
 
                     case 'm':
-                        responseBuilder.put(Response.KeyPeg.Misplaced, responseBuilder.getOrDefault(Response.KeyPeg.Misplaced, 0) + 1);
+                        ++misplacementCount;
                         break;
                 }
             }
 
-            final Response response = new Response(responseBuilder);
+            final Response response = new Response(new Tuple2<>(correctCount, misplacementCount));
 
             final Tuple2<MastermindSolver.Status, Code> result = solver.guess(response);
             status = result.first;

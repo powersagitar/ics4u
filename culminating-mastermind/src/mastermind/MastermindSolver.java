@@ -84,8 +84,13 @@ public class MastermindSolver {
      * Remove from permutations any code that would not give that response of colored and white pegs.
      */
     private void reducePermutations(final Response response) {
-        permutations.removeIf(permutation -> {
+        System.out.println("permutations: " + this.permutations.size());
+        this.permutations.removeIf(permutation -> {
             final Response testResponse = new Response(permutation, this.previousGuess);
+            System.out.println("previous guess: " + this.previousGuess.getColors() + " permutation: " + permutation.getColors());
+            System.out.println("received response: " + response.getResponse().first + " " + response.getResponse().second);
+            System.out.println("test response: " + testResponse.getResponse().first + " " + testResponse.getResponse().second);
+            System.out.println("received response == test response: " + testResponse.equals(response));
             return !testResponse.equals(response);
         });
     }
@@ -104,10 +109,10 @@ public class MastermindSolver {
     private Code findNextGuess() {
         TreeMap<Integer, Code> guessScores = new TreeMap<>();
 
-        for (final Code guess : permutations) {
+        for (final Code guess : this.permutations) {
             HashMap<Response, Tuple2<Code, Integer>> responses = new HashMap<>();
 
-            for (final Code assumedCode : permutations) {
+            for (final Code assumedCode : this.permutations) {
                 final Response response = new Response(assumedCode, guess);
                 final int prevOccurrence = responses.getOrDefault(response, new Tuple2<>(null, 0)).second;
                 responses.put(response, new Tuple2<>(assumedCode, prevOccurrence + 1));

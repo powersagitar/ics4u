@@ -1,5 +1,7 @@
 package src.mastermind;
 
+import java.util.Objects;
+
 public class Tuple2<T, U> {
     public final T first;
     public final U second;
@@ -23,5 +25,10 @@ public class Tuple2<T, U> {
 
         return this.first.equals(otherTuple.first) && this.second.equals(otherTuple.second);
 
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.first, this.second);
     }
 }
