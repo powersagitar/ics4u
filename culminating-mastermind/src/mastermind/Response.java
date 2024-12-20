@@ -14,16 +14,27 @@ public class Response {
         int correctCount = 0;
         int misplacementCount = 0;
 
-        HashMap<Code.Color, Integer> codeOccurrences = code.getOccurrences();
+        HashMap<Code.Color, Integer> codeColorOccurrences = code.getOccurrences();
 
+        //        count correct
         for (int i = 0; i < Mastermind.CODE_LENGTH; ++i) {
-            final Code.Color color = guess.getColor(i);
+            final Code.Color codeColor = code.getColor(i);
+            final Code.Color guessColor = guess.getColor(i);
 
-            if (code.getColor(i) == color) {
+            if (codeColor == guessColor) {
                 ++correctCount;
-            } else if (codeOccurrences.get(color) > 0) {
+                codeColorOccurrences.put(guessColor, codeColorOccurrences.get(guessColor) - 1);
+            }
+        }
+
+        //        count misplacements
+        for (int i = 0; i < Mastermind.CODE_LENGTH; ++i) {
+            final Code.Color codeColor = code.getColor(i);
+            final Code.Color guessColor = guess.getColor(i);
+
+            if (codeColor != guessColor && codeColorOccurrences.get(guessColor) > 0) {
                 ++misplacementCount;
-                codeOccurrences.put(color, codeOccurrences.get(color) - 1);
+                codeColorOccurrences.put(guessColor, codeColorOccurrences.get(guessColor) - 1);
             }
         }
 
@@ -60,5 +71,10 @@ public class Response {
     @Override
     public int hashCode() {
         return this.response.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "correct count: " + this.response.first + " misplacement count: " + this.response.second;
     }
 }

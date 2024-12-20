@@ -84,13 +84,8 @@ public class MastermindSolver {
      * Remove from permutations any code that would not give that response of colored and white pegs.
      */
     private void reducePermutations(final Response response) {
-        System.out.println("permutations: " + this.permutations.size());
         this.permutations.removeIf(permutation -> {
             final Response testResponse = new Response(permutation, this.previousGuess);
-            System.out.println("previous guess: " + this.previousGuess.getColors() + " permutation: " + permutation.getColors());
-            System.out.println("received response: " + response.getResponse().first + " " + response.getResponse().second);
-            System.out.println("test response: " + testResponse.getResponse().first + " " + testResponse.getResponse().second);
-            System.out.println("received response == test response: " + testResponse.equals(response));
             return !testResponse.equals(response);
         });
     }

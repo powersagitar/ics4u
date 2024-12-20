@@ -1,7 +1,6 @@
 package src.mastermind;
 
 import java.util.Scanner;
-import java.util.HashMap;
 
 public class Mastermind {
     public final static int TOTAL_COLORS = 6;
