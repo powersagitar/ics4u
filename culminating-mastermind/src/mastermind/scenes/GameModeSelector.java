@@ -30,7 +30,7 @@ public class GameModeSelector extends Scene {
 
         selectorPanel.setLayout(new BoxLayout(selectorPanel, BoxLayout.Y_AXIS));
         selectorPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        selectorPanel.setBorder(BorderFactory.createTitledBorder("Game Mode"));
+        selectorPanel.setBorder(BorderFactory.createTitledBorder("Game Modes"));
 
         return selectorPanel;
     }
