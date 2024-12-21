@@ -16,8 +16,8 @@ public abstract class MastermindSolver {
      *
      * <p>
      * To ensure {@code isLosing} checks the losing status correctly, the method
-     * must be called by both {@link MastermindSolver#guess()} and
-     * {@link MastermindSolver#guess(Response)}.
+     * must be called by both {@link MastermindAlgorithm#guess()} and
+     * {@link MastermindAlgorithm#guess(Response)}.
      * </p>
      *
      * @return true if the solver fails to guess the code, and false otherwise
@@ -39,14 +39,4 @@ public abstract class MastermindSolver {
     protected boolean isInitialGuess() {
         return attempts <= 0;
     }
-
-    /**
-     * First guess the solver will make
-     */
-    public abstract Code guess();
-
-    /**
-     * Subsequent guesses the solver will make
-     */
-    public abstract Tuple2<Status, Code> guess(final Response response);
 }

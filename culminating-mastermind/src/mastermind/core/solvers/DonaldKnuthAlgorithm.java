@@ -6,7 +6,7 @@ import src.mastermind.Mastermind;
 import src.mastermind.utils.*;
 import src.mastermind.core.*;
 
-public class DonaldKnuthAlgorithm extends MastermindSolver {
+public class DonaldKnuthAlgorithm extends MastermindAlgorithm {
     private Code previousGuess = null;
     private HashSet<Code> permutations;
 

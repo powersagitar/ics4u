@@ -19,7 +19,7 @@ public class Mastermind {
     }
 
     private static void solve() {
-        MastermindSolver solver = new DonaldKnuthAlgorithm();
+        MastermindAlgorithm solver = new DonaldKnuthAlgorithm();
         MastermindSolver.Status status = MastermindSolver.Status.Continue;
         Code guess = solver.guess();
 
