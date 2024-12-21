@@ -11,6 +11,10 @@ public abstract class MastermindSolver {
 
     private int attempts = 0;
 
+    public int getAttempts() {
+        return this.attempts;
+    }
+
     /**
      * Whether the solver guesses the code within {@link Mastermind#MAX_GUESSES}.
      *
