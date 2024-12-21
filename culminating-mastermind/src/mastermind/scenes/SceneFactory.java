@@ -7,7 +7,6 @@ import javax.swing.*;
 public class SceneFactory {
     public static JFrame createDefaultScene() {
         final JFrame frame = new JFrame();
-        frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
 
         frame.setSize(Mastermind.CANVAS_DIMENSION);
         frame.setTitle("Mastermind");
