@@ -1,4 +1,4 @@
-package src.mastermind;
+package src.mastermind.utils;
 
 import java.util.Objects;
 

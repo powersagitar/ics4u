@@ -2,6 +2,9 @@ package src.mastermind;
 
 import java.util.Scanner;
 
+import src.mastermind.core.*;
+import src.mastermind.utils.*;
+
 public class Mastermind {
     public final static int TOTAL_COLORS = 6;
     public final static int CODE_LENGTH = 4;

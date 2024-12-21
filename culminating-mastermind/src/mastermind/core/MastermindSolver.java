@@ -1,6 +1,9 @@
-package src.mastermind;
+package src.mastermind.core;
 
 import java.util.*;
+
+import src.mastermind.Mastermind;
+import src.mastermind.utils.*;
 
 public class MastermindSolver {
     public enum Status {

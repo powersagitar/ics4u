@@ -1,8 +1,10 @@
-package src.mastermind;
+package src.mastermind.core;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
+
+import src.mastermind.Mastermind;
 
 public class Code {
     public enum Color {
