@@ -1,9 +1,10 @@
-package src.mastermind.core;
+package src.mastermind.core.solvers;
 
 import java.util.*;
 
 import src.mastermind.Mastermind;
 import src.mastermind.utils.*;
+import src.mastermind.core.*;
 
 public class DonaldKnuthAlgorithm extends MastermindSolver {
     private Code previousGuess = null;
@@ -23,7 +24,7 @@ public class DonaldKnuthAlgorithm extends MastermindSolver {
 
         for (int i = 0; i < possibilities; ++i) {
             final ArrayList<Integer> codeInDigits = MathUtil.digitsFromBase(i, Mastermind.TOTAL_COLORS,
-                Mastermind.CODE_LENGTH);
+                    Mastermind.CODE_LENGTH);
             final Code code = new Code(codeInDigits);
             permutations.add(code);
         }

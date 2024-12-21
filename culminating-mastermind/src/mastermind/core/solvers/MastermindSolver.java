@@ -1,6 +1,7 @@
-package src.mastermind.core;
+package src.mastermind.core.solvers;
 
 import src.mastermind.utils.*;
+import src.mastermind.core.*;
 import src.mastermind.Mastermind;
 
 public abstract class MastermindSolver {

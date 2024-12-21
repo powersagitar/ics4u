@@ -1,8 +1,10 @@
 package src.mastermind;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import src.mastermind.core.*;
+import src.mastermind.core.solvers.*;
 import src.mastermind.utils.*;
 
 public class Mastermind {
