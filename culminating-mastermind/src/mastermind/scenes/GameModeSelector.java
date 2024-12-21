@@ -4,8 +4,6 @@ import src.mastermind.utils.Tuple2;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class GameModeSelector extends Scene {
     public GameModeSelector(final JFrame frame) {
@@ -51,16 +49,13 @@ public class GameModeSelector extends Scene {
     private JButton makeProceedButton(final JRadioButton codeBreakerButton, final JRadioButton codeMakerButton) {
         final JButton proceedButton = new JButton("Proceed");
         proceedButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        proceedButton.addActionListener(_ -> {
+            if (codeBreakerButton.isSelected()) {
+                new CodeBreakerSelector(frame);
+            } else if (codeMakerButton.isSelected()) {
 
-        proceedButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent event) {
-                if (codeBreakerButton.isSelected()) {
-                    new CodeBreakerSelector(frame);
-                } else if (codeMakerButton.isSelected()) {
+            } else {
 
-                } else {
-
-                }
             }
         });
 
