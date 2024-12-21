@@ -36,7 +36,7 @@ public class GameModeSelector extends Scene {
     }
 
     private Tuple2<JRadioButton, JRadioButton> makeGameModeRadioButtons() {
-        final JRadioButton codeBreakerButton = new JRadioButton("Code Breaker");
+        final JRadioButton codeBreakerButton = new JRadioButton("Code Breaker", true);
         final JRadioButton codeMakerButton = new JRadioButton("Code Maker");
 
         final ButtonGroup selectorButtonGroup = new ButtonGroup();
@@ -53,8 +53,6 @@ public class GameModeSelector extends Scene {
             if (codeBreakerButton.isSelected()) {
                 new CodeBreakerSelector(frame);
             } else if (codeMakerButton.isSelected()) {
-
-            } else {
 
             }
         });

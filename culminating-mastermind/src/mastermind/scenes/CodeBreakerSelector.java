@@ -42,7 +42,7 @@ public class CodeBreakerSelector extends Scene {
     }
 
     private Tuple3<JRadioButton, JRadioButton, JRadioButton> makeAlgorithmRadioButtons() {
-        final JRadioButton donaldKnuthButton = new JRadioButton("Donald Knuth 5-Guess Algorithm");
+        final JRadioButton donaldKnuthButton = new JRadioButton("Donald Knuth 5-Guess Algorithm", true);
         final JRadioButton mediumAlgoButton = new JRadioButton("Medium Algorithm");
         final JRadioButton basicAlgoButton = new JRadioButton("Basic Algorithm");
 
@@ -63,8 +63,6 @@ public class CodeBreakerSelector extends Scene {
             } else if (mediumAlgoButton.isSelected()) {
 
             } else if (basicAlgoButton.isSelected()) {
-
-            } else {
 
             }
         });
