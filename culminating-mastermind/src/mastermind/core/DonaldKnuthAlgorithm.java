@@ -6,6 +6,7 @@ import src.mastermind.Mastermind;
 import src.mastermind.utils.*;
 
 public class DonaldKnuthAlgorithm extends MastermindSolver {
+    private Code previousGuess = null;
     private HashSet<Code> permutations;
 
     public DonaldKnuthAlgorithm() {
@@ -34,11 +35,11 @@ public class DonaldKnuthAlgorithm extends MastermindSolver {
      */
     @Override
     public Code guess() {
-        if (attempts > 0) {
+        if (!isInitialGuess()) {
             throw new IllegalCallerException("guess() is meant for the first guess.");
         }
 
-        ++attempts;
+        isLosing();
 
         final Code nextGuess = new Code(Arrays.asList(0, 0, 1, 1));
         previousGuess = nextGuess;
@@ -55,7 +56,7 @@ public class DonaldKnuthAlgorithm extends MastermindSolver {
      */
     @Override
     public Tuple2<Status, Code> guess(final Response response) {
-        if (attempts <= 0) {
+        if (isInitialGuess()) {
             throw new IllegalCallerException("guess(Response) is meant for subsequent guesses.");
         }
 
@@ -64,11 +65,9 @@ public class DonaldKnuthAlgorithm extends MastermindSolver {
 
         if (correctCount >= Mastermind.CODE_LENGTH) {
             return new Tuple2<>(Status.Win, previousGuess);
-        } else if (attempts >= Mastermind.MAX_GUESSES) {
+        } else if (isLosing()) {
             return new Tuple2<>(Status.Lose, previousGuess);
         }
-
-        ++attempts;
 
         reducePermutations(response);
 
