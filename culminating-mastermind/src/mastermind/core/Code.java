@@ -35,24 +35,15 @@ public class Code {
         return code;
     }
 
-    public int getOccurrence(final Color color) {
-        int occurrence = 0;
-
-        for (final Color c : code) {
-            if (c == color) {
-                ++occurrence;
-            }
-        }
-
-        return occurrence;
-    }
-
     public HashMap<Color, Integer> getOccurrences() {
         HashMap<Color, Integer> occurrences = new HashMap<>(Mastermind.TOTAL_COLORS);
 
         for (final Color color : Color.values()) {
-            final int occurrence = getOccurrence(color);
-            occurrences.put(color, occurrence);
+            occurrences.put(color, 0);
+        }
+
+        for (final Color color : code) {
+            occurrences.put(color, occurrences.get(color) + 1);
         }
 
         return occurrences;
