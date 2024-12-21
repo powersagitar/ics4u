@@ -3,6 +3,8 @@ package src.mastermind.core;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
+import java.util.Random;
+import java.util.function.Function;
 
 import src.mastermind.Mastermind;
 
@@ -16,6 +18,33 @@ public class Code {
     }
 
     private final ArrayList<Color> code;
+
+    public static Code generateRandomCode(List<Function<Code, Boolean>> filters) {
+        final Random random = new Random();
+
+        while (true) {
+            ArrayList<Integer> codeBuilder = new ArrayList<>(Mastermind.CODE_LENGTH);
+
+            for (int i = 0; i < Mastermind.CODE_LENGTH; ++i) {
+                final int randomColor = random.nextInt(Mastermind.TOTAL_COLORS);
+                codeBuilder.add(randomColor);
+            }
+
+            final Code code = new Code(codeBuilder);
+            boolean satisfiesAllFilters = true;
+
+            for (final Function<Code, Boolean> filter : filters) {
+                if (!filter.apply(code)) {
+                    satisfiesAllFilters = false;
+                    break;
+                }
+            }
+
+            if (satisfiesAllFilters) {
+                return code;
+            }
+        }
+    }
 
     public Code(final List<Integer> code) {
         ArrayList<Color> codeBuilder = new ArrayList<>(Mastermind.CODE_LENGTH);
