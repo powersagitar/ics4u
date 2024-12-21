@@ -58,13 +58,17 @@ public class CodeBreakerSelector extends Scene {
         final JButton proceedButton = new JButton("Proceed");
         proceedButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         proceedButton.addActionListener(_ -> {
+            Algorithm algorithm = null;
+
             if (donaldKnuthButton.isSelected()) {
-                new CodeBreaker(frame, Algorithm.DonaldKnuth);
+                algorithm = Algorithm.DonaldKnuth;
             } else if (mediumAlgoButton.isSelected()) {
-
+                algorithm = Algorithm.Medium;
             } else if (basicAlgoButton.isSelected()) {
-
+                algorithm = Algorithm.Basic;
             }
+
+            new CodeBreaker(frame, algorithm);
         });
 
         return proceedButton;
