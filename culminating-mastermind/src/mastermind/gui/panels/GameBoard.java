@@ -1,4 +1,4 @@
-package src.mastermind.scenes;
+package src.mastermind.gui.panels;
 
 import src.mastermind.Mastermind;
 import src.mastermind.utils.SceneUtils;
@@ -7,11 +7,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class GameBoardPanel {
+public class GameBoard {
     private final ArrayList<JPanel> rowPanels = new ArrayList<>(Mastermind.MAX_GUESSES);
     private final JPanel boardPanel = new JPanel(new GridLayout(Mastermind.MAX_GUESSES, 0));
 
-    public GameBoardPanel() {
+    public GameBoard() {
         for (int row = 0; row < Mastermind.MAX_GUESSES; ++row) {
             final JPanel rowPanel = new JPanel(new FlowLayout());
             boardPanel.add(rowPanel);

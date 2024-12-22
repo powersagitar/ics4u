@@ -1,4 +1,4 @@
-package src.mastermind.scenes;
+package src.mastermind.gui.scenes;
 
 import src.mastermind.Mastermind;
 import src.mastermind.core.Code;
@@ -6,6 +6,7 @@ import src.mastermind.core.Response;
 import src.mastermind.core.solvers.DonaldKnuthAlgorithm;
 import src.mastermind.core.solvers.MastermindAlgorithm;
 import src.mastermind.core.solvers.MastermindSolver;
+import src.mastermind.gui.panels.GameBoard;
 import src.mastermind.utils.Tuple2;
 import src.mastermind.utils.Tuple3;
 import src.mastermind.utils.SceneUtils;
@@ -21,7 +22,7 @@ public class CodeBreaker extends Scene {
     final static String MISPLACEMENT_LABEL_TEXT = "Misplaced Key Pegs: ";
 
     final static Function<Integer, Boolean> validateCounterValue = value ->
-            value >= 0 && value <= Mastermind.CODE_LENGTH;
+        value >= 0 && value <= Mastermind.CODE_LENGTH;
 
     final MastermindAlgorithm solver;
 
@@ -48,15 +49,15 @@ public class CodeBreaker extends Scene {
         final JPanel flowPanel = new JPanel(new FlowLayout());
         frame.add(flowPanel);
 
-        final GameBoardPanel gameBoardPanel = new GameBoardPanel();
+        final GameBoard gameBoard = new GameBoard();
 
         final JPanel controlPanel = new JPanel();
         controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.Y_AXIS));
 
-        flowPanel.add(gameBoardPanel.getBoardPanel());
+        flowPanel.add(gameBoard.getBoardPanel());
         flowPanel.add(controlPanel);
 
-        return new Tuple2<>(gameBoardPanel.getRowPanels(), controlPanel);
+        return new Tuple2<>(gameBoard.getRowPanels(), controlPanel);
     }
 
     private void updateGuessPanel(final JPanel panel, final Code code) {

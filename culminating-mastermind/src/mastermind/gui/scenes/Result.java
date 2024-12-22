@@ -1,4 +1,4 @@
-package src.mastermind.scenes;
+package src.mastermind.gui.scenes;
 
 import src.mastermind.Mastermind;
 import src.mastermind.core.Code;
