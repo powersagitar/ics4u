@@ -8,7 +8,6 @@ public abstract class Scene {
     Scene(final JFrame frame) {
         this.frame = frame;
         this.frame.getContentPane().removeAll();
-        this.frame.setLayout(new BoxLayout(this.frame.getContentPane(), BoxLayout.Y_AXIS));
     }
 
     void refresh() {
