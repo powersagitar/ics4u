@@ -12,7 +12,7 @@ public class HumanSolver extends MastermindSolver {
         this.secretCode = secretCode;
     }
 
-    public Tuple2<Status, Response> validate(final Code guess) {
+    public Tuple2<Status, Response> guess(final Code guess) {
         // isLosing is mainly to increment the attempt counter here
         // the losing status is first indicated by
         // getAttempts() == Mastermind.MAX_GUESSES - 1
