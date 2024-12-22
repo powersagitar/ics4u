@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "name": "Mastermind (Parallel Run Allowed)",
+            "type": "java-source-run",
+            "workingDir": "$PROJECT_DIR$",
+            "sourceFile": "src/mastermind/Mastermind.java",
+            "allowParallelRun": true
+        }
+    ]
+}

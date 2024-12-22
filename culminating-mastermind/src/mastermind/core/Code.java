@@ -15,6 +15,10 @@ public class Code {
         public static Color fromIndex(final int index) {
             return Color.values()[index];
         }
+
+        public static String toString(final int index) {
+            return fromIndex(index).toString();
+        }
     }
 
     private final ArrayList<Color> code;

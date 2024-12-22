@@ -53,7 +53,7 @@ public class GameModeSelector extends Scene {
             if (codeBreakerButton.isSelected()) {
                 new CodeBreakerSelector(frame);
             } else if (codeMakerButton.isSelected()) {
-
+                new CodeMaker(frame);
             }
         });
 
