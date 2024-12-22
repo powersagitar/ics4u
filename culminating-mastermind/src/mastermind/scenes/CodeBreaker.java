@@ -33,52 +33,30 @@ public class CodeBreaker extends Scene {
             default -> this.solver = new DonaldKnuthAlgorithm();
         }
 
-        final Tuple2<JPanel, JPanel> subpanels = makeGuessAndControlPanel();
+        final Tuple2<ArrayList<JPanel>, JPanel> subpanels = makeGuessAndControlPanel();
 
-        final ArrayList<JPanel> guessPanels = makeGuessPanel(subpanels.first);
+        final ArrayList<JPanel> gameBoardRowPanels = subpanels.first;
 
         final Tuple3<JButton, AtomicInteger, AtomicInteger> controlPanel = drawControlPanel(subpanels.second);
 
-        registerGuessHandler(controlPanel.first, controlPanel.second, controlPanel.third, guessPanels);
+        registerGuessHandler(controlPanel.first, controlPanel.second, controlPanel.third, gameBoardRowPanels);
 
         refreshFrame();
     }
 
-    private Tuple2<JPanel, JPanel> makeGuessAndControlPanel() {
+    private Tuple2<ArrayList<JPanel>, JPanel> makeGuessAndControlPanel() {
         final JPanel flowPanel = new JPanel(new FlowLayout());
         frame.add(flowPanel);
 
-        final JPanel guessPanel = new JPanel(new GridLayout(Mastermind.MAX_GUESSES, 0));
+        final GameBoardPanel gameBoardPanel = new GameBoardPanel();
 
         final JPanel controlPanel = new JPanel();
         controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.Y_AXIS));
 
-        flowPanel.add(guessPanel);
+        flowPanel.add(gameBoardPanel.getBoardPanel());
         flowPanel.add(controlPanel);
 
-        return new Tuple2<>(guessPanel, controlPanel);
-    }
-
-    private ArrayList<JPanel> makeGuessPanel(final JPanel parent) {
-        ArrayList<JPanel> panels = new ArrayList<>(Mastermind.MAX_GUESSES);
-
-        for (int panelIdx = 0; panelIdx < Mastermind.MAX_GUESSES; ++panelIdx) {
-            final JPanel panel = new JPanel(new FlowLayout());
-            parent.add(panel);
-            panels.add(panel);
-
-            final int HEIGHT_ADJUSTMENT_CONSTANT = 50;
-
-            panel.setPreferredSize(new Dimension(frame.getWidth() / 5, (frame.getHeight() - HEIGHT_ADJUSTMENT_CONSTANT) / Mastermind.MAX_GUESSES));
-            panel.setBorder(BorderFactory.createLineBorder(Color.black));
-
-            for (int colorIdx = 0; colorIdx < Mastermind.CODE_LENGTH; ++colorIdx) {
-                final JLabel circle = SceneUtils.makeGuessPanelCircle(Color.lightGray);
-                panel.add(circle);
-            }
-        }
-
-        return panels;
+        return new Tuple2<>(gameBoardPanel.getRowPanels(), controlPanel);
     }
 
     private void updateGuessPanel(final JPanel panel, final Code code) {
@@ -184,22 +162,4 @@ public class CodeBreaker extends Scene {
             new Result(frame, result.first, result.second);
         });
     }
-
-//    private void drawControlPanel(final JPanel parent) {
-//        final JLabel title = new JLabel("Controls");
-//        title.setAlignmentX(Component.CENTER_ALIGNMENT);
-//        parent.add(title);
-//
-//        final int rowWidth = Mastermind.TOTAL_COLORS / 2;
-//
-//        for (int rowIndex = 0; rowIndex < Mastermind.TOTAL_COLORS / rowWidth; ++rowIndex) {
-//            final JPanel colorPanel = new JPanel(new FlowLayout());
-//            parent.add(colorPanel);
-//
-//            for (int colorIndex = rowWidth * rowIndex; colorIndex < rowWidth * (rowIndex + 1); ++colorIndex) {
-//                final JButton colorButton = new JButton(Code.Color.toString(colorIndex));
-//                colorPanel.add(colorButton);
-//            }
-//        }
-//    }
 }
