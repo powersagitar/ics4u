@@ -12,7 +12,7 @@ public class Mastermind {
     public final static Dimension CANVAS_DIMENSION = new Dimension(640, 480);
 
     public static void main(String[] args) {
-        final JFrame frame = SceneFactory.createDefaultScene();
+        final JFrame frame = Scene.createDefaultScene();
         new GameModeSelector(frame);
     }
 }
