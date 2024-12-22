@@ -22,7 +22,7 @@ public class GameModeSelector extends Scene {
         final JButton proceedButton = makeProceedButton(codeBreakerButton, codeMakerButton);
         frame.add(proceedButton);
 
-        refresh();
+        refreshFrame();
     }
 
     private JPanel makeSelectorPanel() {

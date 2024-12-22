@@ -28,7 +28,7 @@ public class CodeBreakerSelector extends Scene {
         final JButton proceedButton = makeProceedButton(donaldKnuthButton, mediumAlgoButton, basicAlgoButton);
         frame.add(proceedButton);
 
-        refresh();
+        refreshFrame();
     }
 
     private JPanel makeSelectorPanel() {

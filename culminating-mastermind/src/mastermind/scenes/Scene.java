@@ -10,7 +10,7 @@ public abstract class Scene {
         this.frame.getContentPane().removeAll();
     }
 
-    void refresh() {
+    void refreshFrame() {
         frame.repaint();
         frame.revalidate();
     }
