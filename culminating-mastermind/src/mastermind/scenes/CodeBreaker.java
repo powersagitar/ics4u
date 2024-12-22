@@ -8,11 +8,11 @@ import src.mastermind.core.solvers.MastermindAlgorithm;
 import src.mastermind.core.solvers.MastermindSolver;
 import src.mastermind.utils.Tuple2;
 import src.mastermind.utils.Tuple3;
+import src.mastermind.utils.SceneUtils;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 
@@ -59,14 +59,6 @@ public class CodeBreaker extends Scene {
         return new Tuple2<>(guessPanel, controlPanel);
     }
 
-    private JLabel makeGuessPanelCircle(Color color) {
-        final JLabel circle = new JLabel();
-        circle.setBorder(BorderFactory.createLineBorder(color, 10));
-        circle.setPreferredSize(new Dimension(20, 20));
-
-        return circle;
-    }
-
     private ArrayList<JPanel> makeGuessPanel(final JPanel parent) {
         ArrayList<JPanel> panels = new ArrayList<>(Mastermind.MAX_GUESSES);
 
@@ -81,7 +73,7 @@ public class CodeBreaker extends Scene {
             panel.setBorder(BorderFactory.createLineBorder(Color.black));
 
             for (int colorIdx = 0; colorIdx < Mastermind.CODE_LENGTH; ++colorIdx) {
-                final JLabel circle = makeGuessPanelCircle(Color.lightGray);
+                final JLabel circle = SceneUtils.makeGuessPanelCircle(Color.lightGray);
                 panel.add(circle);
             }
         }
@@ -90,18 +82,10 @@ public class CodeBreaker extends Scene {
     }
 
     private void updateGuessPanel(final JPanel panel, final Code code) {
-        final HashMap<Code.Color, Color> colorMap = new HashMap<>(Mastermind.TOTAL_COLORS);
-        colorMap.put(Code.Color.Blue, Color.blue);
-        colorMap.put(Code.Color.Green, Color.green);
-        colorMap.put(Code.Color.Orange, Color.orange);
-        colorMap.put(Code.Color.Purple, new Color(139, 0, 255));
-        colorMap.put(Code.Color.Red, Color.red);
-        colorMap.put(Code.Color.Yellow, Color.yellow);
-
         panel.removeAll();
 
         for (final Code.Color color : code.getColors()) {
-            final JLabel circle = makeGuessPanelCircle(colorMap.get(color));
+            final JLabel circle = SceneUtils.makeGuessPanelCircle(SceneUtils.codeColorAwtColorMap.get(color));
             panel.add(circle);
         }
 
@@ -191,7 +175,13 @@ public class CodeBreaker extends Scene {
             final Response response = new Response(new Tuple2<>(correctCount.get(), incorrectCount.get()));
             final int attempt = solver.getAttempts();
             final Tuple2<MastermindSolver.Status, Code> result = solver.guess(response);
-            updateGuessPanel(guessPanels.get(attempt), result.second);
+
+            if (result.first == MastermindSolver.Status.Continue) {
+                updateGuessPanel(guessPanels.get(attempt), result.second);
+                return;
+            }
+
+            new Result(frame, result.first, result.second);
         });
     }
 
