@@ -90,10 +90,12 @@ public class CodeMaker extends Scene {
                 final Code guess = new Code(nextGuess);
                 nextGuess.clear();
 
+                final int attempt = solver.getAttempts();
+
                 final Tuple2<MastermindSolver.Status, Response> result = solver.guess(guess);
 
                 if (result.first == MastermindSolver.Status.Continue) {
-                    System.out.println("Resopnse: " + result.second);
+                    gameBoard.updateHints(attempt, result.second);
                     return;
                 }
 
