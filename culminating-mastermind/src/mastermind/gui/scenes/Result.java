@@ -4,7 +4,6 @@ import src.mastermind.Mastermind;
 import src.mastermind.core.Code;
 import src.mastermind.core.solvers.MastermindSolver;
 import src.mastermind.gui.panels.GameBoard;
-import src.mastermind.utils.SceneUtils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -57,7 +56,7 @@ public class Result extends Scene {
         final ArrayList<Color> codeAwtColors = new ArrayList<>(Mastermind.CODE_LENGTH);
 
         for (final Code.Color codeColor : correctCode.getColors()) {
-            final Color awtColor = SceneUtils.codeColorAwtColorMap.get(codeColor);
+            final Color awtColor = GameBoard.codeColorToAwtColor.get(codeColor);
             codeAwtColors.add(awtColor);
         }
 

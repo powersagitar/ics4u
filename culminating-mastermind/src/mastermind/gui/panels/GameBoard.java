@@ -3,7 +3,6 @@ package src.mastermind.gui.panels;
 import src.mastermind.Mastermind;
 import src.mastermind.core.Code;
 import src.mastermind.core.Response;
-import src.mastermind.utils.SceneUtils;
 import src.mastermind.utils.Tuple2;
 
 import javax.swing.*;
@@ -11,11 +10,23 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class GameBoard {
     private final ArrayList<Tuple2<JPanel, JPanel>> boardRowPanels = new ArrayList<>(Mastermind.MAX_GUESSES);
     private final JPanel boardPanel = new JPanel(new GridBagLayout());
+
+    public static final HashMap<Code.Color, Color> codeColorToAwtColor = new HashMap<>(Mastermind.TOTAL_COLORS);
+
+    static {
+        codeColorToAwtColor.put(Code.Color.Blue, Color.blue);
+        codeColorToAwtColor.put(Code.Color.Green, Color.green);
+        codeColorToAwtColor.put(Code.Color.Orange, Color.orange);
+        codeColorToAwtColor.put(Code.Color.Purple, new Color(139, 0, 255));
+        codeColorToAwtColor.put(Code.Color.Red, Color.red);
+        codeColorToAwtColor.put(Code.Color.Yellow, Color.yellow);
+    }
 
     public GameBoard() {
         GridBagConstraints gridBagConstraints = new GridBagConstraints();
@@ -113,7 +124,7 @@ public class GameBoard {
         final ArrayList<Color> awtColors = new ArrayList<>(Mastermind.CODE_LENGTH);
 
         for (final Code.Color codeColor : colors) {
-            final Color awtColor = SceneUtils.codeColorAwtColorMap.get(codeColor);
+            final Color awtColor = codeColorToAwtColor.get(codeColor);
             awtColors.add(awtColor);
         }
 
