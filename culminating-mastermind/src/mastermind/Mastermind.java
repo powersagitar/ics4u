@@ -3,8 +3,6 @@ package src.mastermind;
 import javax.swing.*;
 import java.awt.*;
 
-import src.mastermind.core.Code;
-import src.mastermind.core.solvers.MastermindSolver;
 import src.mastermind.gui.scenes.*;
 
 public class Mastermind {
