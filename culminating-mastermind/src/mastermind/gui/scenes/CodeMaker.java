@@ -6,7 +6,6 @@ import src.mastermind.core.Response;
 import src.mastermind.core.solvers.HumanSolver;
 import src.mastermind.core.solvers.MastermindSolver;
 import src.mastermind.gui.panels.GameBoard;
-import src.mastermind.utils.SceneUtils;
 import src.mastermind.utils.Tuple2;
 
 import javax.swing.*;
@@ -15,10 +14,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CodeMaker extends Scene {
-    final HumanSolver solver;
-    ArrayList<JPanel> gameBoardRowPanels = null;
-    final ArrayList<JButton> colorSelectionButtons = new ArrayList<>(Mastermind.TOTAL_COLORS);
-    ArrayList<Integer> nextGuess = new ArrayList<>(Mastermind.CODE_LENGTH);
+    private final HumanSolver solver;
+    private final ArrayList<JButton> colorSelectionButtons = new ArrayList<>(Mastermind.TOTAL_COLORS);
+    private final GameBoard gameBoard = new GameBoard();
+    private ArrayList<Integer> nextGuess = new ArrayList<>(Mastermind.CODE_LENGTH);
 
     public CodeMaker(final JFrame frame) {
         super(frame);
@@ -37,12 +36,10 @@ public class CodeMaker extends Scene {
         final JPanel flowPanel = new JPanel(new FlowLayout());
         frame.add(flowPanel);
 
-        final GameBoard gameBoard = new GameBoard();
-        flowPanel.add(gameBoard.getBoardPanel());
-        gameBoardRowPanels = gameBoard.getRowPanels();
-
         final JPanel controlPanel = new JPanel();
         controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.Y_AXIS));
+
+        flowPanel.add(gameBoard.getBoardPanel());
         flowPanel.add(controlPanel);
 
         drawControlPanel(controlPanel);
@@ -75,30 +72,13 @@ public class CodeMaker extends Scene {
             final int colorIndex = i;
             button.addActionListener(_ -> {
                 if (nextGuess.size() < Mastermind.CODE_LENGTH) {
-                    nextGuess.add(colorIndex);
+                    final int gameBoardRowNumber = solver.getAttempts();
 
-                    final JPanel currentPanel = gameBoardRowPanels.get(solver.getAttempts());
-                    updateGameBoardRowPanel(currentPanel);
+                    nextGuess.add(colorIndex);
+                    gameBoard.update(gameBoardRowNumber, nextGuess);
                 }
             });
         }
-    }
-
-    private void updateGameBoardRowPanel(final JPanel row) {
-        row.removeAll();
-
-        for (int i = 0; i < Mastermind.CODE_LENGTH; ++i) {
-            if (i < nextGuess.size()) {
-                final Code.Color codeColor = Code.Color.fromIndex(nextGuess.get(i));
-                final Color awtColor = SceneUtils.codeColorAwtColorMap.get(codeColor);
-                row.add(SceneUtils.makeGuessPanelCircle(awtColor));
-            } else {
-                row.add(SceneUtils.makeGuessPanelCircle(Color.lightGray));
-            }
-        }
-
-        row.revalidate();
-        row.repaint();
     }
 
     private void drawProceedButton(JPanel parent) {

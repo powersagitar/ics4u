@@ -19,6 +19,7 @@ public class SceneUtils {
         codeColorAwtColorMap.put(Code.Color.Yellow, Color.yellow);
     }
 
+    @Deprecated
     public static JLabel makeGuessPanelCircle(Color color) {
         final JLabel circle = new JLabel();
         circle.setBorder(BorderFactory.createLineBorder(color, 10));

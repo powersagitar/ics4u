@@ -8,23 +8,25 @@ import src.mastermind.core.solvers.MastermindAlgorithm;
 import src.mastermind.core.solvers.MastermindSolver;
 import src.mastermind.gui.panels.GameBoard;
 import src.mastermind.utils.Tuple2;
-import src.mastermind.utils.Tuple3;
 import src.mastermind.utils.SceneUtils;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 
 public class CodeBreaker extends Scene {
-    final static String CORRECT_LABEL_TEXT = "Correct Key Pegs: ";
-    final static String MISPLACEMENT_LABEL_TEXT = "Misplaced Key Pegs: ";
+    private final static String CORRECT_LABEL_TEXT = "Correct Key Pegs: ";
+    private final static String MISPLACEMENT_LABEL_TEXT = "Misplaced Key Pegs: ";
 
-    final static Function<Integer, Boolean> validateCounterValue = value ->
-        value >= 0 && value <= Mastermind.CODE_LENGTH;
+    private final static Function<Integer, Boolean> validateCounterValue = value ->
+            value >= 0 && value <= Mastermind.CODE_LENGTH;
 
-    final MastermindAlgorithm solver;
+    private final MastermindAlgorithm solver;
+    private final GameBoard gameBoard = new GameBoard();
+    private final AtomicInteger correctCount = new AtomicInteger(2);
+    private final AtomicInteger misplacementCount = new AtomicInteger(2);
+    private final JButton proceedButton = new JButton("Proceed");
 
     public CodeBreaker(final JFrame frame, final CodeBreakerSelector.Algorithm algorithm) {
         super(frame);
@@ -34,32 +36,23 @@ public class CodeBreaker extends Scene {
             default -> this.solver = new DonaldKnuthAlgorithm();
         }
 
-        final Tuple2<ArrayList<JPanel>, JPanel> subpanels = makeGuessAndControlPanel();
+        final JPanel flowPanel = new JPanel(new FlowLayout());
+        frame.add(flowPanel);
 
-        final ArrayList<JPanel> gameBoardRowPanels = subpanels.first;
+        drawBoardPanel(flowPanel);
 
-        final Tuple3<JButton, AtomicInteger, AtomicInteger> controlPanel = drawControlPanel(subpanels.second);
+        drawControlPanel(flowPanel);
 
-        registerGuessHandler(controlPanel.first, controlPanel.second, controlPanel.third, gameBoardRowPanels);
+        registerGuessHandler();
 
         refreshFrame();
     }
 
-    private Tuple2<ArrayList<JPanel>, JPanel> makeGuessAndControlPanel() {
-        final JPanel flowPanel = new JPanel(new FlowLayout());
-        frame.add(flowPanel);
-
-        final GameBoard gameBoard = new GameBoard();
-
-        final JPanel controlPanel = new JPanel();
-        controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.Y_AXIS));
-
-        flowPanel.add(gameBoard.getBoardPanel());
-        flowPanel.add(controlPanel);
-
-        return new Tuple2<>(gameBoard.getRowPanels(), controlPanel);
+    private void drawBoardPanel(final JPanel parent) {
+        parent.add(gameBoard.getBoardPanel());
     }
 
+    @Deprecated
     private void updateGuessPanel(final JPanel panel, final Code code) {
         panel.removeAll();
 
@@ -72,28 +65,28 @@ public class CodeBreaker extends Scene {
         panel.repaint();
     }
 
-    private Tuple3<JButton, AtomicInteger, AtomicInteger> drawControlPanel(final JPanel parent) {
+    private void drawControlPanel(final JPanel parent) {
+        final JPanel boxPanel = new JPanel();
+        boxPanel.setLayout(new BoxLayout(boxPanel, BoxLayout.Y_AXIS));
+        parent.add(boxPanel);
+
         final JLabel title = new JLabel("Controls");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
-        parent.add(title);
+        boxPanel.add(title);
 
         final JPanel correctPanel = new JPanel(new FlowLayout());
         final JPanel misplacementPanel = new JPanel(new FlowLayout());
 
-        parent.add(correctPanel);
-        parent.add(misplacementPanel);
+        boxPanel.add(correctPanel);
+        boxPanel.add(misplacementPanel);
 
-        final AtomicInteger correctCount = drawResponseControls(correctPanel, CORRECT_LABEL_TEXT);
-        final AtomicInteger misplacementCount = drawResponseControls(misplacementPanel, MISPLACEMENT_LABEL_TEXT);
+        drawResponseControls(correctPanel, CORRECT_LABEL_TEXT, correctCount);
+        drawResponseControls(misplacementPanel, MISPLACEMENT_LABEL_TEXT, misplacementCount);
 
-        final JButton proceedButton = drawProceedButton(parent);
-
-        return new Tuple3<>(proceedButton, correctCount, misplacementCount);
+        drawProceedButton(parent);
     }
 
-    private AtomicInteger drawResponseControls(final JPanel parent, final String labelPrefix) {
-        AtomicInteger count = new AtomicInteger(2);
-
+    private void drawResponseControls(final JPanel parent, final String labelPrefix, final AtomicInteger count) {
         final JLabel label = new JLabel(labelPrefix + count);
         parent.add(label);
 
@@ -132,31 +125,27 @@ public class CodeBreaker extends Scene {
 
         parent.add(decrementButton);
         parent.add(incrementButton);
-
-        return count;
     }
 
-    private JButton drawProceedButton(final JPanel parent) {
-        final JButton proceedButton = new JButton("Proceed");
+    private void drawProceedButton(final JPanel parent) {
         proceedButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         parent.add(proceedButton);
-
-        return proceedButton;
     }
 
-    private void registerGuessHandler(final JButton proceedButton, final AtomicInteger correctCount, final AtomicInteger incorrectCount, final ArrayList<JPanel> guessPanels) {
+    private void registerGuessHandler() {
 //        first guess
-        final Code guess = solver.guess();
-        updateGuessPanel(guessPanels.getFirst(), guess);
+        final Code firstGuess = solver.guess();
+        gameBoard.update(0, firstGuess);
 
 //        subsequent guesses
         proceedButton.addActionListener(_ -> {
-            final Response response = new Response(new Tuple2<>(correctCount.get(), incorrectCount.get()));
-            final int attempt = solver.getAttempts();
-            final Tuple2<MastermindSolver.Status, Code> result = solver.guess(response);
+            final Response responseForPreviousGuess = new Response(new Tuple2<>(correctCount.get(), misplacementCount.get()));
+            final int currentAttempt = solver.getAttempts();
+            final Tuple2<MastermindSolver.Status, Code> result = solver.guess(responseForPreviousGuess);
 
             if (result.first == MastermindSolver.Status.Continue) {
-                updateGuessPanel(guessPanels.get(attempt), result.second);
+                gameBoard.update(currentAttempt - 1, responseForPreviousGuess);
+                gameBoard.update(currentAttempt, result.second);
                 return;
             }
 
