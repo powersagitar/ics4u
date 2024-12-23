@@ -52,19 +52,6 @@ public class CodeBreaker extends Scene {
         parent.add(gameBoard.getBoardPanel());
     }
 
-    @Deprecated
-    private void updateGuessPanel(final JPanel panel, final Code code) {
-        panel.removeAll();
-
-        for (final Code.Color color : code.getColors()) {
-            final JLabel circle = SceneUtils.makeGuessPanelCircle(SceneUtils.codeColorAwtColorMap.get(color));
-            panel.add(circle);
-        }
-
-        panel.revalidate();
-        panel.repaint();
-    }
-
     private void drawControlPanel(final JPanel parent) {
         final JPanel boxPanel = new JPanel();
         boxPanel.setLayout(new BoxLayout(boxPanel, BoxLayout.Y_AXIS));
@@ -135,7 +122,7 @@ public class CodeBreaker extends Scene {
     private void registerGuessHandler() {
 //        first guess
         final Code firstGuess = solver.guess();
-        gameBoard.update(0, firstGuess);
+        gameBoard.updateGuess(0, firstGuess.getColors());
 
 //        subsequent guesses
         proceedButton.addActionListener(_ -> {
@@ -144,8 +131,8 @@ public class CodeBreaker extends Scene {
             final Tuple2<MastermindSolver.Status, Code> result = solver.guess(responseForPreviousGuess);
 
             if (result.first == MastermindSolver.Status.Continue) {
-                gameBoard.update(currentAttempt - 1, responseForPreviousGuess);
-                gameBoard.update(currentAttempt, result.second);
+                gameBoard.updateHints(currentAttempt - 1, responseForPreviousGuess);
+                gameBoard.updateGuess(currentAttempt, result.second.getColors());
                 return;
             }
 

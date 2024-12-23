@@ -73,9 +73,8 @@ public class CodeMaker extends Scene {
             button.addActionListener(_ -> {
                 if (nextGuess.size() < Mastermind.CODE_LENGTH) {
                     final int gameBoardRowNumber = solver.getAttempts();
-
                     nextGuess.add(colorIndex);
-                    gameBoard.update(gameBoardRowNumber, nextGuess);
+                    gameBoard.updateGuessFromColorIndices(gameBoardRowNumber, nextGuess);
                 }
             });
         }

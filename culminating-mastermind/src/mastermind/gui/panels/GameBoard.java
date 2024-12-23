@@ -25,11 +25,13 @@ public class GameBoard {
 
             gridBagConstraints.gridx = 0;
             final JPanel guessPanel = new JPanel(new FlowLayout());
+            guessPanel.setBorder(BorderFactory.createLineBorder(Color.black));
             boardPanel.add(guessPanel, gridBagConstraints);
             drawGuess(guessPanel, List.of(Color.lightGray, Color.lightGray, Color.lightGray, Color.lightGray));
 
             gridBagConstraints.gridx = 1;
             final JPanel hintsPanel = new JPanel(new GridBagLayout());
+            hintsPanel.setBorder(BorderFactory.createLineBorder(Color.black));
             boardPanel.add(hintsPanel, gridBagConstraints);
             drawHints(hintsPanel, new Response(new Tuple2<>(0, 0)));
 
@@ -37,14 +39,12 @@ public class GameBoard {
         }
     }
 
-    private void drawGuess(final JPanel parent, final List<Color> colors) {
+    public static void drawGuess(final JPanel parent, final List<Color> colors) {
         if (colors.size() < Mastermind.CODE_LENGTH) {
             throw new IllegalArgumentException("colors should contain at least 4 colors representing the code.");
         }
 
         parent.removeAll();
-
-        parent.setBorder(BorderFactory.createLineBorder(Color.black));
 
         for (int col = 0; col < Mastermind.CODE_LENGTH; ++col) {
             final JLabel colLabel = new JLabel();
@@ -57,7 +57,7 @@ public class GameBoard {
         parent.repaint();
     }
 
-    private void drawHints(final JPanel parent, final Response response) {
+    public static void drawHints(final JPanel parent, final Response response) {
         parent.removeAll();
 
         final Tuple2<Integer, Integer> hints = response.getResponse();
@@ -74,8 +74,6 @@ public class GameBoard {
         while (colors.size() < Mastermind.CODE_LENGTH) {
             colors.add(Color.lightGray);
         }
-
-        parent.setBorder(BorderFactory.createLineBorder(Color.black));
 
         final GridBagConstraints hintConstraints = new GridBagConstraints();
 
@@ -100,56 +98,39 @@ public class GameBoard {
         parent.repaint();
     }
 
-    public void update(final int rowNumber, final List<Integer> guessColorIndices) {
-        final ArrayList<Color> guessColors = new ArrayList<>(Mastermind.CODE_LENGTH);
+    public void updateGuessFromColorIndices(final int rowNumber, final List<Integer> colorIndices) {
+        final ArrayList<Code.Color> colors = new ArrayList<>(Mastermind.CODE_LENGTH);
 
-        for (final int idx : guessColorIndices) {
+        for (final int idx : colorIndices) {
             final Code.Color codeColor = Code.Color.fromIndex(idx);
-            final Color awtColor = SceneUtils.codeColorAwtColorMap.get(codeColor);
-            guessColors.add(awtColor);
+            colors.add(codeColor);
         }
 
-        while (guessColors.size() < Mastermind.CODE_LENGTH) {
-            guessColors.add(Color.lightGray);
-        }
-
-        update(rowNumber, guessColors, new Response(new Tuple2<>(0, 0)));
+        updateGuess(rowNumber, colors);
     }
 
-    public void update(final int rowNumber, final Code guess) {
-        final ArrayList<Color> guessColors = new ArrayList<>(Mastermind.CODE_LENGTH);
+    public void updateGuess(final int rowNumber, final List<Code.Color> colors) {
+        final ArrayList<Color> awtColors = new ArrayList<>(Mastermind.CODE_LENGTH);
 
-        for (final Code.Color codeColor : guess.getColors()) {
+        for (final Code.Color codeColor : colors) {
             final Color awtColor = SceneUtils.codeColorAwtColorMap.get(codeColor);
-            guessColors.add(awtColor);
+            awtColors.add(awtColor);
         }
 
-        update(rowNumber, guessColors, new Response(new Tuple2<>(0, 0)));
-    }
+        while (awtColors.size() < Mastermind.CODE_LENGTH) {
+            awtColors.add(Color.lightGray);
+        }
 
-//    public void update(final int rowNumber, final Code guess, final Response hints) {
-//        final ArrayList<Color> guessColors = new ArrayList<>(Mastermind.CODE_LENGTH);
-//
-//        for (final Code.Color codeColor : guess.getColors()) {
-//            final Color awtColor = SceneUtils.codeColorAwtColorMap.get(codeColor);
-//            guessColors.add(awtColor);
-//        }
-//
-//        update(rowNumber, guessColors, hints);
-//    }
-
-    public void update(final int rowNumber, final List<Color> guessColors, final Response hints) {
         final Tuple2<JPanel, JPanel> rowPanel = boardRowPanels.get(rowNumber);
         final JPanel guessPanel = rowPanel.first;
-        final JPanel hintsPanel = rowPanel.second;
 
-        drawGuess(guessPanel, guessColors);
-        drawHints(hintsPanel, hints);
+        drawGuess(guessPanel, awtColors);
     }
 
-    public void update(final int rowNumber, final Response hints) {
+    public void updateHints(final int rowNumber, final Response hints) {
         final Tuple2<JPanel, JPanel> rowPanel = boardRowPanels.get(rowNumber);
         final JPanel hintsPanel = rowPanel.second;
+
         drawHints(hintsPanel, hints);
     }
 

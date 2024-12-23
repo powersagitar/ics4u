@@ -3,10 +3,12 @@ package src.mastermind.gui.scenes;
 import src.mastermind.Mastermind;
 import src.mastermind.core.Code;
 import src.mastermind.core.solvers.MastermindSolver;
+import src.mastermind.gui.panels.GameBoard;
 import src.mastermind.utils.SceneUtils;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Result extends Scene {
     private final Code correctCode;
@@ -52,11 +54,14 @@ public class Result extends Scene {
         correctCodePanel.setAlignmentX(Component.CENTER_ALIGNMENT);
         frame.add(correctCodePanel);
 
+        final ArrayList<Color> codeAwtColors = new ArrayList<>(Mastermind.CODE_LENGTH);
+
         for (final Code.Color codeColor : correctCode.getColors()) {
             final Color awtColor = SceneUtils.codeColorAwtColorMap.get(codeColor);
-            final JLabel circle = SceneUtils.makeGuessPanelCircle(awtColor);
-            correctCodePanel.add(circle);
+            codeAwtColors.add(awtColor);
         }
+
+        GameBoard.drawGuess(correctCodePanel, codeAwtColors);
     }
 
     private void drawProceedButton() {
