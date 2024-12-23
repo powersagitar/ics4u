@@ -24,7 +24,7 @@ public class DonaldKnuthAlgorithm extends MastermindAlgorithm {
 
         for (int i = 0; i < possibilities; ++i) {
             final ArrayList<Integer> codeInDigits = MathUtil.digitsFromBase(i, Mastermind.TOTAL_COLORS,
-                    Mastermind.CODE_LENGTH);
+                Mastermind.CODE_LENGTH);
             final Code code = new Code(codeInDigits);
             permutations.add(code);
         }

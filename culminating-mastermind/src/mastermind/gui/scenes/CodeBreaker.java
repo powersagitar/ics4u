@@ -8,7 +8,6 @@ import src.mastermind.core.solvers.MastermindAlgorithm;
 import src.mastermind.core.solvers.MastermindSolver;
 import src.mastermind.gui.panels.GameBoard;
 import src.mastermind.utils.Tuple2;
-import src.mastermind.utils.SceneUtils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,7 +19,7 @@ public class CodeBreaker extends Scene {
     private final static String MISPLACEMENT_LABEL_TEXT = "Misplaced Key Pegs: ";
 
     private final static Function<Integer, Boolean> validateCounterValue = value ->
-            value >= 0 && value <= Mastermind.CODE_LENGTH;
+        value >= 0 && value <= Mastermind.CODE_LENGTH;
 
     private final MastermindAlgorithm solver;
     private final GameBoard gameBoard = new GameBoard();

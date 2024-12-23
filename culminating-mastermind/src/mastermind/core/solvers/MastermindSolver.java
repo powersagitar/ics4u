@@ -1,6 +1,5 @@
 package src.mastermind.core.solvers;
 
-import src.mastermind.utils.*;
 import src.mastermind.core.*;
 import src.mastermind.Mastermind;
 

@@ -17,7 +17,7 @@ public class CodeMaker extends Scene {
     private final HumanSolver solver;
     private final ArrayList<JButton> colorSelectionButtons = new ArrayList<>(Mastermind.TOTAL_COLORS);
     private final GameBoard gameBoard = new GameBoard();
-    private ArrayList<Integer> nextGuess = new ArrayList<>(Mastermind.CODE_LENGTH);
+    private final ArrayList<Integer> nextGuess = new ArrayList<>(Mastermind.CODE_LENGTH);
 
     public CodeMaker(final JFrame frame) {
         super(frame);

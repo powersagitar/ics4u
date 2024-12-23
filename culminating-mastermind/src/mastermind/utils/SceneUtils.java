@@ -3,7 +3,6 @@ package src.mastermind.utils;
 import src.mastermind.Mastermind;
 import src.mastermind.core.Code;
 
-import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
 
