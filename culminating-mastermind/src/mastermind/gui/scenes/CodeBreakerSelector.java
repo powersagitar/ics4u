@@ -1,7 +1,5 @@
 package src.mastermind.gui.scenes;
 
-import src.mastermind.utils.Tuple3;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -10,53 +8,51 @@ public class CodeBreakerSelector extends Scene {
         DonaldKnuth, Medium, Basic
     }
 
+    private final JPanel selectorPanel = new JPanel();
+    private final JRadioButton donaldKnuthButton = new JRadioButton("Donald Knuth 5-Guess Algorithm", true);
+    private final JRadioButton mediumAlgoButton = new JRadioButton("Medium Algorithm");
+    private final JRadioButton basicAlgoButton = new JRadioButton("Basic Algorithm");
+    private final JButton proceedButton = new JButton("Proceed");
+
     public CodeBreakerSelector(final JFrame frame) {
         super(frame);
 
-        final JPanel selectorPanel = makeSelectorPanel();
-        frame.add(selectorPanel);
+        drawSelectorPanel();
 
-        final Tuple3<JRadioButton, JRadioButton, JRadioButton> algorithmRadioButtons = makeAlgorithmRadioButtons();
-        final JRadioButton donaldKnuthButton = algorithmRadioButtons.first;
-        final JRadioButton mediumAlgoButton = algorithmRadioButtons.second;
-        final JRadioButton basicAlgoButton = algorithmRadioButtons.third;
+        drawSelectorButtons();
 
-        selectorPanel.add(donaldKnuthButton);
-        selectorPanel.add(mediumAlgoButton);
-        selectorPanel.add(basicAlgoButton);
+        drawProceedButton();
 
-        final JButton proceedButton = makeProceedButton(donaldKnuthButton, mediumAlgoButton, basicAlgoButton);
-        frame.add(proceedButton);
+        registerProceedHandler();
 
         refreshFrame();
     }
 
-    private JPanel makeSelectorPanel() {
-        final JPanel selectorPanel = new JPanel();
-
+    private void drawSelectorPanel() {
         selectorPanel.setLayout(new BoxLayout(selectorPanel, BoxLayout.Y_AXIS));
         selectorPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
         selectorPanel.setBorder(BorderFactory.createTitledBorder("Code Breaker Algorithms"));
 
-        return selectorPanel;
+        frame.add(selectorPanel);
     }
 
-    private Tuple3<JRadioButton, JRadioButton, JRadioButton> makeAlgorithmRadioButtons() {
-        final JRadioButton donaldKnuthButton = new JRadioButton("Donald Knuth 5-Guess Algorithm", true);
-        final JRadioButton mediumAlgoButton = new JRadioButton("Medium Algorithm");
-        final JRadioButton basicAlgoButton = new JRadioButton("Basic Algorithm");
-
+    private void drawSelectorButtons() {
         final ButtonGroup selectorButtonGroup = new ButtonGroup();
         selectorButtonGroup.add(donaldKnuthButton);
         selectorButtonGroup.add(mediumAlgoButton);
         selectorButtonGroup.add(basicAlgoButton);
 
-        return new Tuple3<>(donaldKnuthButton, mediumAlgoButton, basicAlgoButton);
+        selectorPanel.add(donaldKnuthButton);
+        selectorPanel.add(mediumAlgoButton);
+        selectorPanel.add(basicAlgoButton);
     }
 
-    private JButton makeProceedButton(final JRadioButton donaldKnuthButton, final JRadioButton mediumAlgoButton, final JRadioButton basicAlgoButton) {
-        final JButton proceedButton = new JButton("Proceed");
+    private void drawProceedButton() {
         proceedButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        frame.add(proceedButton);
+    }
+
+    private void registerProceedHandler() {
         proceedButton.addActionListener(_ -> {
             final Algorithm algorithm;
 
@@ -72,7 +68,5 @@ public class CodeBreakerSelector extends Scene {
 
             new CodeBreaker(frame, algorithm);
         });
-
-        return proceedButton;
     }
 }
