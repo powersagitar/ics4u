@@ -12,64 +12,76 @@ import src.mastermind.utils.Tuple2;
 import javax.swing.*;
 import java.awt.*;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.Function;
 
 public class CodeBreaker extends Scene {
-    private final static String CORRECT_LABEL_TEXT = "Correct Key Pegs: ";
-    private final static String MISPLACEMENT_LABEL_TEXT = "Misplaced Key Pegs: ";
-
-    private final static Function<Integer, Boolean> validateCounterValue = value ->
-        value >= 0 && value <= Mastermind.CODE_LENGTH;
-
     private final MastermindAlgorithm solver;
     private final GameBoard gameBoard = new GameBoard();
     private final AtomicInteger correctCount = new AtomicInteger(2);
     private final AtomicInteger misplacementCount = new AtomicInteger(2);
     private final JButton proceedButton = new JButton("Proceed");
+    private final JPanel flowPanel = new JPanel(new FlowLayout());
+    private final JPanel controlPanel = new JPanel();
 
     public CodeBreaker(final JFrame frame, final CodeBreakerSelector.Algorithm algorithm) {
         super(frame);
 
         switch (algorithm) {
             case DonaldKnuth -> this.solver = new DonaldKnuthAlgorithm();
-            default -> this.solver = new DonaldKnuthAlgorithm();
+            case Medium -> this.solver = new DonaldKnuthAlgorithm();
+            case Basic -> this.solver = new DonaldKnuthAlgorithm();
+            default ->
+                    throw new IllegalArgumentException("algorithm is not nullable.");
         }
 
-        final JPanel flowPanel = new JPanel(new FlowLayout());
         frame.add(flowPanel);
 
-        drawBoardPanel(flowPanel);
+        drawGameBoard();
 
-        drawControlPanel(flowPanel);
+        drawControlPanel();
+
+        drawCorrectControls();
+
+        drawMisplacementControls();
+
+        drawProceedButton();
 
         registerGuessHandler();
 
         refreshFrame();
     }
 
-    private void drawBoardPanel(final JPanel parent) {
-        parent.add(gameBoard.getBoardPanel());
+    private void drawGameBoard() {
+        flowPanel.add(gameBoard.getBoardPanel());
     }
 
-    private void drawControlPanel(final JPanel parent) {
-        final JPanel boxPanel = new JPanel();
-        boxPanel.setLayout(new BoxLayout(boxPanel, BoxLayout.Y_AXIS));
-        parent.add(boxPanel);
+    private void drawControlPanel() {
+        controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.Y_AXIS));
 
         final JLabel title = new JLabel("Controls");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
-        boxPanel.add(title);
 
+        controlPanel.add(title);
+        flowPanel.add(controlPanel);
+    }
+
+    private void drawCorrectControls() {
         final JPanel correctPanel = new JPanel(new FlowLayout());
+        correctPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        controlPanel.add(correctPanel);
+
+        drawResponseControls(correctPanel, "Black Key Pegs: ", correctCount);
+    }
+
+    private void drawMisplacementControls() {
         final JPanel misplacementPanel = new JPanel(new FlowLayout());
+        misplacementPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        controlPanel.add(misplacementPanel);
 
-        boxPanel.add(correctPanel);
-        boxPanel.add(misplacementPanel);
+        drawResponseControls(misplacementPanel, "White Key Pegs: ", misplacementCount);
+    }
 
-        drawResponseControls(correctPanel, CORRECT_LABEL_TEXT, correctCount);
-        drawResponseControls(misplacementPanel, MISPLACEMENT_LABEL_TEXT, misplacementCount);
-
-        drawProceedButton(parent);
+    private boolean isInvalidCount(final int value) {
+        return value < 0 || value > Mastermind.CODE_LENGTH;
     }
 
     private void drawResponseControls(final JPanel parent, final String labelPrefix, final AtomicInteger count) {
@@ -86,7 +98,7 @@ public class CodeBreaker extends Scene {
 
             if (newCount == 0) {
                 decrementButton.setEnabled(false);
-            } else if (!validateCounterValue.apply(newCount)) {
+            } else if (isInvalidCount(newCount)) {
                 return;
             }
 
@@ -101,7 +113,7 @@ public class CodeBreaker extends Scene {
 
             if (newCount == Mastermind.CODE_LENGTH) {
                 incrementButton.setEnabled(false);
-            } else if (!validateCounterValue.apply(newCount)) {
+            } else if (isInvalidCount(newCount)) {
                 return;
             }
 
@@ -113,9 +125,9 @@ public class CodeBreaker extends Scene {
         parent.add(incrementButton);
     }
 
-    private void drawProceedButton(final JPanel parent) {
+    private void drawProceedButton() {
         proceedButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        parent.add(proceedButton);
+        controlPanel.add(proceedButton);
     }
 
     private void registerGuessHandler() {
