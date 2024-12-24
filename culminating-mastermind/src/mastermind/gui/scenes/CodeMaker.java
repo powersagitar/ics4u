@@ -19,8 +19,9 @@ public class CodeMaker extends Scene {
 
     private final ArrayList<JButton> colorSelectionButtons = new ArrayList<>(Mastermind.TOTAL_COLORS);
     private final GameBoard gameBoard = new GameBoard();
-    private final JPanel controlPanel = new JPanel();
     private final JButton proceedButton = new JButton("Proceed");
+    private final JPanel flowPanel = new JPanel(new FlowLayout());
+    private final JPanel controlPanel = new JPanel();
 
     public CodeMaker(final JFrame frame) {
         super(frame);
@@ -28,13 +29,9 @@ public class CodeMaker extends Scene {
         final Code secretCode = Code.generateRandomCode(List.of());
         solver = new HumanSolver(secretCode);
 
-        controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.Y_AXIS));
-
-        final JPanel flowPanel = new JPanel(new FlowLayout());
         frame.add(flowPanel);
 
-        flowPanel.add(gameBoard.getBoardPanel());
-        flowPanel.add(controlPanel);
+        drawGameBoard();
 
         drawControlPanel();
 
@@ -47,7 +44,14 @@ public class CodeMaker extends Scene {
         refreshFrame();
     }
 
+    private void drawGameBoard() {
+        flowPanel.add(gameBoard.getBoardPanel());
+    }
+
     private void drawControlPanel() {
+        controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.Y_AXIS));
+        flowPanel.add(controlPanel);
+
         final JLabel title = new JLabel("Controls");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
         controlPanel.add(title);
