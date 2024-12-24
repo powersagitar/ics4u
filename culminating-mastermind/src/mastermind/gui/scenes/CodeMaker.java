@@ -15,9 +15,12 @@ import java.util.List;
 
 public class CodeMaker extends Scene {
     private final HumanSolver solver;
+    private final ArrayList<Integer> nextGuess = new ArrayList<>(Mastermind.CODE_LENGTH);
+
     private final ArrayList<JButton> colorSelectionButtons = new ArrayList<>(Mastermind.TOTAL_COLORS);
     private final GameBoard gameBoard = new GameBoard();
-    private final ArrayList<Integer> nextGuess = new ArrayList<>(Mastermind.CODE_LENGTH);
+    private final JPanel controlPanel = new JPanel();
+    private final JButton proceedButton = new JButton("Proceed");
 
     public CodeMaker(final JFrame frame) {
         super(frame);
@@ -25,36 +28,35 @@ public class CodeMaker extends Scene {
         final Code secretCode = Code.generateRandomCode(List.of());
         solver = new HumanSolver(secretCode);
 
-        drawGuessAndControlPanel();
+        controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.Y_AXIS));
 
-        registerColorSelectionHandlers();
-
-        refreshFrame();
-    }
-
-    private void drawGuessAndControlPanel() {
         final JPanel flowPanel = new JPanel(new FlowLayout());
         frame.add(flowPanel);
-
-        final JPanel controlPanel = new JPanel();
-        controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.Y_AXIS));
 
         flowPanel.add(gameBoard.getBoardPanel());
         flowPanel.add(controlPanel);
 
-        drawControlPanel(controlPanel);
+        drawControlPanel();
+
+        registerColorSelectionHandlers();
+
+        drawProceedButton();
+
+        registerProceedHandlers();
+
+        refreshFrame();
     }
 
-    private void drawControlPanel(final JPanel parent) {
+    private void drawControlPanel() {
         final JLabel title = new JLabel("Controls");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
-        parent.add(title);
+        controlPanel.add(title);
 
         final int rowWidth = Mastermind.TOTAL_COLORS / 2;
 
         for (int rowIndex = 0; rowIndex < Mastermind.TOTAL_COLORS / rowWidth; ++rowIndex) {
             final JPanel colorPanel = new JPanel(new FlowLayout());
-            parent.add(colorPanel);
+            controlPanel.add(colorPanel);
 
             for (int colorIndex = rowWidth * rowIndex; colorIndex < rowWidth * (rowIndex + 1); ++colorIndex) {
                 final JButton colorButton = new JButton(Code.Color.toString(colorIndex));
@@ -62,8 +64,6 @@ public class CodeMaker extends Scene {
                 colorSelectionButtons.add(colorButton);
             }
         }
-
-        drawProceedButton(parent);
     }
 
     private void registerColorSelectionHandlers() {
@@ -80,29 +80,32 @@ public class CodeMaker extends Scene {
         }
     }
 
-    private void drawProceedButton(JPanel parent) {
-        final JButton proceedButton = new JButton("Proceed");
+    private void drawProceedButton() {
         proceedButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        parent.add(proceedButton);
+        controlPanel.add(proceedButton);
+    }
 
+    private void registerProceedHandlers() {
         proceedButton.addActionListener(_ -> {
-            if (nextGuess.size() >= Mastermind.CODE_LENGTH) {
-                final Code guess = new Code(nextGuess);
-                nextGuess.clear();
-
-                final int attempt = solver.getAttempts();
-
-                final Tuple2<MastermindSolver.Status, Response> result = solver.guess(guess);
-
-                if (result.first == MastermindSolver.Status.Continue) {
-                    gameBoard.updateHints(attempt, result.second);
-                    return;
-                }
-
-                new Result(frame, result.first, guess);
-            } else {
+            if (nextGuess.size() < Mastermind.CODE_LENGTH) {
                 throw new IllegalArgumentException("Haven't chosen all 4 colors for a guess yet");
             }
+
+            final Code guess = new Code(nextGuess);
+            nextGuess.clear();
+
+            final int attempt = solver.getAttempts();
+
+            final Tuple2<MastermindSolver.Status, Response> result = solver.guess(guess);
+            final MastermindSolver.Status status = result.first;
+            final Response response = result.second;
+
+            if (status == MastermindSolver.Status.Continue) {
+                gameBoard.updateHints(attempt, response);
+                return;
+            }
+
+            new Result(frame, status, guess);
         });
     }
 }
