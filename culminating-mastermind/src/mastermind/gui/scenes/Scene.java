@@ -1,6 +1,6 @@
-package src.mastermind.gui.scenes;
+package mastermind.gui.scenes;
 
-import src.mastermind.Mastermind;
+import mastermind.Mastermind;
 
 import javax.swing.*;
 

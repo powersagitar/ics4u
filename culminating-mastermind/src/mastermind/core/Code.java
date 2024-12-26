@@ -1,4 +1,4 @@
-package src.mastermind.core;
+package mastermind.core;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Random;
 import java.util.function.Function;
 
-import src.mastermind.Mastermind;
+import mastermind.Mastermind;
 
 public class Code {
     public enum Color {

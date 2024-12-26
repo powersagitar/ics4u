@@ -1,9 +1,9 @@
-package src.mastermind;
+package mastermind;
 
 import javax.swing.*;
 import java.awt.*;
 
-import src.mastermind.gui.scenes.*;
+import mastermind.gui.scenes.*;
 
 public class Mastermind {
     public final static int TOTAL_COLORS = 6;

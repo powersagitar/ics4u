@@ -1,4 +1,4 @@
-package src.mastermind.gui.scenes;
+package mastermind.gui.scenes;
 
 import javax.swing.*;
 import java.awt.*;

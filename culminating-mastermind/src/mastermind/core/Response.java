@@ -1,9 +1,9 @@
-package src.mastermind.core;
+package mastermind.core;
 
 import java.util.HashMap;
 
-import src.mastermind.utils.*;
-import src.mastermind.Mastermind;
+import mastermind.utils.*;
+import mastermind.Mastermind;
 
 public class Response {
     //    (correct count, misplacement count)

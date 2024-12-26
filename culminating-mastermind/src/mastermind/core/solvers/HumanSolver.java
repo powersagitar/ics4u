@@ -1,9 +1,9 @@
-package src.mastermind.core.solvers;
+package mastermind.core.solvers;
 
-import src.mastermind.Mastermind;
-import src.mastermind.core.Code;
-import src.mastermind.core.Response;
-import src.mastermind.utils.Tuple2;
+import mastermind.Mastermind;
+import mastermind.core.Code;
+import mastermind.core.Response;
+import mastermind.utils.Tuple2;
 
 public class HumanSolver extends MastermindSolver {
     private final Code secretCode;

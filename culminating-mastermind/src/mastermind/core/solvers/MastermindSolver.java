@@ -1,7 +1,7 @@
-package src.mastermind.core.solvers;
+package mastermind.core.solvers;
 
-import src.mastermind.core.*;
-import src.mastermind.Mastermind;
+import mastermind.core.*;
+import mastermind.Mastermind;
 
 public abstract class MastermindSolver {
     public enum Status {

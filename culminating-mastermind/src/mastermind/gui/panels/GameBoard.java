@@ -1,9 +1,9 @@
-package src.mastermind.gui.panels;
+package mastermind.gui.panels;
 
-import src.mastermind.Mastermind;
-import src.mastermind.core.Code;
-import src.mastermind.core.Response;
-import src.mastermind.utils.Tuple2;
+import mastermind.Mastermind;
+import mastermind.core.Code;
+import mastermind.core.Response;
+import mastermind.utils.Tuple2;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -279,18 +279,18 @@ public class GameBoard {
 
     /**
      * Retrieves the main game board panel.
-     * 
+     *
      * <p>
      * The returned panel, structured using a {@link GridBagLayout}, serves as the primary component
-     * that visually represents the game board. It contains rows of panels, each consisting of a 
+     * that visually represents the game board. It contains rows of panels, each consisting of a
      * guess panel and a hint panel representing player guesses and feedback respectively.
      * </p>
-     * 
+     *
      * <p>
-     * This panel is initialized and updated internally within the {@link GameBoard} class, 
+     * This panel is initialized and updated internally within the {@link GameBoard} class,
      * reflecting the current state of the game.
      * </p>
-     * 
+     *
      * @return The {@link JPanel} representing the main game board.
      */
     public JPanel getBoardPanel() {

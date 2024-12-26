@@ -1,12 +1,12 @@
-package src.mastermind.gui.scenes;
+package mastermind.gui.scenes;
 
-import src.mastermind.Mastermind;
-import src.mastermind.core.Code;
-import src.mastermind.core.Response;
-import src.mastermind.core.solvers.HumanSolver;
-import src.mastermind.core.solvers.MastermindSolver;
-import src.mastermind.gui.panels.GameBoard;
-import src.mastermind.utils.Tuple2;
+import mastermind.Mastermind;
+import mastermind.core.Code;
+import mastermind.core.Response;
+import mastermind.core.solvers.HumanSolver;
+import mastermind.core.solvers.MastermindSolver;
+import mastermind.gui.panels.GameBoard;
+import mastermind.utils.Tuple2;
 
 import javax.swing.*;
 import java.awt.*;

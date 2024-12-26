@@ -1,10 +1,10 @@
-package src.mastermind.core.solvers;
+package mastermind.core.solvers;
 
 import java.util.*;
 
-import src.mastermind.Mastermind;
-import src.mastermind.utils.*;
-import src.mastermind.core.*;
+import mastermind.Mastermind;
+import mastermind.utils.*;
+import mastermind.core.*;
 
 public class DonaldKnuthAlgorithm extends MastermindAlgorithm {
     private Code previousGuess = null;
