@@ -7,6 +7,16 @@ import javax.swing.*;
 public abstract class Scene {
     protected final JFrame frame;
 
+    /**
+     * Creates and returns a default configured JFrame instance.
+     *
+     * <p>
+     * The returned JFrame uses a vertical BoxLayout for its content pane, and its size, title, and visibility
+     * settings are predefined. The JFrame is also resizable.
+     * </p>
+     *
+     * @return A configured JFrame instance.
+     */
     public static JFrame createDefaultScene() {
         final JFrame frame = new JFrame();
         frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
@@ -19,11 +29,31 @@ public abstract class Scene {
         return frame;
     }
 
+    /**
+     * Initializes a new Scene instance with the specified JFrame.
+     *
+     * <p>
+     * This constructor assigns the given JFrame to the Scene instance and ensures
+     * that the content pane of the provided JFrame is cleared of all existing components.
+     * </p>
+     *
+     * @param frame The JFrame to be associated with this Scene. The content pane
+     *              of this frame will be cleared during instantiation.
+     */
     Scene(final JFrame frame) {
         this.frame = frame;
         this.frame.getContentPane().removeAll();
     }
 
+    /**
+     * Refreshes the associated JFrame by repainting and revalidating it.
+     *
+     * <p>
+     * This method ensures that the visual representation of the frame is updated to
+     * reflect any changes made to its components or layout. It is typically used
+     * after modifying the frame's contents or its structure to force an immediate update.
+     * </p>
+     */
     void refreshFrame() {
         frame.repaint();
         frame.revalidate();

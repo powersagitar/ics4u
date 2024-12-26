@@ -10,6 +10,11 @@ public abstract class MastermindSolver {
 
     private int attempts = 0;
 
+    /**
+     * Retrieves the number of attempts made by the solver.
+     * 
+     * @return the current number of attempts
+     */
     public int getAttempts() {
         return this.attempts;
     }
