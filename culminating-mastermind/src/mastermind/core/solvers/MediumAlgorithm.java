@@ -33,7 +33,7 @@ public class MediumAlgorithm extends MastermindAlgorithm {
     private Code findNextGuess() {
         int size = permutations.size();
 
-        int random = (int) (Math.random()  * size);
+        int random = (int) (Math.random() * size);
         int count = 0;
         for (Code code : permutations) {
             if (count == random) {
@@ -46,7 +46,7 @@ public class MediumAlgorithm extends MastermindAlgorithm {
     }
 
     public Code guess() {
-        if (isInitialGuess()) {
+        if (!isInitialGuess()) {
             throw new IllegalCallerException("guess() is meant for the first guess.");
         }
 

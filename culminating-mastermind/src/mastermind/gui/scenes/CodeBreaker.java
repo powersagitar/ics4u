@@ -4,6 +4,8 @@ import mastermind.Mastermind;
 import mastermind.core.Code;
 import mastermind.core.Response;
 import mastermind.core.solvers.DonaldKnuthAlgorithm;
+import mastermind.core.solvers.EasyAlgorithm;
+import mastermind.core.solvers.MediumAlgorithm;
 import mastermind.core.solvers.MastermindAlgorithm;
 import mastermind.core.solvers.MastermindSolver;
 import mastermind.gui.panels.GameBoard;
@@ -43,8 +45,8 @@ public class CodeBreaker extends Scene {
 
         switch (algorithm) {
             case DonaldKnuth -> this.solver = new DonaldKnuthAlgorithm();
-            case Medium -> this.solver = new DonaldKnuthAlgorithm();
-            case Basic -> this.solver = new DonaldKnuthAlgorithm();
+            case Medium -> this.solver = new MediumAlgorithm();
+            case Basic -> this.solver = new EasyAlgorithm();
             default ->
                     throw new IllegalArgumentException("algorithm is not nullable.");
         }

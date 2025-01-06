@@ -40,7 +40,7 @@ public class HumanSolver extends MastermindSolver {
     public Tuple2<Status, Response> guess(final Code guess) {
         // isLosing is mainly to increment the attempt counter here
         // the losing status is first indicated by
-        // getAttempts() == Mastermind.MAX_GUESSES - 1
+        // getAttempts() == Mastermind.MAX_GUESSES
         if (isLosing()) {
             return new Tuple2<>(Status.Lose, null);
         }
@@ -50,7 +50,7 @@ public class HumanSolver extends MastermindSolver {
 
         if (correctCount >= Mastermind.CODE_LENGTH) {
             return new Tuple2<>(Status.Win, response);
-        } else if (getAttempts() == Mastermind.MAX_GUESSES - 1) {
+        } else if (getAttempts() == Mastermind.MAX_GUESSES) {
             return new Tuple2<>(Status.Lose, null);
         } else {
             return new Tuple2<>(Status.Continue, response);
