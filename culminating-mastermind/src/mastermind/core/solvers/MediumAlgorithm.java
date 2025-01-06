@@ -30,16 +30,13 @@ public class MediumAlgorithm extends MastermindAlgorithm {
         });
     }
 
-    private Code findNextGuess() {
+    private Code findNextGuess(int numAttempts) {
         int size = permutations.size();
-
-        int random = (int) (Math.random() * size);
-        int count = 0;
+        if (numAttempts < 4) {
+            return new Code(Arrays.asList(numAttempts, numAttempts, numAttempts, numAttempts));
+        }
         for (Code code : permutations) {
-            if (count == random) {
-                return code;
-            }
-            count++;
+            return code;
         }
 
         return null;
@@ -52,7 +49,7 @@ public class MediumAlgorithm extends MastermindAlgorithm {
 
         isLosing();
 
-        final Code nextGuess = new Code(Arrays.asList(0, 0, 1, 1));
+        final Code nextGuess = new Code(Arrays.asList(0, 0, 0, 0));
         previousGuess = nextGuess;
 
         return nextGuess;
@@ -73,8 +70,7 @@ public class MediumAlgorithm extends MastermindAlgorithm {
         }
 
         reducePermutations(response);
-
-        final Code nextGuess = findNextGuess();
+        final Code nextGuess = findNextGuess(getAttempts());
         previousGuess = nextGuess;
 
         return new Tuple2<>(Status.Continue, nextGuess);
