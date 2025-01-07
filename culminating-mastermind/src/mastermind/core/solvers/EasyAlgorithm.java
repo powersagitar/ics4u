@@ -8,19 +8,10 @@ import java.util.*;
 public class EasyAlgorithm extends MastermindAlgorithm {
     private Code previousGuess = null;
     private ArrayList<Code> permutations;
-    private HashSet<Code> previousGuesses = new HashSet<>();
+    private Set<Code> previousGuesses;
 
     public EasyAlgorithm() {
-        generatePermutations();
-    }
-    private void generatePermutations() {
-        final int possibilities = (int) Math.pow(Mastermind.TOTAL_COLORS, Mastermind.CODE_LENGTH);
-        permutations = new ArrayList<>();
-        for (int i = 0; i < possibilities; i++) {
-            final ArrayList<Integer> codeInDigits = MathUtil.digitsFromBase(i, Mastermind.TOTAL_COLORS, Mastermind.CODE_LENGTH);
-            final Code code = new Code(codeInDigits);
-            permutations.add(code);
-        }
+        previousGuesses = new HashSet<>();
     }
 
     public Code guess() {
@@ -30,7 +21,7 @@ public class EasyAlgorithm extends MastermindAlgorithm {
 
         isLosing();
 
-        final Code nextGuess = new Code(Arrays.asList(0, 0, 1, 1));
+        Code nextGuess = findNextGuess();
         previousGuess = nextGuess;
         previousGuesses.add(previousGuess);
 
@@ -58,13 +49,18 @@ public class EasyAlgorithm extends MastermindAlgorithm {
     }
 
     private Code findNextGuess() {
-        int size = permutations.size();
+        Code code;
+        do {
+            code = new Code(Arrays.asList(getRandomNumber(0, 5), getRandomNumber(0, 5), getRandomNumber(0, 5), getRandomNumber(0, 5)));
 
-        int random = (int) (Math.random() * size);
-        while (previousGuesses.contains(permutations.get(random))) {
-            random = (int) (Math.random() * size);
-        }
-        return permutations.get(random);
+        } while (previousGuesses.contains(code));
+        previousGuesses.add(code);
+        return code;
+
+    }
+
+    private int getRandomNumber(int low, int high) {
+        return (int) (Math.random() * (high - low + 1) + low);
     }
 
 
