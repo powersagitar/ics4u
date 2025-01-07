@@ -47,7 +47,7 @@ public class MediumAlgorithm extends MastermindAlgorithm {
             throw new IllegalCallerException("guess() is meant for the first guess.");
         }
 
-        isLosing();
+        hasExceededMaxGuesses();
 
         final Code nextGuess = new Code(Arrays.asList(0, 0, 0, 0));
         previousGuess = nextGuess;
@@ -65,7 +65,7 @@ public class MediumAlgorithm extends MastermindAlgorithm {
 
         if (correctCount >= Mastermind.CODE_LENGTH) {
             return new Tuple2<>(Status.Win, previousGuess);
-        } else if (isLosing()) {
+        } else if (hasExceededMaxGuesses()) {
             return new Tuple2<>(Status.Lose, previousGuess);
         }
 

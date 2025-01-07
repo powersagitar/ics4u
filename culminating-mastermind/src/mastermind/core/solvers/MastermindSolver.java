@@ -30,7 +30,7 @@ public abstract class MastermindSolver {
      *
      * @return true if the solver fails to guess the code, and false otherwise
      */
-    protected boolean isLosing() {
+    protected boolean hasExceededMaxGuesses() {
         if (attempts >= Mastermind.MAX_GUESSES) {
             return true;
         } else {

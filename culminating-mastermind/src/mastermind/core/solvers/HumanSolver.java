@@ -41,7 +41,7 @@ public class HumanSolver extends MastermindSolver {
         // isLosing is mainly to increment the attempt counter here
         // the losing status is first indicated by
         // getAttempts() == Mastermind.MAX_GUESSES
-        if (isLosing()) {
+        if (hasExceededMaxGuesses()) {
             return new Tuple2<>(Status.Lose, null);
         }
 
