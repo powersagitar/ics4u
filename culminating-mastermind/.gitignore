@@ -1,3 +1,6 @@
-# ide ignores
+# Build directory
 out
+
+# Editors
 .idea
+.lazy.lua
