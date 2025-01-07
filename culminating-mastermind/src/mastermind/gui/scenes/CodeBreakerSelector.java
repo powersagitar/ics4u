@@ -3,11 +3,11 @@ package mastermind.gui.scenes;
 import javax.swing.*;
 import java.awt.*;
 
-public class CodeBreakerSelector extends Scene {
-    public enum Algorithm {
-        DonaldKnuth, Medium, Basic
-    }
+import mastermind.core.solvers.DonaldKnuthAlgorithm;
+import mastermind.core.solvers.EasyAlgorithm;
+import mastermind.core.solvers.MediumAlgorithm;
 
+public class CodeBreakerSelector extends Scene {
     private final JPanel selectorPanel = new JPanel();
     private final JRadioButton donaldKnuthButton = new JRadioButton("Donald Knuth 5-Guess Algorithm", true);
     private final JRadioButton mediumAlgoButton = new JRadioButton("Medium Algorithm");
@@ -116,19 +116,15 @@ public class CodeBreakerSelector extends Scene {
      */
     private void registerProceedHandler() {
         proceedButton.addActionListener(_ -> {
-            final Algorithm algorithm;
-
             if (donaldKnuthButton.isSelected()) {
-                algorithm = Algorithm.DonaldKnuth;
+                new CodeBreaker(frame, new DonaldKnuthAlgorithm());
             } else if (mediumAlgoButton.isSelected()) {
-                algorithm = Algorithm.Medium;
+                new CodeBreaker(frame, new MediumAlgorithm());
             } else if (basicAlgoButton.isSelected()) {
-                algorithm = Algorithm.Basic;
+                new CodeBreaker(frame, new EasyAlgorithm());
             } else {
                 throw new IllegalArgumentException("A code breaker algorithm has to be selected");
             }
-
-            new CodeBreaker(frame, algorithm);
         });
     }
 }

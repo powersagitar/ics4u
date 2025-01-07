@@ -3,9 +3,6 @@ package mastermind.gui.scenes;
 import mastermind.Mastermind;
 import mastermind.core.Code;
 import mastermind.core.Response;
-import mastermind.core.solvers.DonaldKnuthAlgorithm;
-import mastermind.core.solvers.EasyAlgorithm;
-import mastermind.core.solvers.MediumAlgorithm;
 import mastermind.core.solvers.MastermindAlgorithm;
 import mastermind.core.solvers.MastermindSolver;
 import mastermind.gui.panels.GameBoard;
@@ -37,19 +34,12 @@ public class CodeBreaker extends Scene {
      * @param frame     The parent `JFrame` that contains this scene.
      * @param algorithm The algorithm to be used for solving the Mastermind puzzle.
      *                  Supported algorithms include `DonaldKnuth`, `Medium`, and `Basic`.
-     *
      * @throws IllegalArgumentException if the provided algorithm is null or unsupported.
      */
-    public CodeBreaker(final JFrame frame, final CodeBreakerSelector.Algorithm algorithm) {
+    public CodeBreaker(final JFrame frame, final MastermindAlgorithm algorithm) {
         super(frame);
 
-        switch (algorithm) {
-            case DonaldKnuth -> this.solver = new DonaldKnuthAlgorithm();
-            case Medium -> this.solver = new MediumAlgorithm();
-            case Basic -> this.solver = new EasyAlgorithm();
-            default ->
-                    throw new IllegalArgumentException("algorithm is not nullable.");
-        }
+        this.solver = algorithm;
 
         frame.add(flowPanel);
 
@@ -261,7 +251,7 @@ public class CodeBreaker extends Scene {
 
     /**
      * Registers a handler for processing guesses and updating the game state in the CodeBreaker game.
-     * 
+     *
      * <p>
      * This method sets up the game logic for the Mastermind puzzle by performing the following actions:
      * </p>
@@ -271,21 +261,21 @@ public class CodeBreaker extends Scene {
      *         the game board with the resulting colors for the first attempt.
      *     </li>
      *     <li>
-     *         It adds an action listener to the "Proceed" button, which triggers subsequent steps in the game round. 
-     *         When the "Proceed" button is clicked, the game retrieves feedback on the previous guess, including 
-     *         the number of correct positions and misplaced pieces. Using this feedback, the solver makes the next 
+     *         It adds an action listener to the "Proceed" button, which triggers subsequent steps in the game round.
+     *         When the "Proceed" button is clicked, the game retrieves feedback on the previous guess, including
+     *         the number of correct positions and misplaced pieces. Using this feedback, the solver makes the next
      *         guess and updates the game board with that guess.
      *     </li>
      * </ul>
-     * 
+     *
      * <p>
-     * If the solver determines that the puzzle is not yet solved (`MastermindSolver.Status.Continue`), 
-     * the game board updates hints for the previous guess and displays the next guess. Otherwise, 
+     * If the solver determines that the puzzle is not yet solved (`MastermindSolver.Status.Continue`),
+     * the game board updates hints for the previous guess and displays the next guess. Otherwise,
      * the game concludes, and a result window is displayed with the final outcome.
      * </p>
-     * 
+     *
      * <p>
-     * This handler links the user interface with the solver algorithm, enabling interactive and 
+     * This handler links the user interface with the solver algorithm, enabling interactive and
      * iterative gameplay through the "Proceed" button.
      * </p>
      */
