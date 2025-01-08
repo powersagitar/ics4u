@@ -111,17 +111,12 @@ public class CodeMaker extends Scene {
                 colorButton.setForeground(Color.BLACK);
                 colorButton.setOpaque(true);
                 colorButton.setContentAreaFilled(true);
-//                colorButton.setBorderPainted(false);
                 colorPanel.add(colorButton);
                 colorSelectionButtons.add(colorButton);
             }
         }
 
-//        final JPanel deletePanel = new JPanel(new FlowLayout());
-//        final JButton deleteButton = new JButton("Delete");
-//        controlPanel.add(deleteButton); // dblcheck
-
-
+        drawDeleteButton();
     }
 
     /**
@@ -158,6 +153,12 @@ public class CodeMaker extends Scene {
                 }
             });
         }
+    }
+
+    private void drawDeleteButton() {
+        final JButton deleteButton = new JButton("Delete");
+        deleteButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        controlPanel.add(deleteButton);
     }
 
     /**
