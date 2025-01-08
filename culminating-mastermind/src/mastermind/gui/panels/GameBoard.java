@@ -104,10 +104,20 @@ public class GameBoard {
         parent.removeAll();
 
         for (int col = 0; col < Mastermind.CODE_LENGTH; ++col) {
-            final JLabel colLabel = new JLabel();
-            colLabel.setBorder(BorderFactory.createLineBorder(colors.get(col), 10));
-            colLabel.setPreferredSize(new Dimension(20, 20));
-            parent.add(colLabel);
+            final int COL = col;
+            final JPanel circlePanel = new JPanel() {
+                @Override
+                protected void paintComponent(Graphics g) {
+                    super.paintComponent(g);
+                    Graphics2D g2d = (Graphics2D) g;
+                    g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                    g2d.setColor(colors.get(COL));
+                    g2d.fillOval(0, 0, getWidth(), getHeight());
+                }
+            };
+
+            circlePanel.setPreferredSize(new Dimension(20, 20));
+            parent.add(circlePanel);
         }
 
         parent.revalidate();
