@@ -115,7 +115,7 @@ public class CodeBreakerSelector extends Scene {
      * @throws IllegalArgumentException if no algorithm is selected.
      */
     private void registerProceedHandler() {
-        proceedButton.addActionListener(_ -> {
+        proceedButton.addActionListener(event -> {
             if (donaldKnuthButton.isSelected()) {
                 new CodeBreaker(frame, new DonaldKnuthAlgorithm());
             } else if (mediumAlgoButton.isSelected()) {

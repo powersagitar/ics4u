@@ -109,6 +109,6 @@ public class Result extends Scene {
         proceedButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         frame.add(proceedButton);
 
-        proceedButton.addActionListener(_ -> new GameModeSelector(frame));
+        proceedButton.addActionListener(event -> new GameModeSelector(frame));
     }
 }

@@ -148,7 +148,7 @@ public class CodeMaker extends Scene {
         for (int i = 0; i < colorSelectionButtons.size(); ++i) {
             final JButton button = colorSelectionButtons.get(i);
             final int colorIndex = i;
-            button.addActionListener(_ -> {
+            button.addActionListener(event -> {
                 if (nextGuess.size() < Mastermind.CODE_LENGTH) {
                     final int gameBoardRowNumber = solver.getAttempts();
                     nextGuess.add(colorIndex);
@@ -223,7 +223,7 @@ public class CodeMaker extends Scene {
      * </p>
      */
     private void registerProceedHandlers() {
-        proceedButton.addActionListener(_ -> {
+        proceedButton.addActionListener(event -> {
             if (nextGuess.size() < Mastermind.CODE_LENGTH) {
                 throw new IllegalArgumentException("Haven't chosen all 4 colors for a guess yet");
             }

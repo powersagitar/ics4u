@@ -93,7 +93,7 @@ public class GameModeSelector extends Scene {
      */
     private void drawProceedButton() {
         proceedButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        proceedButton.addActionListener(_ -> {
+        proceedButton.addActionListener(event -> {
             if (codeBreakerButton.isSelected()) {
                 new CodeBreakerSelector(frame);
             } else if (codeMakerButton.isSelected()) {

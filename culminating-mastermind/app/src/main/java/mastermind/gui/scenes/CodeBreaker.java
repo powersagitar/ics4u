@@ -196,7 +196,7 @@ public class CodeBreaker extends Scene {
         final JButton decrementButton = new JButton("-");
         final JButton incrementButton = new JButton("+");
 
-        decrementButton.addActionListener(_ -> {
+        decrementButton.addActionListener(event -> {
             incrementButton.setEnabled(true);
 
             final int newCount = count.get() - 1;
@@ -211,7 +211,7 @@ public class CodeBreaker extends Scene {
             label.setText(labelPrefix + newCount);
         });
 
-        incrementButton.addActionListener(_ -> {
+        incrementButton.addActionListener(event -> {
             decrementButton.setEnabled(true);
 
             final int newCount = count.get() + 1;
@@ -285,7 +285,7 @@ public class CodeBreaker extends Scene {
         gameBoard.updateGuess(0, firstGuess.getColors());
 
 //        subsequent guesses
-        proceedButton.addActionListener(_ -> {
+        proceedButton.addActionListener(event -> {
             final Response responseForPreviousGuess = new Response(new Tuple2<>(correctCount.get(), misplacementCount.get()));
             final int currentAttempt = solver.getAttempts();
             final Tuple2<MastermindSolver.Status, Code> result = solver.guess(responseForPreviousGuess);
