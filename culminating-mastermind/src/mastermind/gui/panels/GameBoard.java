@@ -186,8 +186,7 @@ public class GameBoard {
                         Graphics2D g2d = (Graphics2D) g;
                         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-                        // Adjust circle size and position to create spacing
-                        int padding = 2; // Space between border and circle
+                        int padding = 2;
                         int diameter = Math.min(getWidth(), getHeight()) - 2 * padding;
 
                         g2d.setColor(colors.get(finalColorIdx));

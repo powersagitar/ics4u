@@ -109,7 +109,7 @@ public class CodeMaker extends Scene {
             controlPanel.add(colorPanel);
 
             for (int colorIndex = rowWidth * rowIndex; colorIndex < rowWidth * (rowIndex + 1); ++colorIndex) {
-                JButton colorButton = new JButton(Code.Color.toString(colorIndex));
+                JButton colorButton = new JButton(" ");
                 colorButton.setBackground(GameBoard.codeColorToAwtColor.get(Code.Color.values()[colorIndex]));
                 colorButton.setForeground(Color.BLACK);
                 colorButton.setOpaque(true);

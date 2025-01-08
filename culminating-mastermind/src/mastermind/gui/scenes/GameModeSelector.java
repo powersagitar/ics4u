@@ -5,8 +5,8 @@ import java.awt.*;
 
 public class GameModeSelector extends Scene {
     private final JPanel selectorPanel = new JPanel();
-    private final JRadioButton codeBreakerButton = new JRadioButton("Code Breaker", true);
-    private final JRadioButton codeMakerButton = new JRadioButton("Code Maker");
+    private final JRadioButton codeBreakerButton = new JRadioButton("CODEBREAKER: Computer Guesses, Player Makes Code", true);
+    private final JRadioButton codeMakerButton = new JRadioButton("CODEMAKER: Player Guesses, Computer Makes Code");
     private final JButton proceedButton = new JButton("Proceed");
 
     /**
@@ -22,7 +22,8 @@ public class GameModeSelector extends Scene {
      */
     public GameModeSelector(final JFrame frame) {
         super(frame);
-
+        drawWelcomeMessage();
+        frame.add(Box.createRigidArea(new Dimension(10,20)));
         drawSelectorPanel();
         drawProceedButton();
 
@@ -30,6 +31,20 @@ public class GameModeSelector extends Scene {
         frame.add(proceedButton);
 
         refreshFrame();
+    }
+
+    /**
+     * Displays a welcome message to the user on the game mode selection screen.
+     *
+     * <p>
+     * This method adds a label to the frame welcoming the user to the game mode selection screen.
+     * The label is centrally aligned within the frame.
+     * </p>
+     */
+    private void drawWelcomeMessage() {
+        final JLabel welcomeMessage = new JLabel("WELCOME TO MASTERMIND!");
+        welcomeMessage.setAlignmentX(Component.CENTER_ALIGNMENT);
+        frame.add(welcomeMessage);
     }
 
     /**
