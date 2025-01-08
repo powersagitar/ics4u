@@ -20,6 +20,7 @@ public class CodeMaker extends Scene {
     private final ArrayList<JButton> colorSelectionButtons = new ArrayList<>(Mastermind.TOTAL_COLORS);
     private final GameBoard gameBoard = new GameBoard();
     private final JButton proceedButton = new JButton("Proceed");
+    private final JButton deleteButton = new JButton("Delete");
     private final JPanel flowPanel = new JPanel(new FlowLayout());
     private final JPanel controlPanel = new JPanel();
 
@@ -50,6 +51,8 @@ public class CodeMaker extends Scene {
         drawControlPanel();
 
         registerColorSelectionHandlers();
+
+        registerDeleteHandler();
 
         drawProceedButton();
 
@@ -156,9 +159,18 @@ public class CodeMaker extends Scene {
     }
 
     private void drawDeleteButton() {
-        final JButton deleteButton = new JButton("Delete");
         deleteButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         controlPanel.add(deleteButton);
+    }
+
+    private void registerDeleteHandler() {
+        deleteButton.addActionListener(_ -> {
+            if (!nextGuess.isEmpty()) {
+                final int gameBoardRowNumber = solver.getAttempts();
+                nextGuess.removeLast();
+                gameBoard.updateGuessFromColorIndices(gameBoardRowNumber, nextGuess);
+            }
+        });
     }
 
     /**
