@@ -4,3 +4,16 @@ out
 # Editors
 .idea
 .lazy.lua
+.project
+
+# Ignore Gradle project-specific cache directory
+.gradle
+.settings
+app/.settings
+app/.classpath
+app/.project
+gradle.properties
+
+# Ignore Gradle build output directory
+build
+bin
