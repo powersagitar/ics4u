@@ -4,57 +4,55 @@
 
 ```tree
 .
-├── culminating-mastermind.iml
-├── out
-├── src
-│   └── mastermind
-│       ├── Mastermind.java
-│       ├── core
-│       │   ├── Code.java
-│       │   ├── Response.java
-│       │   └── solvers
-│       │       ├── DonaldKnuthAlgorithm.java
-│       │       ├── EasyAlgorithm.java
-│       │       ├── HumanSolver.java
-│       │       ├── MastermindAlgorithm.java
-│       │       ├── MastermindSolver.java
-│       │       └── MediumAlgorithm.java
-│       ├── gui
-│       │   ├── panels
-│       │   │   └── GameBoard.java
-│       │   └── scenes
-│       │       ├── CodeBreaker.java
-│       │       ├── CodeBreakerSelector.java
-│       │       ├── CodeMaker.java
-│       │       ├── GameModeSelector.java
-│       │       ├── Result.java
-│       │       └── Scene.java
-│       └── utils
-│           ├── MathUtil.java
-│           └── Tuple2.java
-└── wiki.md
+├── app
+│   ├── bin
+│   ├── build
+│   └── src
+│       ├── main
+│       │   ├── java
+│       │   │   └── mastermind
+│       │   │       ├── core
+│       │   │       │   └── solvers
+│       │   │       ├── gui
+│       │   │       │   ├── panels
+│       │   │       │   └── scenes
+│       │   │       └── utils
+│       │   └── resources
+│       └── test
+│           ├── java
+│           │   └── mastermind
+│           └── resources
+├── build
+└── gradle
 ```
 
-### Editor Settings
+### Build Directories
 
-- `culminating-mastermind.iml` Intellij configuration file
+- `app/bin`
+- `app/build`
+- `build`
 
-### Binary Files
+### Gradle Directory
 
-- `out` Intellij build directory
+- `gradle`
 
 ### Project Sources
 
-- `src/mastermind/core` core (non-gui) components of program
-- `src/mastermind/core/solvers` algorithms for solving mastermind game
-- `src/gui` gui components of program
-- `src/gui/panels` shareable gui components
-- `src/gui/scenes` scenes/stages/pages/screens of the game
+- `app/src/main/java/mastermind/core` core (non-gui) components of program
+- `app/src/main/java/mastermind/core/solvers` algorithms for solving mastermind game
+- `app/src/main/java/mastermind/gui` gui components of program
+- `app/src/main/java/mastermind/gui/panels` shareable gui components
+- `app/src/main/java/mastermind/gui/scenes` scenes/stages/pages/screens of the game
   - each page/stage/screen of the program is a scene
   - e.g., game mode selector, code breaker gameplay, code maker gameplay
-- `src/utils` general utilities that are not directly associated with program logic
+- `app/src/main/java/mastermind/utils` general utilities that are not directly
+  associated with program logic
   - i.e., components that can be reused by other projects
   - e.g., helper methods, data structures
+
+### Unit Tests
+
+- `app/src/test/java/mastermind`
 
 ## Solvers
 
