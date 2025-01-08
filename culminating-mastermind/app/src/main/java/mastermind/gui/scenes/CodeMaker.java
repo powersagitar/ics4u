@@ -84,7 +84,7 @@ public class CodeMaker extends Scene {
      * It includes the following components:
      * - A title label ("Controls") displayed at the top of the panel.
      * - Color selection buttons grouped into rows. Each button corresponds to a color
-     *   and allows the player to make selections for their guesses.
+     * and allows the player to make selections for their guesses.
      * </p>
      *
      * <p>
@@ -164,7 +164,7 @@ public class CodeMaker extends Scene {
     }
 
     private void registerDeleteHandler() {
-        deleteButton.addActionListener(_ -> {
+        deleteButton.addActionListener(event -> {
             if (!nextGuess.isEmpty()) {
                 final int gameBoardRowNumber = solver.getAttempts();
                 nextGuess.removeLast();
@@ -194,27 +194,27 @@ public class CodeMaker extends Scene {
 
     /**
      * Registers action handlers for the "Proceed" button to process user guesses in the game.
-     * 
+     *
      * <p>
      * This method attaches an `ActionListener` to the "Proceed" button. When the button is clicked:
      * - It verifies that the current guess (`nextGuess`) meets the required length (`Mastermind.CODE_LENGTH`).
      * - If the guess is incomplete, an `IllegalArgumentException` is thrown to indicate the error.
      * - If the guess is valid, it creates a new `Code` object from the selected colors and clears the `nextGuess`.
-     *  
+     *
      * <p>
      * The registered handler then processes the player's guess by invoking the `solver.guess` method, which
      * returns a tuple containing:
-     * - A status (`MastermindSolver.Status`) indicating whether the game should continue, or if a win/loss condition 
-     *   is reached.
+     * - A status (`MastermindSolver.Status`) indicating whether the game should continue, or if a win/loss condition
+     * is reached.
      * - A feedback response (`Response`) with hints for the current guess.
      * </p>
-     * 
+     *
      * <p>
      * Based on the status:
      * - If the game is to continue, the method updates the game board with the provided response hints.
      * - If the game ends (win or loss), it displays a result dialog (`Result`) summarizing the outcome.
      * </p>
-     * 
+     *
      * <p>
      * This method ensures that:
      * - The game enforces a full guess before submission.
