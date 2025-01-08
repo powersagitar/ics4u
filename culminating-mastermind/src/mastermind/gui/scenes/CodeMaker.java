@@ -106,11 +106,22 @@ public class CodeMaker extends Scene {
             controlPanel.add(colorPanel);
 
             for (int colorIndex = rowWidth * rowIndex; colorIndex < rowWidth * (rowIndex + 1); ++colorIndex) {
-                final JButton colorButton = new JButton(Code.Color.toString(colorIndex));
+                JButton colorButton = new JButton(Code.Color.toString(colorIndex));
+                colorButton.setBackground(GameBoard.codeColorToAwtColor.get(Code.Color.values()[colorIndex]));
+                colorButton.setForeground(Color.BLACK);
+                colorButton.setOpaque(true);
+                colorButton.setContentAreaFilled(true);
+//                colorButton.setBorderPainted(false);
                 colorPanel.add(colorButton);
                 colorSelectionButtons.add(colorButton);
             }
         }
+
+//        final JPanel deletePanel = new JPanel(new FlowLayout());
+//        final JButton deleteButton = new JButton("Delete");
+//        controlPanel.add(deleteButton); // dblcheck
+
+
     }
 
     /**
