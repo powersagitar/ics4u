@@ -178,15 +178,51 @@ public class GameBoard {
                 hintConstraints.gridx = col;
                 hintConstraints.gridy = row;
 
-                final JLabel hint = new JLabel();
-                parent.add(hint, hintConstraints);
+                int finalColorIdx = colorIdx;
+                final JPanel hint = new JPanel() {
+                    @Override
+                    protected void paintComponent(Graphics g) {
+                        super.paintComponent(g);
+                        Graphics2D g2d = (Graphics2D) g;
+                        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-                hint.setBorder(BorderFactory.createCompoundBorder(new EmptyBorder(2, 2, 2, 2), new LineBorder(colors.get(colorIdx), 99)));
-                hint.setPreferredSize(new Dimension(15, 15));
+                        // Adjust circle size and position to create spacing
+                        int padding = 2; // Space between border and circle
+                        int diameter = Math.min(getWidth(), getHeight()) - 2 * padding;
+
+                        g2d.setColor(colors.get(finalColorIdx));
+                        g2d.fillOval(padding, padding, diameter, diameter);
+                    }
+                };
+
+                hint.setPreferredSize(new Dimension(15, 15)); // Adjust size to account for padding
+                parent.add(hint, hintConstraints);
 
                 ++colorIdx;
             }
         }
+
+        /*
+        for (int col = 0; col < Mastermind.CODE_LENGTH; ++col) {
+            final int COL = col;
+            final JPanel circlePanel = new JPanel() {
+                @Override
+                protected void paintComponent(Graphics g) {
+                    super.paintComponent(g);
+                    Graphics2D g2d = (Graphics2D) g;
+                    g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                    g2d.setColor(colors.get(COL));
+                    g2d.fillOval(0, 0, getWidth(), getHeight());
+                }
+            };
+
+            circlePanel.setPreferredSize(new Dimension(20, 20));
+            parent.add(circlePanel);
+        }
+
+        parent.revalidate();
+        parent.repaint();
+         */
 
         parent.revalidate();
         parent.repaint();
