@@ -96,7 +96,7 @@ class ResponseTest {
     }
 
     @Test
-    void responseFromInt() {
+    void responseFromTuple() {
         final Tuple2<Integer, Integer> counts = new Tuple2<>(1, 2);
         final Response response = new Response(counts);
 
