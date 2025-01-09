@@ -4,14 +4,12 @@ import mastermind.Mastermind;
 import mastermind.core.Code;
 import mastermind.core.solvers.MastermindSolver;
 import mastermind.gui.panels.GameBoard;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
 public class Result extends Scene {
     private final Code correctCode;
-
     /**
      * Constructs a new Result scene to display the outcome of the Mastermind game.
      *

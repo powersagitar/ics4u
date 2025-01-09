@@ -6,6 +6,7 @@ import mastermind.core.Response;
 import mastermind.core.solvers.HumanSolver;
 import mastermind.core.solvers.MastermindSolver;
 import mastermind.gui.panels.GameBoard;
+import mastermind.gui.panels.HomeButton;
 import mastermind.utils.Tuple2;
 
 import javax.swing.*;
@@ -21,6 +22,7 @@ public class CodeMaker extends Scene {
     private final GameBoard gameBoard = new GameBoard();
     private final JButton proceedButton = new JButton("Proceed");
     private final JButton deleteButton = new JButton("Delete");
+    private final HomeButton homeButton = new HomeButton();
     private final JPanel flowPanel = new JPanel(new FlowLayout());
     private final JPanel controlPanel = new JPanel();
 
@@ -50,11 +52,15 @@ public class CodeMaker extends Scene {
 
         drawControlPanel();
 
+        drawProceedButton();
+
+        homeButton.drawHomeButton(frame);
+
         registerColorSelectionHandlers();
 
-        registerDeleteHandler();
+        registerDeleteHandlers();
 
-        drawProceedButton();
+        homeButton.registerHomeHandlers();
 
         registerProceedHandlers();
 
@@ -163,7 +169,7 @@ public class CodeMaker extends Scene {
         controlPanel.add(deleteButton);
     }
 
-    private void registerDeleteHandler() {
+    private void registerDeleteHandlers() {
         deleteButton.addActionListener(event -> {
             if (!nextGuess.isEmpty()) {
                 final int gameBoardRowNumber = solver.getAttempts();

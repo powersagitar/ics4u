@@ -6,6 +6,7 @@ import java.awt.*;
 import mastermind.core.solvers.DonaldKnuthAlgorithm;
 import mastermind.core.solvers.EasyAlgorithm;
 import mastermind.core.solvers.MediumAlgorithm;
+import mastermind.gui.panels.HomeButton;
 
 public class CodeBreakerSelector extends Scene {
     private final JPanel selectorPanel = new JPanel();
@@ -13,6 +14,7 @@ public class CodeBreakerSelector extends Scene {
     private final JRadioButton mediumAlgoButton = new JRadioButton("Medium Algorithm");
     private final JRadioButton basicAlgoButton = new JRadioButton("Basic Algorithm");
     private final JButton proceedButton = new JButton("Proceed");
+    private final HomeButton homeButton = new HomeButton();
 
     /**
      * Constructs a CodeBreakerSelector, which provides a user interface to select
@@ -34,6 +36,10 @@ public class CodeBreakerSelector extends Scene {
         drawSelectorButtons();
 
         drawProceedButton();
+
+        homeButton.drawHomeButton(frame);
+
+        homeButton.registerHomeHandlers();
 
         registerProceedHandler();
 

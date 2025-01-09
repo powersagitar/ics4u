@@ -7,14 +7,17 @@ import mastermind.core.solvers.MastermindAlgorithm;
 import mastermind.core.solvers.MastermindSolver;
 import mastermind.gui.panels.GameBoard;
 import mastermind.utils.Tuple2;
+import mastermind.gui.panels.HomeButton;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
+
 public class CodeBreaker extends Scene {
     private final MastermindAlgorithm solver;
     private final GameBoard gameBoard = new GameBoard();
+    private final HomeButton homeButton = new HomeButton();
     private final AtomicInteger correctCount = new AtomicInteger(2);
     private final AtomicInteger misplacementCount = new AtomicInteger(2);
     private final JButton proceedButton = new JButton("Proceed");
@@ -52,6 +55,10 @@ public class CodeBreaker extends Scene {
         drawMisplacementControls();
 
         drawProceedButton();
+
+        homeButton.drawHomeButton(frame);
+
+        homeButton.registerHomeHandlers();
 
         registerGuessHandler();
 
@@ -248,6 +255,7 @@ public class CodeBreaker extends Scene {
         proceedButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         controlPanel.add(proceedButton);
     }
+
 
     /**
      * Registers a handler for processing guesses and updating the game state in the CodeBreaker game.
