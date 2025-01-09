@@ -22,8 +22,11 @@ public class GameModeSelector extends Scene {
      */
     public GameModeSelector(final JFrame frame) {
         super(frame);
+        final int LINE_SEPARATOR = 20;
+        final int CENTER_ALIGNMENT = 130;
+        frame.add(Box.createRigidArea(new Dimension(10,CENTER_ALIGNMENT)));
         drawWelcomeMessage();
-        frame.add(Box.createRigidArea(new Dimension(10,20)));
+        frame.add(Box.createRigidArea(new Dimension(10,LINE_SEPARATOR)));
         drawSelectorPanel();
         drawProceedButton();
 
