@@ -31,7 +31,6 @@ public class MediumAlgorithm extends MastermindAlgorithm {
     }
 
     private Code findNextGuess(int numAttempts) {
-        int size = permutations.size();
         if (numAttempts < 4) {
             return new Code(Arrays.asList(numAttempts, numAttempts, numAttempts, numAttempts));
         }
