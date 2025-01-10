@@ -39,7 +39,7 @@ public class CodeBreakerSelector extends Scene {
 
         homeButton.drawHomeButton(frame);
 
-        homeButton.registerHomeHandlers();
+        homeButton.registerHomeHandlers(frame);
 
         registerProceedHandler();
 

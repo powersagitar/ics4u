@@ -2,7 +2,6 @@ package mastermind.gui.panels;
 
 import javax.swing.*;
 import mastermind.gui.scenes.GameModeSelector;
-import mastermind.gui.scenes.Scene;
 
 public class HomeButton {
     private final static JButton homeButton;
@@ -14,10 +13,9 @@ public class HomeButton {
         buttonPanel.add(homeButton);
     }
 
-    public static void registerHomeHandlers() {
+    public static void registerHomeHandlers(final JFrame frame) {
         homeButton.addActionListener(event -> {
-            final JFrame gameModeSelector = Scene.createDefaultScene();
-            new GameModeSelector(gameModeSelector);
+            new GameModeSelector(frame);
         });
     }
 
