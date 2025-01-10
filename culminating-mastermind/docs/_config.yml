@@ -35,6 +35,21 @@ github_username: powersagitar
 # Build settings
 theme: just-the-docs
 
+footer_content: Copyright &copy; 2024-2025 Kenneth Chen and Mohan Dong (powersagitar).
+
+back_to_top: true
+back_to_top_text: Back to Top
+
+last_edit_timestamp: true # show or hide edit time - page must have `last_modified_date` defined in the frontmatter
+last_edit_time_format: "%b %e %Y at %I:%M %p" # uses ruby's time format: https://ruby-doc.org/stdlib-2.7.0/libdoc/time/rdoc/Time.html
+
+gh_edit_link: true
+gh_edit_link_text: Edit this page on GitHub.
+gh_edit_repository: https://github.com/powersagitar/ics4u
+gh_edit_branch: main
+gh_edit_source: culminating-mastermind/docs
+gh_edit_view_mode: tree
+
 mermaid:
   version: 11.4.1
 
