@@ -60,8 +60,6 @@ public class CodeMaker extends Scene {
 
         registerDeleteHandlers();
 
-        homeButton.registerHomeHandlers();
-
         registerProceedHandlers();
 
         refreshFrame();

@@ -39,8 +39,6 @@ public class CodeBreakerSelector extends Scene {
 
         homeButton.drawHomeButton(frame);
 
-        homeButton.registerHomeHandlers();
-
         registerProceedHandler();
 
         refreshFrame();
