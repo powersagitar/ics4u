@@ -58,6 +58,8 @@ public class CodeBreaker extends Scene {
 
         homeButton.drawHomeButton(frame);
 
+        homeButton.registerHomeHandlers();
+
         registerGuessHandler();
 
         refreshFrame();
