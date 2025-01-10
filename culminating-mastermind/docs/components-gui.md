@@ -9,7 +9,7 @@ nav_order: 2
 
 # GUI Components
 
-Components related to GUI of the program.
+Components responsible for user interaction.
 
 ## Panels
 

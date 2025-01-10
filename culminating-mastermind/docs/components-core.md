@@ -9,7 +9,7 @@ nav_order: 1
 
 # Core Components
 
-Non-GUI components of the program.
+Components responsible for game logic.
 
 ## Code
 
@@ -76,6 +76,6 @@ to solve the game.
 
 TODO: description
 
-### EasyAlgorithm
+### BasicAlgorithm
 
 TODO: description

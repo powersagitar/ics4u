@@ -9,7 +9,7 @@ nav_order: 4
 
 # Utility Components
 
-General utilities that are not directly associated with program logic.
+Helper methods for [other component categories](/ics4u/components/).
 
 I.e., components that can be reused by other projects.
 

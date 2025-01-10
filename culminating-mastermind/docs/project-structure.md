@@ -32,6 +32,13 @@ nav_order: 2
 └── gradle
 ```
 
+## Project Root
+
+The repository this project resides in is a compilation of all coursework
+throughout the semester.
+
+Thus, the project root is [`/culminating-mastermind`](https://github.com/powersagitar/ics4u/tree/main/culminating-mastermind).
+
 ## Build Directories
 
 - `app/bin`
