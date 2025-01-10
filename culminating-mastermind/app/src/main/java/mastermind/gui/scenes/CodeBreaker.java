@@ -17,7 +17,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class CodeBreaker extends Scene {
     private final MastermindAlgorithm solver;
     private final GameBoard gameBoard = new GameBoard();
-    private final HomeButton homeButton = new HomeButton();
     private final AtomicInteger correctCount = new AtomicInteger(2);
     private final AtomicInteger misplacementCount = new AtomicInteger(2);
     private final JButton proceedButton = new JButton("Proceed");
@@ -56,9 +55,9 @@ public class CodeBreaker extends Scene {
 
         drawProceedButton();
 
-        homeButton.drawHomeButton(frame);
+        HomeButton.drawHomeButton(frame);
 
-        homeButton.registerHomeHandlers(frame);
+        HomeButton.registerHomeHandlers(frame);
 
         registerGuessHandler();
 

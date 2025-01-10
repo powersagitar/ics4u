@@ -22,7 +22,6 @@ public class CodeMaker extends Scene {
     private final GameBoard gameBoard = new GameBoard();
     private final JButton proceedButton = new JButton("Proceed");
     private final JButton deleteButton = new JButton("Delete");
-    private final HomeButton homeButton = new HomeButton();
     private final JPanel flowPanel = new JPanel(new FlowLayout());
     private final JPanel controlPanel = new JPanel();
 
@@ -54,13 +53,13 @@ public class CodeMaker extends Scene {
 
         drawProceedButton();
 
-        homeButton.drawHomeButton(frame);
+        HomeButton.drawHomeButton(frame);
 
         registerColorSelectionHandlers();
 
         registerDeleteHandlers();
 
-        homeButton.registerHomeHandlers(frame);
+        HomeButton.registerHomeHandlers(frame);
 
         registerProceedHandlers();
 
