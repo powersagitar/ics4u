@@ -56,6 +56,7 @@ public class GameModeSelector extends Scene {
      */
     private void drawWelcomeMessage() {
         final JLabel welcomeMessage = new JLabel("WELCOME TO MASTERMIND!");
+        welcomeMessage.setFont(new Font("Default", Font.BOLD, 20));
         welcomeMessage.setAlignmentX(Component.CENTER_ALIGNMENT);
         frame.add(welcomeMessage);
     }
