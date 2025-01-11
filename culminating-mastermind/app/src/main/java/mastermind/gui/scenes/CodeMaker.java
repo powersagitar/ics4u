@@ -74,7 +74,7 @@ public class CodeMaker extends Scene {
 
     private void drawControlPanel() {
         final CodeInput codeInput = new CodeInput();
-        final JPanel controlPanel = codeInput.drawButtonsToPanel();
+        final JPanel controlPanel = codeInput.drawButtons();
 
         codeInput.addActionListener(guess -> {
             gameBoard.updateGuessFromColorIndices(solver.getAttempts(), guess);
