@@ -1,9 +1,9 @@
 package mastermind.core;
 
-import java.util.HashMap;
-
-import mastermind.utils.*;
 import mastermind.Mastermind;
+import mastermind.utils.Tuple2;
+
+import java.util.HashMap;
 
 public class Response {
     //    (correct count, misplacement count)
@@ -140,6 +140,6 @@ public class Response {
      */
     @Override
     public String toString() {
-        return "correct count: " + this.response.first + " misplacement count: " + this.response.second;
+        return "Black: " + this.response.first + ", White: " + this.response.second;
     }
 }
