@@ -23,6 +23,8 @@ public class CodeMakerResult extends Scene {
     public CodeMakerResult(final JFrame frame, MastermindSolver.Status status, final Code correctCode) {
         super(frame);
 
+        Mastermind.log.info("Creating CodeMakerResult scene.");
+
         this.correctCode = correctCode;
 
         if (status == MastermindSolver.Status.Win) {

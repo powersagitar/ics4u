@@ -5,26 +5,23 @@ import mastermind.core.Code;
 import mastermind.core.Response;
 import mastermind.core.solvers.HumanSolver;
 import mastermind.core.solvers.MastermindSolver;
+import mastermind.gui.panels.CodeInput;
 import mastermind.gui.panels.GameBoard;
 import mastermind.gui.panels.HomeButton;
 import mastermind.utils.Tuple2;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class CodeMaker extends Scene {
-    private final ArrayList<Integer> nextGuess = new ArrayList<>(Mastermind.CODE_LENGTH);
+    private List<Integer> nextGuess = null;
     private final Code secretCode = Code.generateRandomCode(List.of());
     private final HumanSolver solver = new HumanSolver(secretCode);
 
-    private final ArrayList<JButton> colorSelectionButtons = new ArrayList<>(Mastermind.TOTAL_COLORS);
     private final GameBoard gameBoard = new GameBoard();
     private final JButton proceedButton = new JButton("Proceed");
-    private final JButton deleteButton = new JButton("Delete");
     private final JPanel flowPanel = new JPanel(new FlowLayout());
-    private final JPanel controlPanel = new JPanel();
 
     /**
      * Constructs a new CodeMaker instance, initializing the game environment,
@@ -51,13 +48,7 @@ public class CodeMaker extends Scene {
 
         drawControlPanel();
 
-        drawProceedButton();
-
         HomeButton.drawHomeButton(frame);
-
-        registerColorSelectionHandlers();
-
-        registerDeleteHandlers();
 
         HomeButton.registerHomeHandlers(frame);
 
@@ -81,120 +72,19 @@ public class CodeMaker extends Scene {
         flowPanel.add(gameBoard.getBoardPanel());
     }
 
-    /**
-     * Constructs and populates the control panel for the Mastermind game interface.
-     *
-     * <p>
-     * This method sets up a vertically aligned control panel within the user interface.
-     * It includes the following components:
-     * - A title label ("Controls") displayed at the top of the panel.
-     * - Color selection buttons grouped into rows. Each button corresponds to a color
-     * and allows the player to make selections for their guesses.
-     * </p>
-     *
-     * <p>
-     * The control panel is added to the primary layout (`flowPanel`) of the game.
-     * Buttons for color selection are dynamically created and stored in the
-     * `colorSelectionButtons` list for event handling and future access. The rows
-     * are organized based on the total number of colors defined in the game (`Mastermind.TOTAL_COLORS`).
-     * </p>
-     */
     private void drawControlPanel() {
-        controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.Y_AXIS));
-        flowPanel.add(controlPanel);
+        final CodeInput codeInput = new CodeInput();
+        final JPanel controlPanel = codeInput.drawButtonsToPanel();
 
-        final JLabel title = new JLabel("Controls");
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
-        controlPanel.add(title);
-
-        final int rowWidth = Mastermind.TOTAL_COLORS / 2;
-
-        for (int rowIndex = 0; rowIndex < Mastermind.TOTAL_COLORS / rowWidth; ++rowIndex) {
-            final JPanel colorPanel = new JPanel(new FlowLayout());
-            controlPanel.add(colorPanel);
-
-            for (int colorIndex = rowWidth * rowIndex; colorIndex < rowWidth * (rowIndex + 1); ++colorIndex) {
-                JButton colorButton = new JButton(" ");
-                colorButton.setBackground(GameBoard.codeColorToAwtColor.get(Code.Color.values()[colorIndex]));
-                colorButton.setForeground(Color.BLACK);
-                colorButton.setOpaque(true);
-                colorButton.setContentAreaFilled(true);
-                colorPanel.add(colorButton);
-                colorSelectionButtons.add(colorButton);
-            }
-        }
-
-        drawDeleteButton();
-    }
-
-    /**
-     * Registers action handlers for the color selection buttons to manage user guesses.
-     *
-     * <p>
-     * This method iterates over the list of color selection buttons (`colorSelectionButtons`)
-     * and attaches an `ActionListener` to each button. When a button is pressed, the associated
-     * color index is added to the current guess (`nextGuess`), provided that the guess has
-     * not yet reached the maximum length (`Mastermind.CODE_LENGTH`).
-     * </p>
-     *
-     * <p>
-     * The handler also updates the game board visually to reflect the selected colors
-     * by modifying the guess displayed on the corresponding row of the game board, based
-     * on the number of attempts made by the solver (`solver.getAttempts()`).
-     * </p>
-     *
-     * <p>
-     * It ensures that:
-     * - The user's guess does not exceed the expected number of colors.
-     * - The game board is updated in real-time to indicate the progress of the guess.
-     * </p>
-     */
-    private void registerColorSelectionHandlers() {
-        for (int i = 0; i < colorSelectionButtons.size(); ++i) {
-            final JButton button = colorSelectionButtons.get(i);
-            final int colorIndex = i;
-            button.addActionListener(event -> {
-                if (nextGuess.size() < Mastermind.CODE_LENGTH) {
-                    final int gameBoardRowNumber = solver.getAttempts();
-                    nextGuess.add(colorIndex);
-                    gameBoard.updateGuessFromColorIndices(gameBoardRowNumber, nextGuess);
-                }
-            });
-        }
-    }
-
-    private void drawDeleteButton() {
-        deleteButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        controlPanel.add(deleteButton);
-    }
-
-    private void registerDeleteHandlers() {
-        deleteButton.addActionListener(event -> {
-            if (!nextGuess.isEmpty()) {
-                final int gameBoardRowNumber = solver.getAttempts();
-                nextGuess.removeLast();
-                gameBoard.updateGuessFromColorIndices(gameBoardRowNumber, nextGuess);
-            }
+        codeInput.addActionListener(guess -> {
+            gameBoard.updateGuessFromColorIndices(solver.getAttempts(), guess);
+            nextGuess = guess;
         });
-    }
 
-    /**
-     * Draws and configures the "Proceed" button within the control panel of the game interface.
-     *
-     * <p>
-     * This method aligns the "Proceed" button to the center horizontally within the control panel
-     * and adds it to the panel. The button is integral to the gameplay, allowing the player to
-     * submit their guess during each turn after selecting the desired colors.
-     * </p>
-     *
-     * <p>
-     * The control panel is a vertically aligned part of the user interface, and the "Proceed"
-     * button is added at the appropriate position to enable ease of interaction for the player.
-     * </p>
-     */
-    private void drawProceedButton() {
-        proceedButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         controlPanel.add(proceedButton);
+        proceedButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        flowPanel.add(controlPanel);
     }
 
     /**
