@@ -102,24 +102,29 @@ public class GameBoard {
         parent.removeAll();
 
         for (int col = 0; col < Mastermind.CODE_LENGTH; ++col) {
-            final int COL = col;
-            final JPanel circlePanel = new JPanel() {
-                @Override
-                protected void paintComponent(Graphics g) {
-                    super.paintComponent(g);
-                    Graphics2D g2d = (Graphics2D) g;
-                    g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                    g2d.setColor(colors.get(COL));
-                    g2d.fillOval(0, 0, getWidth(), getHeight());
-                }
-            };
-
-            circlePanel.setPreferredSize(new Dimension(20, 20));
+            final JPanel circlePanel = getCirclePanel(colors, col);
             parent.add(circlePanel);
         }
 
         parent.revalidate();
         parent.repaint();
+    }
+
+    private static JPanel getCirclePanel(List<Color> colors, int col) {
+        final int COL = col;
+        final JPanel circlePanel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2d = (Graphics2D) g;
+                g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                g2d.setColor(colors.get(COL));
+                g2d.fillOval(0, 0, getWidth(), getHeight());
+            }
+        };
+
+        circlePanel.setPreferredSize(new Dimension(20, 20));
+        return circlePanel;
     }
 
     /**
@@ -176,23 +181,7 @@ public class GameBoard {
                 hintConstraints.gridx = col;
                 hintConstraints.gridy = row;
 
-                int finalColorIdx = colorIdx;
-                final JPanel hint = new JPanel() {
-                    @Override
-                    protected void paintComponent(Graphics g) {
-                        super.paintComponent(g);
-                        Graphics2D g2d = (Graphics2D) g;
-                        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-                        int padding = 2;
-                        int diameter = Math.min(getWidth(), getHeight()) - 2 * padding;
-
-                        g2d.setColor(colors.get(finalColorIdx));
-                        g2d.fillOval(padding, padding, diameter, diameter);
-                    }
-                };
-
-                hint.setPreferredSize(new Dimension(15, 15)); // Adjust size to account for padding
+                final JPanel hint = getHintPanel(colorIdx, colors);
                 parent.add(hint, hintConstraints);
 
                 ++colorIdx;
@@ -201,6 +190,26 @@ public class GameBoard {
 
         parent.revalidate();
         parent.repaint();
+    }
+
+    private static JPanel getHintPanel(int colorIdx, ArrayList<Color> colors) {
+        final JPanel hint = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2d = (Graphics2D) g;
+                g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+                int padding = 2;
+                int diameter = Math.min(getWidth(), getHeight()) - 2 * padding;
+
+                g2d.setColor(colors.get(colorIdx));
+                g2d.fillOval(padding, padding, diameter, diameter);
+            }
+        };
+
+        hint.setPreferredSize(new Dimension(15, 15)); // Adjust size to account for padding
+        return hint;
     }
 
 
