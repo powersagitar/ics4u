@@ -23,7 +23,6 @@ public class CodeBreaker extends Scene {
     private final JButton proceedButton = new JButton("Proceed");
     private final JPanel flowPanel = new JPanel(new FlowLayout());
     private final JPanel controlPanel = new JPanel();
-    private final Help help = new Help();
 
     /**
      * Represents the CodeBreaker scene in the application, inheriting from the parent `Scene` class.
@@ -61,11 +60,11 @@ public class CodeBreaker extends Scene {
 
         HomeButton.drawHomeButton(frame);
 
-        help.drawHelpButton(frame);
+        Help.drawHelpButton(frame);
 
         HomeButton.registerHomeHandlers(frame);
 
-        help.registerHelpHandlers();
+        Help.registerHelpHandlers();
 
         registerGuessHandler();
 
