@@ -1,12 +1,12 @@
 package mastermind.core;
 
+import mastermind.Mastermind;
+
 import java.util.ArrayList;
-import java.util.List;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 import java.util.function.Function;
-
-import mastermind.Mastermind;
 
 public class Code {
     public enum Color {
@@ -21,17 +21,6 @@ public class Code {
          */
         public static Color fromIndex(final int index) {
             return Color.values()[index];
-        }
-
-        /**
-         * Converts the zero-based index of a {@code Color} constant to its string representation.
-         *
-         * @param index the zero-based index of the {@code Color} constant.
-         * @return the string representation of the {@code Color} constant at the specified index.
-         * @throws ArrayIndexOutOfBoundsException if the index is out of range for the {@code Color} values.
-         */
-        public static String toString(final int index) {
-            return fromIndex(index).toString();
         }
     }
 
@@ -87,7 +76,7 @@ public class Code {
      * @param code a {@link List} of integers, where each integer is the index of a {@code Color}.
      *             The indices must be within the range of valid {@code Color} values.
      * @throws ArrayIndexOutOfBoundsException if any index in the provided list is out of range
-     *         for the {@code Color} enum.
+     *                                        for the {@code Color} enum.
      */
     public Code(final List<Integer> code) {
         ArrayList<Color> codeBuilder = new ArrayList<>(Mastermind.CODE_LENGTH);
@@ -130,8 +119,8 @@ public class Code {
      * </p>
      *
      * @return a {@link HashMap} where the keys are {@link Color} values and the values
-     *         are integers representing the number of occurrences of each color in the
-     *         code sequence.
+     * are integers representing the number of occurrences of each color in the
+     * code sequence.
      */
     public HashMap<Color, Integer> getOccurrences() {
         HashMap<Color, Integer> occurrences = new HashMap<>(Mastermind.TOTAL_COLORS);
@@ -145,5 +134,10 @@ public class Code {
         }
 
         return occurrences;
+    }
+
+    @Override
+    public String toString() {
+        return code.toString();
     }
 }
