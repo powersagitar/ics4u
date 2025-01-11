@@ -3,8 +3,9 @@ package mastermind.utils;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.time.Instant;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 @SuppressWarnings("unused")
 public class Logger {
@@ -33,7 +34,7 @@ public class Logger {
 
     private Severity level = Severity.INFO;
 
-    private final ArrayList<OutputStream> sinks = new ArrayList<>(1);
+    private final Set<OutputStream> sinks = new HashSet<>(Set.of(System.out));
 
     public void addSink(final OutputStream sink) {
         sinks.add(sink);
