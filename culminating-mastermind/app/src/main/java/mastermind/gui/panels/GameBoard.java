@@ -102,29 +102,12 @@ public class GameBoard {
         parent.removeAll();
 
         for (int col = 0; col < Mastermind.CODE_LENGTH; ++col) {
-            final JPanel circlePanel = getCirclePanel(colors, col);
-            parent.add(circlePanel);
+            final JPanel codeCircle = new CodeCircle(colors.get(col));
+            parent.add(codeCircle);
         }
 
         parent.revalidate();
         parent.repaint();
-    }
-
-    private static JPanel getCirclePanel(List<Color> colors, int col) {
-        final int COL = col;
-        final JPanel circlePanel = new JPanel() {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                Graphics2D g2d = (Graphics2D) g;
-                g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                g2d.setColor(colors.get(COL));
-                g2d.fillOval(0, 0, getWidth(), getHeight());
-            }
-        };
-
-        circlePanel.setPreferredSize(new Dimension(20, 20));
-        return circlePanel;
     }
 
     /**
