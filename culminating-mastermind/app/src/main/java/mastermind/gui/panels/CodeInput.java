@@ -54,6 +54,8 @@ public class CodeInput {
                 final JButton button = new JButton(" ");
                 button.setBackground(GameBoard.codeColorToAwtColor.get(codeColors[codeColorIndex]));
                 button.setOpaque(true);
+                button.setBorderPainted(false);
+                button.setFocusPainted(false);
                 buttonPanel.add(button, gbc);
                 submitButtons.add(button);
 
