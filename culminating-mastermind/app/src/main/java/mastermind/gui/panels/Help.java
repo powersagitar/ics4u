@@ -4,19 +4,15 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Help {
-    private final JButton helpButton;
-    private final JPanel helpPanel;
-    private final JFrame popupFrame;
-    private final JLabel helpTitle = new JLabel("Mastermind Help", SwingConstants.CENTER);
-    private final JButton gameplayInstructionsButton = new JButton("Gameplay Instructions");
-    private final JButton navigationInstructionsButton = new JButton("Navigation Instructions");
-    private final JPanel popupPanel = new JPanel();
+    private final static JButton helpButton = new JButton("Help");
+    private final static JPanel helpPanel = new JPanel();
+    private final static JFrame popupFrame = new JFrame("Help");
+    private final static JLabel helpTitle = new JLabel("Mastermind Help", SwingConstants.CENTER);
+    private final static JButton gameplayInstructionsButton = new JButton("Gameplay Instructions");
+    private final static JButton navigationInstructionsButton = new JButton("Navigation Instructions");
+    private final static JPanel popupPanel = new JPanel();
 
-
-    public Help() {
-        helpButton = new JButton("Help");
-        helpPanel = new JPanel();
-        popupFrame = new JFrame("Help");
+    static {
         popupFrame.setLayout(new BorderLayout());
 
         popupPanel.setLayout(new BoxLayout(popupPanel, BoxLayout.Y_AXIS));
@@ -35,11 +31,11 @@ public class Help {
         registerNavigationInstructionsHandler();
     }
 
-    public void drawHelpButton(final JFrame frame) {
+    public static void drawHelpButton(final JFrame frame) {
         frame.add(helpPanel);
     }
 
-    public void registerHelpHandlers() {
+    public static void registerHelpHandlers() {
         helpButton.addActionListener(event -> {
             popupFrame.setSize(400, 400);
             popupFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -47,19 +43,15 @@ public class Help {
         });
     }
 
-    private void registerGameplayInstructionsHandler() {
-        gameplayInstructionsButton.addActionListener(event -> {
-            showGameplayInstructions();
-        });
+    private static void registerGameplayInstructionsHandler() {
+        gameplayInstructionsButton.addActionListener(event -> showGameplayInstructions());
     }
 
-    private void registerNavigationInstructionsHandler() {
-        navigationInstructionsButton.addActionListener(event -> {
-            showNavigationInstructions();
-        });
+    private static void registerNavigationInstructionsHandler() {
+        navigationInstructionsButton.addActionListener(event -> showNavigationInstructions());
     }
 
-    private void showNavigationInstructions() {
+    private static void showNavigationInstructions() {
         popupPanel.removeAll();
 
         JLabel instructionsLabel = new JLabel("<html>" + getNavigationInstructionsText() + "</html>", SwingConstants.CENTER);
@@ -78,7 +70,7 @@ public class Help {
         popupPanel.repaint();
     }
 
-    private void showGameplayInstructions() {
+    private static void showGameplayInstructions() {
         popupPanel.removeAll();
 
         JLabel instructionsLabel = new JLabel("<html>" + getGameplayInstructionsText() + "</html>", SwingConstants.CENTER);
@@ -94,7 +86,7 @@ public class Help {
         popupPanel.repaint();
     }
 
-    private void showHelpMenu() {
+    private static void showHelpMenu() {
         popupPanel.removeAll();
 
         popupPanel.setLayout(new BoxLayout(popupPanel, BoxLayout.Y_AXIS));
@@ -108,26 +100,26 @@ public class Help {
         popupPanel.repaint();
     }
 
-    private String getGameplayInstructionsText() {
+    private static String getGameplayInstructionsText() {
         return """
             Mastermind is a code-breaking game where a setter sets a secret code and a guesser must guess that secret code.
             The code consists of a sequence of 4 colored pegs, and the guesser must guess the correct sequence.
             After each guess, the guesser receives feedback on the correctness of their guess.
-            A black peg indicates a correct color in the correct position, 
+            A black peg indicates a correct color in the correct position,
             while a white peg indicates a correct color in the wrong position.
-            The guesser has 10 guesses to crack the code and win the game. 
+            The guesser has 10 guesses to crack the code and win the game.
             
             Good luck!
             """.replace("\n", "<br>");
     }
 
-    private String getNavigationInstructionsText() {
+    private static String getNavigationInstructionsText() {
         return """
             In the first screen, you can choose to play as the code maker or the code breaker.
             As the code breaker, you will set a secret code for the code breaker (the computer) to guess.
             As the code maker, you will guess the secret code that the code breaker (the computer) creates.
             
-            If you selected code breaker, you will choose the difficulty of the computer guesser algorithm. 
+            If you selected code breaker, you will choose the difficulty of the computer guesser algorithm.
             You will secretly select a code for the computer to guess.
             You will then view the code breaker's guesses and provide feedback on each guess, using the white and black pegs.
             If the computer is unsuccessful in guessing, then you will input the correct code.
