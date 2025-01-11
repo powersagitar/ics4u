@@ -9,7 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class Result extends Scene {
+public class CodeMakerResult extends Scene {
     private final Code correctCode;
 
     /**
@@ -20,7 +20,7 @@ public class Result extends Scene {
      * @param correctCode The correct code that was to be guessed in the game.
      * @throws IllegalArgumentException If the provided status is not MastermindSolver.Status.Win or MastermindSolver.Status.Lose.
      */
-    public Result(final JFrame frame, MastermindSolver.Status status, final Code correctCode) {
+    public CodeMakerResult(final JFrame frame, MastermindSolver.Status status, final Code correctCode) {
         super(frame);
 
         this.correctCode = correctCode;
@@ -30,7 +30,7 @@ public class Result extends Scene {
         } else if (status == MastermindSolver.Status.Lose) {
             drawLoseScreen();
         } else {
-            throw new IllegalArgumentException("Only Status.Win and Status.Lose can yield results.");
+            Mastermind.log.fatal("Status other than win and lose provided to CodeMakerResult.");
         }
 
         drawCorrectCode();

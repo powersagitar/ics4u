@@ -15,8 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CodeMaker extends Scene {
-    private final HumanSolver solver;
     private final ArrayList<Integer> nextGuess = new ArrayList<>(Mastermind.CODE_LENGTH);
+    private final Code secretCode = Code.generateRandomCode(List.of());
+    private final HumanSolver solver = new HumanSolver(secretCode);
 
     private final ArrayList<JButton> colorSelectionButtons = new ArrayList<>(Mastermind.TOTAL_COLORS);
     private final GameBoard gameBoard = new GameBoard();
@@ -42,8 +43,7 @@ public class CodeMaker extends Scene {
     public CodeMaker(final JFrame frame) {
         super(frame);
 
-        final Code secretCode = Code.generateRandomCode(List.of());
-        solver = new HumanSolver(secretCode);
+        Mastermind.log.info("Creating CodeMaker scene");
 
         frame.add(flowPanel);
 
@@ -230,7 +230,7 @@ public class CodeMaker extends Scene {
     private void registerProceedHandlers() {
         proceedButton.addActionListener(event -> {
             if (nextGuess.size() < Mastermind.CODE_LENGTH) {
-                throw new IllegalArgumentException("Haven't chosen all 4 colors for a guess yet");
+                Mastermind.log.fatal("Haven't chosen all 4 colors for a guess yet");
             }
 
             final Code guess = new Code(nextGuess);
@@ -247,7 +247,7 @@ public class CodeMaker extends Scene {
                 return;
             }
 
-            new Result(frame, status, guess);
+            new CodeMakerResult(frame, status, secretCode);
         });
     }
 }

@@ -314,7 +314,7 @@ public class CodeBreaker extends Scene {
                 return;
             }
 
-            new Result(frame, result.first, result.second);
+            new CodeMakerResult(frame, result.first, result.second);
         });
     }
 }
