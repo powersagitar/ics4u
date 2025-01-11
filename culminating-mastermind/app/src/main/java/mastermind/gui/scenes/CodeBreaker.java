@@ -6,6 +6,7 @@ import mastermind.core.Response;
 import mastermind.core.solvers.MastermindAlgorithm;
 import mastermind.core.solvers.MastermindSolver;
 import mastermind.gui.panels.GameBoard;
+import mastermind.gui.panels.Help;
 import mastermind.gui.panels.HomeButton;
 import mastermind.utils.Tuple2;
 
@@ -22,6 +23,7 @@ public class CodeBreaker extends Scene {
     private final JButton proceedButton = new JButton("Proceed");
     private final JPanel flowPanel = new JPanel(new FlowLayout());
     private final JPanel controlPanel = new JPanel();
+    private final Help help = new Help();
 
     /**
      * Represents the CodeBreaker scene in the application, inheriting from the parent `Scene` class.
@@ -59,7 +61,11 @@ public class CodeBreaker extends Scene {
 
         HomeButton.drawHomeButton(frame);
 
+        help.drawHelpButton(frame);
+
         HomeButton.registerHomeHandlers(frame);
+
+        help.registerHelpHandlers();
 
         registerGuessHandler();
 

@@ -8,6 +8,7 @@ import mastermind.core.solvers.MastermindSolver;
 import mastermind.gui.panels.CodeInput;
 import mastermind.gui.panels.GameBoard;
 import mastermind.gui.panels.HomeButton;
+import mastermind.gui.panels.Help;
 import mastermind.utils.Tuple2;
 
 import javax.swing.*;
@@ -22,6 +23,7 @@ public class CodeMaker extends Scene {
     private final GameBoard gameBoard = new GameBoard();
     private final JButton proceedButton = new JButton("Proceed");
     private final JPanel flowPanel = new JPanel(new FlowLayout());
+    private final Help help = new Help();
 
     /**
      * Constructs a new CodeMaker instance, initializing the game environment,
@@ -50,7 +52,11 @@ public class CodeMaker extends Scene {
 
         HomeButton.drawHomeButton(frame);
 
+        help.drawHelpButton(frame);
+
         HomeButton.registerHomeHandlers(frame);
+
+        help.registerHelpHandlers();
 
         registerProceedHandlers();
 

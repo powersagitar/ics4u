@@ -1,19 +1,38 @@
 package mastermind.gui.panels;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class Help {
-    final private JButton helpButton;
-    final private JPanel helpPanel;
-    final private JFrame popupFrame;
-    final private JLabel HELP_CONTENT = new JLabel("Welcome to Mastermind! The goal of the game is to guess the secret code. The code maker will create a secret code of 4 colors. The code breaker will have 10 chances to guess the code. After each guess, the code maker will provide feedback to the code breaker. The feedback consists of black and white pegs. A black peg indicates that a color is correct and in the correct position. A white peg indicates that a color is correct but in the wrong position. Good luck!"); // TODO: Add more information
+    private final JButton helpButton;
+    private final JPanel helpPanel;
+    private final JFrame popupFrame;
+    private final JLabel helpTitle = new JLabel("Mastermind Help", SwingConstants.CENTER);
+    private final JButton gameplayInstructionsButton = new JButton("Gameplay Instructions");
+    private final JButton navigationInstructionsButton = new JButton("Navigation Instructions");
+    private final JPanel popupPanel = new JPanel();
+
 
     public Help() {
         helpButton = new JButton("Help");
         helpPanel = new JPanel();
-        popupFrame = new JFrame();
-        popupFrame.add(HELP_CONTENT);
+        popupFrame = new JFrame("Help");
+        popupFrame.setLayout(new BorderLayout());
+
+        popupPanel.setLayout(new BoxLayout(popupPanel, BoxLayout.Y_AXIS));
+        helpTitle.setFont(new Font("Default", Font.BOLD, 20));
+        popupPanel.add(helpTitle);
+        popupPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        popupPanel.add(gameplayInstructionsButton);
+        popupPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        popupPanel.add(navigationInstructionsButton);
+        popupFrame.add(popupPanel, BorderLayout.CENTER);
+
         helpPanel.add(helpButton);
+
+        registerHelpHandlers();
+        registerGameplayInstructionsHandler();
+        registerNavigationInstructionsHandler();
     }
 
     public void drawHelpButton(final JFrame frame) {
@@ -21,12 +40,104 @@ public class Help {
     }
 
     public void registerHelpHandlers() {
-        helpButton.addActionListener( event -> {
-            popupFrame.setSize(300, 300);
+        helpButton.addActionListener(event -> {
+            popupFrame.setSize(400, 400);
             popupFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             popupFrame.setVisible(true);
         });
     }
 
+    private void registerGameplayInstructionsHandler() {
+        gameplayInstructionsButton.addActionListener(event -> {
+            showGameplayInstructions();
+        });
+    }
 
+    private void registerNavigationInstructionsHandler() {
+        navigationInstructionsButton.addActionListener(event -> {
+            showNavigationInstructions();
+        });
+    }
+
+    private void showNavigationInstructions() {
+        popupPanel.removeAll();
+
+        JLabel instructionsLabel = new JLabel("<html>" + getNavigationInstructionsText() + "</html>", SwingConstants.CENTER);
+        instructionsLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        instructionsLabel.setPreferredSize(new Dimension(350, instructionsLabel.getPreferredSize().height));
+
+        JButton backButton = new JButton("Back");
+        backButton.addActionListener(event -> showHelpMenu());
+
+        popupPanel.setLayout(new BorderLayout());
+        popupPanel.add(instructionsLabel, BorderLayout.CENTER);
+        popupPanel.add(backButton, BorderLayout.SOUTH);
+
+        popupPanel.revalidate();
+        popupPanel.repaint();
+    }
+
+    private void showGameplayInstructions() {
+        popupPanel.removeAll();
+
+        JLabel instructionsLabel = new JLabel("<html>" + getGameplayInstructionsText() + "</html>", SwingConstants.CENTER);
+        instructionsLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        JButton backButton = new JButton("Back");
+        backButton.addActionListener(event -> showHelpMenu());
+
+        popupPanel.setLayout(new BorderLayout());
+        popupPanel.add(instructionsLabel, BorderLayout.CENTER);
+        popupPanel.add(backButton, BorderLayout.SOUTH);
+
+        popupPanel.revalidate();
+        popupPanel.repaint();
+    }
+
+    private void showHelpMenu() {
+        popupPanel.removeAll();
+
+        popupPanel.setLayout(new BoxLayout(popupPanel, BoxLayout.Y_AXIS));
+        popupPanel.add(helpTitle);
+        popupPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        popupPanel.add(gameplayInstructionsButton);
+        popupPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        popupPanel.add(navigationInstructionsButton);
+
+        popupPanel.revalidate();
+        popupPanel.repaint();
+    }
+
+    private String getGameplayInstructionsText() {
+        return """
+            Mastermind is a code-breaking game where a setter sets a secret code and a guesser must guess that secret code.
+            The code consists of a sequence of 4 colored pegs, and the guesser must guess the correct sequence.
+            After each guess, the guesser receives feedback on the correctness of their guess.
+            A black peg indicates a correct color in the correct position, 
+            while a white peg indicates a correct color in the wrong position.
+            The guesser has 10 guesses to crack the code and win the game. 
+            
+            Good luck!
+            """.replace("\n", "<br>");
+    }
+
+    private String getNavigationInstructionsText() {
+        return """
+            In the first screen, you can choose to play as the code maker or the code breaker.
+            As the code breaker, you will set a secret code for the code breaker (the computer) to guess.
+            As the code maker, you will guess the secret code that the code breaker (the computer) creates.
+            
+            If you selected code breaker, you will choose the difficulty of the computer guesser algorithm. 
+            You will secretly select a code for the computer to guess.
+            You will then view the code breaker's guesses and provide feedback on each guess, using the white and black pegs.
+            If the computer is unsuccessful in guessing, then you will input the correct code.
+            
+            If you selected code maker, you will guess the code that the computer secretly selected.
+            You will input your guesses and receive feedback on each guess, using the white and black pegs.
+            
+            There is a home button on each screen (except the starting screen) that will take you back to the starting screen.
+            
+            Please enjoy!
+            """.replace("\n", "<br>");
+    }
 }

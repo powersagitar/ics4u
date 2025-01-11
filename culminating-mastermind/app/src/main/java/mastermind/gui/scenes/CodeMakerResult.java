@@ -4,6 +4,7 @@ import mastermind.Mastermind;
 import mastermind.core.Code;
 import mastermind.core.solvers.MastermindSolver;
 import mastermind.gui.panels.GameBoard;
+import mastermind.gui.panels.Help;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 
 public class CodeMakerResult extends Scene {
     private final Code correctCode;
+    private final Help help = new Help();
 
     /**
      * Constructs a new Result scene to display the outcome of the Mastermind game.
@@ -38,6 +40,10 @@ public class CodeMakerResult extends Scene {
         drawCorrectCode();
 
         drawProceedButton();
+
+        help.drawHelpButton(frame);
+
+        help.registerHelpHandlers();
 
         refreshFrame();
     }
