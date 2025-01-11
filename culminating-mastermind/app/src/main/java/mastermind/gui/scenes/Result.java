@@ -4,19 +4,20 @@ import mastermind.Mastermind;
 import mastermind.core.Code;
 import mastermind.core.solvers.MastermindSolver;
 import mastermind.gui.panels.GameBoard;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
 public class Result extends Scene {
     private final Code correctCode;
+
     /**
      * Constructs a new Result scene to display the outcome of the Mastermind game.
      *
      * @param frame       The parent JFrame that serves as the container for this scene.
      * @param status      The game status, indicating whether the code breaker has won or lost.
      * @param correctCode The correct code that was to be guessed in the game.
-     *
      * @throws IllegalArgumentException If the provided status is not MastermindSolver.Status.Win or MastermindSolver.Status.Lose.
      */
     public Result(final JFrame frame, MastermindSolver.Status status, final Code correctCode) {
