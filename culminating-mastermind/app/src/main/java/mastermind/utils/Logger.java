@@ -18,18 +18,19 @@ public class Logger {
         FATAL;
 
         final static Map<Severity, ANSIColor> colorMap = Map.of(
-            TRACE, ANSIColor.GRAY,
-            DEBUG, ANSIColor.GREEN,
-            INFO, ANSIColor.CYAN,
-            WARNING, ANSIColor.YELLOW,
-            ERROR, ANSIColor.RED,
-            FATAL, ANSIColor.RED_BACKGROUND
-        );
+                TRACE, ANSIColor.GRAY,
+                DEBUG, ANSIColor.GREEN,
+                INFO, ANSIColor.CYAN,
+                WARNING, ANSIColor.YELLOW,
+                ERROR, ANSIColor.RED,
+                FATAL, ANSIColor.RED_BACKGROUND);
     }
 
     private Severity level = Severity.INFO;
 
-    private final Set<OutputStream> sinks = new HashSet<>(Set.of(System.out));
+    private final Set<OutputStream> sinks = new HashSet<>();
+
+    private boolean logToStdout = true;
 
     public void addSink(final OutputStream sink) {
         sinks.add(sink);
@@ -37,6 +38,10 @@ public class Logger {
 
     public void setLevel(final Severity level) {
         this.level = level;
+    }
+
+    public void setLogToStdout(final boolean logToStdout) {
+        this.logToStdout = logToStdout;
     }
 
     public void trace(final String msg) {
@@ -71,17 +76,23 @@ public class Logger {
 
         final Instant now = Instant.now();
 
+        final String severityStr = severity.toString();
+        final String coloredSeverityStr = ANSIColor.colorize(Severity.colorMap.get(severity), severityStr);
+
+        final String msgFormatString = "[%s][%s] %s%n";
+
+        final String fullMsg = String.format(msgFormatString, now.toString(), severityStr, msg);
+        final String coloredFullMsg = String.format(msgFormatString, now.toString(), coloredSeverityStr, msg);
+
+        if (logToStdout) {
+            System.out.print(coloredFullMsg);
+        }
+
         for (OutputStream sink : sinks) {
             try {
-                final String severityStr = sink == System.out ?
-                    ANSIColor.colorize(Severity.colorMap.get(severity), severity.toString()) :
-                    severity.toString();
-
-                final String formattedMessage = String.format("[%s][%s] %s%n", now.toString(), severityStr, msg);
-
-                sink.write(formattedMessage.getBytes());
+                sink.write(fullMsg.getBytes());
             } catch (final IOException e) {
-                System.err.println(e.getMessage());
+                System.err.println("Failed to log to sink: " + e.getMessage());
             }
         }
     }
