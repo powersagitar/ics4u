@@ -35,6 +35,11 @@ github_username: powersagitar
 # Build settings
 theme: just-the-docs
 
+callouts:
+  important:
+    title: important
+    color: purple
+
 footer_content: Copyright &copy; 2024-2025 Kenneth Chen and Mohan Dong (powersagitar).
 
 back_to_top: true
