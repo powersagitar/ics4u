@@ -25,11 +25,6 @@ public class Logger {
             ERROR, ANSIColor.RED,
             FATAL, ANSIColor.RED_BACKGROUND
         );
-
-        @Override
-        public String toString() {
-            return ANSIColor.colorize(colorMap.get(this), super.toString());
-        }
     }
 
     private Severity level = Severity.INFO;
@@ -76,11 +71,15 @@ public class Logger {
 
         final Instant now = Instant.now();
 
-        final String formattedMsg = String.format("[%s][%s] %s%n", now.toString(), severity, msg);
-
         for (OutputStream sink : sinks) {
             try {
-                sink.write(formattedMsg.getBytes());
+                final String severityStr = sink == System.out ?
+                    ANSIColor.colorize(Severity.colorMap.get(severity), severity.toString()) :
+                    severity.toString();
+
+                final String formattedMessage = String.format("[%s][%s] %s%n", now.toString(), severityStr, msg);
+
+                sink.write(formattedMessage.getBytes());
             } catch (final IOException e) {
                 System.err.println(e.getMessage());
             }
