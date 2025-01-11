@@ -14,7 +14,7 @@ public class CodeInput {
     private final JButton clearButton = new JButton("Clear");
     private final List<Integer> code = new ArrayList<>(Mastermind.CODE_LENGTH);
 
-    public JPanel drawButtonsToPanel() {
+    public JPanel drawButtons() {
         final JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
@@ -33,20 +33,31 @@ public class CodeInput {
             throw new IllegalStateException("Buttons already drawn");
         }
 
-        final int rowWidth = Mastermind.TOTAL_COLORS / 2;
+        final JPanel buttonPanel = new JPanel(new GridBagLayout());
+        panel.add(buttonPanel);
 
-        for (int rowIndex = 0; rowIndex < Mastermind.TOTAL_COLORS / rowWidth; ++rowIndex) {
-            final JPanel colorPanel = new JPanel(new FlowLayout());
-            panel.add(colorPanel);
+        final Code.Color[] codeColors = Code.Color.values();
 
-            for (int colorIndex = rowWidth * rowIndex; colorIndex < rowWidth * (rowIndex + 1); ++colorIndex) {
-                JButton colorButton = new JButton(" ");
-                colorButton.setBackground(GameBoard.codeColorToAwtColor.get(Code.Color.values()[colorIndex]));
-                colorButton.setForeground(Color.BLACK);
-                colorButton.setOpaque(true);
-                colorButton.setContentAreaFilled(true);
-                colorPanel.add(colorButton);
-                submitButtons.add(colorButton);
+        final int cols = Mastermind.TOTAL_COLORS / 2;
+        final int rows = Mastermind.TOTAL_COLORS / cols;
+
+        int codeColorIndex = 0;
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(3, 3, 3, 3);
+
+        for (int row = 0; row < rows; ++row) {
+            for (int col = 0; col < cols; ++col) {
+                gbc.gridx = col;
+                gbc.gridy = row;
+
+                final JButton button = new JButton(" ");
+                button.setBackground(GameBoard.codeColorToAwtColor.get(codeColors[codeColorIndex]));
+                button.setOpaque(true);
+                buttonPanel.add(button, gbc);
+                submitButtons.add(button);
+
+                codeColorIndex++;
             }
         }
     }
