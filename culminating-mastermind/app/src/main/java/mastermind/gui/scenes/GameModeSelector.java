@@ -102,11 +102,15 @@ public class GameModeSelector extends Scene {
     private void drawProceedButton() {
         proceedButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         proceedButton.addActionListener(event -> {
+            Mastermind.log.trace("Proceed button pressed");
+
             if (codeBreakerButton.isSelected()) {
-                Mastermind.log.info("Code Breaker mode selected");
+                Mastermind.log.debug("Code breaker mode selected");
+
                 new CodeBreakerSelector(frame);
             } else if (codeMakerButton.isSelected()) {
-                Mastermind.log.info("Code Maker mode selected");
+                Mastermind.log.debug("Code maker mode selected");
+
                 new CodeMaker(frame);
             } else {
                 Mastermind.log.fatal("No game mode selected");

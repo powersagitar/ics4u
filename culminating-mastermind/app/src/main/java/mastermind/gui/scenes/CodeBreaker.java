@@ -6,8 +6,8 @@ import mastermind.core.Response;
 import mastermind.core.solvers.MastermindAlgorithm;
 import mastermind.core.solvers.MastermindSolver;
 import mastermind.gui.panels.GameBoard;
-import mastermind.utils.Tuple2;
 import mastermind.gui.panels.HomeButton;
+import mastermind.utils.Tuple2;
 
 import javax.swing.*;
 import java.awt.*;
@@ -40,6 +40,8 @@ public class CodeBreaker extends Scene {
      */
     public CodeBreaker(final JFrame frame, final MastermindAlgorithm algorithm) {
         super(frame);
+
+        Mastermind.log.info("Creating CodeBreaker scene");
 
         this.solver = algorithm;
 
@@ -291,13 +293,22 @@ public class CodeBreaker extends Scene {
         final Code firstGuess = solver.guess();
         gameBoard.updateGuess(0, firstGuess.getColors());
 
+        Mastermind.log.info("Guess 0: " + firstGuess);
+
 //        subsequent guesses
         proceedButton.addActionListener(event -> {
+            Mastermind.log.trace("Proceed button pressed");
+
             final Response responseForPreviousGuess = new Response(new Tuple2<>(correctCount.get(), misplacementCount.get()));
             final int currentAttempt = solver.getAttempts();
             final Tuple2<MastermindSolver.Status, Code> result = solver.guess(responseForPreviousGuess);
 
+            Mastermind.log.info("Response: " + responseForPreviousGuess);
+            Mastermind.log.info("Solver status: " + result.first);
+
             if (result.first == MastermindSolver.Status.Continue) {
+                Mastermind.log.info("Guess " + currentAttempt + ": " + result.second);
+
                 gameBoard.updateHints(currentAttempt - 1, responseForPreviousGuess);
                 gameBoard.updateGuess(currentAttempt, result.second.getColors());
                 return;
