@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 @SuppressWarnings("unused")
@@ -32,9 +31,9 @@ public class Logger {
         }
     }
 
-    private final ArrayList<OutputStream> sinks = new ArrayList<>(List.of(System.out));
-
     private Severity level = Severity.INFO;
+
+    private final ArrayList<OutputStream> sinks = new ArrayList<>(1);
 
     public void addSink(final OutputStream sink) {
         sinks.add(sink);
