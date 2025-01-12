@@ -136,10 +136,6 @@ public class Code {
         return occurrences;
     }
 
-    public boolean isValid() {
-        return code.size() == Mastermind.CODE_LENGTH;
-    }
-
     @Override
     public String toString() {
         return code.toString();

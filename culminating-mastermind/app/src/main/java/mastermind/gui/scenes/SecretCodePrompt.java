@@ -72,6 +72,12 @@ public class SecretCodePrompt extends Scene {
         codeInput.addActionListener(codeIdxList -> {
             final Code code = new Code(codeIdxList);
 
+            if (codeIdxList.size() >= Mastermind.CODE_LENGTH) {
+                secretCode = code;
+            } else {
+                secretCode = null;
+            }
+
             final List<Color> codeAWTColors = code.getColors()
                 .stream()
                 .map(GameBoard.codeColorToAwtColor::get)
@@ -82,7 +88,6 @@ public class SecretCodePrompt extends Scene {
             }
 
             GameBoard.drawGuess(codePanel, codeAWTColors);
-            secretCode = code;
         });
 
         return buttonsPanelWrapper;
@@ -93,10 +98,10 @@ public class SecretCodePrompt extends Scene {
         proceedButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         proceedButton.addActionListener(e -> {
-            if (secretCode == null || !secretCode.isValid()) {
+            if (secretCode == null) {
                 JOptionPane.showMessageDialog(frame,
-                    "Please Make sure it has a length of " + Mastermind.CODE_LENGTH + ".",
-                    "Entered code is invalid",
+                    "Please choose all 4 colors for the correct code",
+                    "Incomplete Code",
                     JOptionPane.ERROR_MESSAGE);
 
                 return;
