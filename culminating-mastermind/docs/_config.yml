@@ -40,6 +40,11 @@ callouts:
     title: important
     color: purple
 
+nav_external_links:
+  - title: Javadoc
+    url: /javadoc
+    opens_in_new_tab: true
+
 footer_content: Copyright &copy; 2024-2025 Kenneth Chen and Mohan Dong (powersagitar).
 
 back_to_top: true

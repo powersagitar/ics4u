@@ -81,9 +81,7 @@ jobs:
         uses: actions/download-artifact@v4
 
       - name: Move javadoc to wiki
-        run: |
-          mkdir -p wiki/components
-          mv javadoc/* wiki/components
+        run: mv javadoc wiki
 
       - name: Setup Pages
         id: pages
