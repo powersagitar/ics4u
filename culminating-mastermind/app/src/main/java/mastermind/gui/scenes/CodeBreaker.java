@@ -12,14 +12,19 @@ import mastermind.utils.Tuple2;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 
 public class CodeBreaker extends Scene {
     private final MastermindAlgorithm solver;
-    private final GameBoard gameBoard = new GameBoard();
     private final AtomicInteger correctCount = new AtomicInteger(2);
     private final AtomicInteger misplacementCount = new AtomicInteger(2);
+    private final List<Code> guesses = new ArrayList<>(Mastermind.MAX_GUESSES);
+    private final List<Response> responses = new ArrayList<>(Mastermind.MAX_GUESSES);
+
+    private final GameBoard gameBoard = new GameBoard();
     private final JButton proceedButton = new JButton("Proceed");
     private final JPanel flowPanel = new JPanel(new FlowLayout());
     private final JPanel controlPanel = new JPanel();
@@ -297,6 +302,7 @@ public class CodeBreaker extends Scene {
 //        first guess
         final Code firstGuess = solver.guess();
         gameBoard.updateGuess(0, firstGuess.getColors());
+        guesses.add(firstGuess);
 
         Mastermind.log.info("Guess 0: " + firstGuess);
 
@@ -308,18 +314,22 @@ public class CodeBreaker extends Scene {
             final int currentAttempt = solver.getAttempts();
             final Tuple2<MastermindSolver.Status, Code> result = solver.guess(responseForPreviousGuess);
 
+            responses.add(responseForPreviousGuess);
+
             Mastermind.log.info("Response: " + responseForPreviousGuess);
             Mastermind.log.info("Solver status: " + result.first);
 
             if (result.first == MastermindSolver.Status.Continue) {
                 Mastermind.log.info("Guess " + currentAttempt + ": " + result.second);
 
+                guesses.add(result.second);
+
                 gameBoard.updateHints(currentAttempt - 1, responseForPreviousGuess);
                 gameBoard.updateGuess(currentAttempt, result.second.getColors());
                 return;
             }
 
-            new SecretCodePrompt(frame);
+            new SecretCodePrompt(frame, result.first, guesses, responses);
         });
     }
 }

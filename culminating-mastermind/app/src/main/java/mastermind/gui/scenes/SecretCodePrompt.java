@@ -2,6 +2,8 @@ package mastermind.gui.scenes;
 
 import mastermind.Mastermind;
 import mastermind.core.Code;
+import mastermind.core.Response;
+import mastermind.core.solvers.MastermindSolver;
 import mastermind.gui.panels.CodeCircle;
 import mastermind.gui.panels.CodeInput;
 import mastermind.gui.panels.GameBoard;
@@ -14,15 +16,21 @@ import java.util.stream.Collectors;
 
 public class SecretCodePrompt extends Scene {
     private Code secretCode = null;
+    private final MastermindSolver.Status status;
+    private final List<Code> guesses;
+    private final List<Response> responses;
 
-    public SecretCodePrompt(final JFrame frame) {
+    public SecretCodePrompt(final JFrame frame,
+                            final MastermindSolver.Status status,
+                            final List<Code> guesses,
+                            final List<Response> responses) {
         super(frame);
 
         Mastermind.log.info("Creating CorrectCodePrompt scene");
 
-        final JLabel failureLabel = new JLabel("The program failed to guess the code.");
-        failureLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        frame.add(failureLabel);
+        this.status = status;
+        this.guesses = guesses;
+        this.responses = responses;
 
         final JLabel promptLabel = new JLabel("Please enter the correct code:");
         promptLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -94,8 +102,7 @@ public class SecretCodePrompt extends Scene {
                 return;
             }
 
-            // TODO: transition to code breaker result
-            new GameModeSelector(frame);
+            new CodeBreakerResult(frame, status, secretCode, guesses, responses);
         });
 
         return proceedButton;
