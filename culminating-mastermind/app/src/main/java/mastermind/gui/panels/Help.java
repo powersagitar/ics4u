@@ -37,7 +37,7 @@ public class Help {
 
     public static void registerHelpHandlers() {
         HELP_BUTTON.addActionListener(event -> {
-            POPUP_FRAME.setSize(400, 400);
+            POPUP_FRAME.setSize(400, 500);
             POPUP_FRAME.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             POPUP_FRAME.setVisible(true);
         });
