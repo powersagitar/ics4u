@@ -57,8 +57,6 @@ public class Help {
         JLabel instructionsLabel = new JLabel("<html>" + getNavigationInstructionsText() + "</html>", SwingConstants.CENTER);
         instructionsLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        instructionsLabel.setPreferredSize(new Dimension(350, instructionsLabel.getPreferredSize().height));
-
         JButton backButton = new JButton("Back");
         backButton.addActionListener(event -> showHelpMenu());
 
