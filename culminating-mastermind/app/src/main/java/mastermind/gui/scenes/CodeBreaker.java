@@ -339,7 +339,7 @@ public class CodeBreaker extends Scene {
         try {
             return solver.guess(response);
         } catch (final InvalidHintsException e) {
-            Mastermind.log.error("Invalid hints provided: " + e.getMessage());
+            Mastermind.LOG.error("Invalid hints provided: " + e.getMessage());
             return new Tuple2<>(MastermindSolver.Status.Lose, null);
         }
     }
