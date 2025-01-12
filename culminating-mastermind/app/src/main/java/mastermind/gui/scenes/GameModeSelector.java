@@ -116,7 +116,7 @@ public class GameModeSelector extends Scene {
             } else if (codeMakerButton.isSelected()) {
                 Mastermind.log.debug("Code maker mode selected");
 
-                new CodeMaker(frame);
+                new CodeMakerSelector(frame);
             } else {
                 Mastermind.log.fatal("No game mode selected");
             }
