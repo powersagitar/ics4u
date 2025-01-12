@@ -42,3 +42,7 @@ tasks.named<Test>("test") {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()
 }
+
+tasks.named<Javadoc>("javadoc") {
+  title = "Mastermind API Docs"
+}
