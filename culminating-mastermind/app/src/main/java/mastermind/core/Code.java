@@ -93,7 +93,7 @@ public class Code {
      *
      * @param index the zero-based index of the {@code Color} to retrieve.
      * @return the {@code Color} at the specified index.
-     * @throws IndexOutOfBoundsException if the index is out of range (index < 0 || index >= size of the code).
+     * @throws IndexOutOfBoundsException if the index is out of range (index &lt; 0 || index &gt;= size of the code).
      */
     public Color getColor(final int index) {
         return code.get(index);
