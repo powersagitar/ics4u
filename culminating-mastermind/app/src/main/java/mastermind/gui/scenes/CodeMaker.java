@@ -7,8 +7,8 @@ import mastermind.core.solvers.HumanSolver;
 import mastermind.core.solvers.MastermindSolver;
 import mastermind.gui.panels.CodeInput;
 import mastermind.gui.panels.GameBoard;
-import mastermind.gui.panels.HomeButton;
 import mastermind.gui.panels.Help;
+import mastermind.gui.panels.HomeButton;
 import mastermind.utils.Tuple2;
 
 import javax.swing.*;
@@ -125,7 +125,13 @@ public class CodeMaker extends Scene {
     private void registerProceedHandlers() {
         proceedButton.addActionListener(event -> {
             if (nextGuess.size() < Mastermind.CODE_LENGTH) {
-                Mastermind.log.fatal("Haven't chosen all 4 colors for a guess yet");
+                JOptionPane.showMessageDialog(
+                    frame,
+                    "Please choose all 4 colors for your guess",
+                    "Incomplete Guess",
+                    JOptionPane.ERROR_MESSAGE);
+
+                return;
             }
 
             final Code guess = new Code(nextGuess);
