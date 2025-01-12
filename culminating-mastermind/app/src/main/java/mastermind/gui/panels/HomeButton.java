@@ -14,9 +14,7 @@ public class HomeButton {
     }
 
     public static void registerHomeHandlers(final JFrame frame) {
-        homeButton.addActionListener(event -> {
-            new GameModeSelector(frame);
-        });
+        homeButton.addActionListener(event -> new GameModeSelector(frame));
     }
 
     public static void drawHomeButton(final JFrame frame) {

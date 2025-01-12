@@ -12,7 +12,6 @@ import java.util.ArrayList;
 
 public class CodeMakerResult extends Scene {
     private final Code correctCode;
-    private final Help help = new Help();
 
     /**
      * Constructs a new Result scene to display the outcome of the Mastermind game.
@@ -41,9 +40,9 @@ public class CodeMakerResult extends Scene {
 
         drawProceedButton();
 
-        help.drawHelpButton(frame);
+        Help.drawHelpButton(frame);
 
-        help.registerHelpHandlers();
+        Help.registerHelpHandlers();
 
         refreshFrame();
     }

@@ -11,7 +11,6 @@ public class GameModeSelector extends Scene {
     private final JRadioButton codeBreakerButton = new JRadioButton("CODEBREAKER: Computer Guesses, Player Makes Code", true);
     private final JRadioButton codeMakerButton = new JRadioButton("CODEMAKER: Player Guesses, Computer Makes Code");
     private final JButton proceedButton = new JButton("Proceed");
-    private final Help help = new Help();
 
     /**
      * Creates a new GameModeSelector object that represents a scene for selecting the game mode.
@@ -40,8 +39,8 @@ public class GameModeSelector extends Scene {
         frame.add(selectorPanel);
         frame.add(proceedButton);
 
-        help.drawHelpButton(frame);
-        help.registerHelpHandlers();
+        Help.drawHelpButton(frame);
+        Help.registerHelpHandlers();
 
         refreshFrame();
     }

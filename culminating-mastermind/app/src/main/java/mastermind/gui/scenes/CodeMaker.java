@@ -23,7 +23,6 @@ public class CodeMaker extends Scene {
     private final GameBoard gameBoard = new GameBoard();
     private final JButton proceedButton = new JButton("Proceed");
     private final JPanel flowPanel = new JPanel(new FlowLayout());
-    private final Help help = new Help();
 
     /**
      * Constructs a new CodeMaker instance, initializing the game environment,
@@ -52,11 +51,11 @@ public class CodeMaker extends Scene {
 
         HomeButton.drawHomeButton(frame);
 
-        help.drawHelpButton(frame);
+        Help.drawHelpButton(frame);
 
         HomeButton.registerHomeHandlers(frame);
 
-        help.registerHelpHandlers();
+        Help.registerHelpHandlers();
 
         registerProceedHandlers();
 

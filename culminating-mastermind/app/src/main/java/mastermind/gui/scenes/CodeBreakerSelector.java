@@ -16,7 +16,6 @@ public class CodeBreakerSelector extends Scene {
     private final JRadioButton mediumAlgoButton = new JRadioButton("Medium Algorithm");
     private final JRadioButton basicAlgoButton = new JRadioButton("Basic Algorithm");
     private final JButton proceedButton = new JButton("Proceed");
-    private final Help help = new Help();
 
     /**
      * Constructs a CodeBreakerSelector, which provides a user interface to select
@@ -43,11 +42,11 @@ public class CodeBreakerSelector extends Scene {
 
         HomeButton.drawHomeButton(frame);
 
-        help.drawHelpButton(frame);
+        Help.drawHelpButton(frame);
 
         HomeButton.registerHomeHandlers(frame);
 
-        help.registerHelpHandlers();
+        Help.registerHelpHandlers();
 
         registerProceedHandler();
 
