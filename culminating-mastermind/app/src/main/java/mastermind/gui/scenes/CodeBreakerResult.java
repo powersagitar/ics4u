@@ -110,7 +110,7 @@ public class CodeBreakerResult extends Scene {
         final List<Color> codeAWTColors = secretCode
             .getColors()
             .stream()
-            .map(GameBoard.codeColorToAwtColor::get)
+            .map(GameBoard.CODE_COLOR_TO_AWT_COLOR::get)
             .toList();
 
         final JPanel codePanel = new JPanel(new FlowLayout());

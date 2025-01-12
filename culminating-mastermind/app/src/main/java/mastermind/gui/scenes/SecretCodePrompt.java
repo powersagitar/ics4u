@@ -26,7 +26,7 @@ public class SecretCodePrompt extends Scene {
                             final List<Response> responses) {
         super(frame);
 
-        Mastermind.log.info("Creating CorrectCodePrompt scene");
+        Mastermind.LOG.info("Creating CorrectCodePrompt scene");
 
         this.status = status;
         this.guesses = guesses;
@@ -80,7 +80,7 @@ public class SecretCodePrompt extends Scene {
 
             final List<Color> codeAWTColors = code.getColors()
                 .stream()
-                .map(GameBoard.codeColorToAwtColor::get)
+                .map(GameBoard.CODE_COLOR_TO_AWT_COLOR::get)
                 .collect(Collectors.toList());
 
             while (codeAWTColors.size() < Mastermind.CODE_LENGTH) {

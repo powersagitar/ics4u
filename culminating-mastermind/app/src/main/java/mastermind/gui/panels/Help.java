@@ -4,27 +4,27 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Help {
-    private final static JButton helpButton = new JButton("Help");
-    private final static JPanel helpPanel = new JPanel();
-    private final static JFrame popupFrame = new JFrame("Help");
-    private final static JLabel helpTitle = new JLabel("Mastermind Help", SwingConstants.CENTER);
-    private final static JButton gameplayInstructionsButton = new JButton("Gameplay Instructions");
-    private final static JButton navigationInstructionsButton = new JButton("Navigation Instructions");
-    private final static JPanel popupPanel = new JPanel();
+    private final static JButton HELP_BUTTON = new JButton("Help");
+    private final static JPanel HELP_PANEL = new JPanel();
+    private final static JFrame POPUP_FRAME = new JFrame("Help");
+    private final static JLabel HELP_TITLE = new JLabel("Mastermind Help", SwingConstants.CENTER);
+    private final static JButton GAMEPLAY_INSTRUCTIONS_BUTTON = new JButton("Gameplay Instructions");
+    private final static JButton NAVIGATION_INSTRUCTIONS_BUTTON = new JButton("Navigation Instructions");
+    private final static JPanel POPUP_PANEL = new JPanel();
 
     static {
-        popupFrame.setLayout(new BorderLayout());
+        POPUP_FRAME.setLayout(new BorderLayout());
 
-        popupPanel.setLayout(new BoxLayout(popupPanel, BoxLayout.Y_AXIS));
-        helpTitle.setFont(new Font("Default", Font.BOLD, 20));
-        popupPanel.add(helpTitle);
-        popupPanel.add(Box.createRigidArea(new Dimension(0, 10)));
-        popupPanel.add(gameplayInstructionsButton);
-        popupPanel.add(Box.createRigidArea(new Dimension(0, 10)));
-        popupPanel.add(navigationInstructionsButton);
-        popupFrame.add(popupPanel, BorderLayout.CENTER);
+        POPUP_PANEL.setLayout(new BoxLayout(POPUP_PANEL, BoxLayout.Y_AXIS));
+        HELP_TITLE.setFont(new Font("Default", Font.BOLD, 20));
+        POPUP_PANEL.add(HELP_TITLE);
+        POPUP_PANEL.add(Box.createRigidArea(new Dimension(0, 10)));
+        POPUP_PANEL.add(GAMEPLAY_INSTRUCTIONS_BUTTON);
+        POPUP_PANEL.add(Box.createRigidArea(new Dimension(0, 10)));
+        POPUP_PANEL.add(NAVIGATION_INSTRUCTIONS_BUTTON);
+        POPUP_FRAME.add(POPUP_PANEL, BorderLayout.CENTER);
 
-        helpPanel.add(helpButton);
+        HELP_PANEL.add(HELP_BUTTON);
 
         registerHelpHandlers();
         registerGameplayInstructionsHandler();
@@ -32,27 +32,27 @@ public class Help {
     }
 
     public static void drawHelpButton(final JFrame frame) {
-        frame.add(helpPanel);
+        frame.add(HELP_PANEL);
     }
 
     public static void registerHelpHandlers() {
-        helpButton.addActionListener(event -> {
-            popupFrame.setSize(400, 400);
-            popupFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            popupFrame.setVisible(true);
+        HELP_BUTTON.addActionListener(event -> {
+            POPUP_FRAME.setSize(400, 400);
+            POPUP_FRAME.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            POPUP_FRAME.setVisible(true);
         });
     }
 
     private static void registerGameplayInstructionsHandler() {
-        gameplayInstructionsButton.addActionListener(event -> showGameplayInstructions());
+        GAMEPLAY_INSTRUCTIONS_BUTTON.addActionListener(event -> showGameplayInstructions());
     }
 
     private static void registerNavigationInstructionsHandler() {
-        navigationInstructionsButton.addActionListener(event -> showNavigationInstructions());
+        NAVIGATION_INSTRUCTIONS_BUTTON.addActionListener(event -> showNavigationInstructions());
     }
 
     private static void showNavigationInstructions() {
-        popupPanel.removeAll();
+        POPUP_PANEL.removeAll();
 
         JLabel instructionsLabel = new JLabel("<html>" + getNavigationInstructionsText() + "</html>", SwingConstants.CENTER);
         instructionsLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -60,42 +60,42 @@ public class Help {
         JButton backButton = new JButton("Back");
         backButton.addActionListener(event -> showHelpMenu());
 
-        popupPanel.setLayout(new BorderLayout());
-        popupPanel.add(instructionsLabel, BorderLayout.CENTER);
-        popupPanel.add(backButton, BorderLayout.SOUTH);
+        POPUP_PANEL.setLayout(new BorderLayout());
+        POPUP_PANEL.add(instructionsLabel, BorderLayout.CENTER);
+        POPUP_PANEL.add(backButton, BorderLayout.SOUTH);
 
-        popupPanel.revalidate();
-        popupPanel.repaint();
+        POPUP_PANEL.revalidate();
+        POPUP_PANEL.repaint();
     }
 
     private static void showGameplayInstructions() {
-        popupPanel.removeAll();
+        POPUP_PANEL.removeAll();
 
         JLabel instructionsLabel = new JLabel("<html>" + getGameplayInstructionsText() + "</html>", SwingConstants.CENTER);
         instructionsLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         JButton backButton = new JButton("Back");
         backButton.addActionListener(event -> showHelpMenu());
 
-        popupPanel.setLayout(new BorderLayout());
-        popupPanel.add(instructionsLabel, BorderLayout.CENTER);
-        popupPanel.add(backButton, BorderLayout.SOUTH);
+        POPUP_PANEL.setLayout(new BorderLayout());
+        POPUP_PANEL.add(instructionsLabel, BorderLayout.CENTER);
+        POPUP_PANEL.add(backButton, BorderLayout.SOUTH);
 
-        popupPanel.revalidate();
-        popupPanel.repaint();
+        POPUP_PANEL.revalidate();
+        POPUP_PANEL.repaint();
     }
 
     private static void showHelpMenu() {
-        popupPanel.removeAll();
+        POPUP_PANEL.removeAll();
 
-        popupPanel.setLayout(new BoxLayout(popupPanel, BoxLayout.Y_AXIS));
-        popupPanel.add(helpTitle);
-        popupPanel.add(Box.createRigidArea(new Dimension(0, 10)));
-        popupPanel.add(gameplayInstructionsButton);
-        popupPanel.add(Box.createRigidArea(new Dimension(0, 10)));
-        popupPanel.add(navigationInstructionsButton);
+        POPUP_PANEL.setLayout(new BoxLayout(POPUP_PANEL, BoxLayout.Y_AXIS));
+        POPUP_PANEL.add(HELP_TITLE);
+        POPUP_PANEL.add(Box.createRigidArea(new Dimension(0, 10)));
+        POPUP_PANEL.add(GAMEPLAY_INSTRUCTIONS_BUTTON);
+        POPUP_PANEL.add(Box.createRigidArea(new Dimension(0, 10)));
+        POPUP_PANEL.add(NAVIGATION_INSTRUCTIONS_BUTTON);
 
-        popupPanel.revalidate();
-        popupPanel.repaint();
+        POPUP_PANEL.revalidate();
+        POPUP_PANEL.repaint();
     }
 
     private static String getGameplayInstructionsText() {

@@ -17,7 +17,7 @@ public class Logger {
         ERROR,
         FATAL;
 
-        final static Map<Severity, ANSIColor> colorMap = Map.of(
+        final static Map<Severity, ANSIColor> COLOR_MAP = Map.of(
                 TRACE, ANSIColor.GRAY,
                 DEBUG, ANSIColor.GREEN,
                 INFO, ANSIColor.CYAN,
@@ -77,7 +77,7 @@ public class Logger {
         final Instant now = Instant.now();
 
         final String severityStr = severity.toString();
-        final String coloredSeverityStr = ANSIColor.colorize(Severity.colorMap.get(severity), severityStr);
+        final String coloredSeverityStr = ANSIColor.colorize(Severity.COLOR_MAP.get(severity), severityStr);
 
         final String msgFormatString = "[%s][%s] %s%n";
 

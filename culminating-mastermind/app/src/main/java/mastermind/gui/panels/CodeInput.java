@@ -30,7 +30,7 @@ public class CodeInput {
 
     private void drawSubmitButtons(final JPanel panel) {
         if (!submitButtons.isEmpty()) {
-            Mastermind.log.fatal("Trying to draw submit buttons more than once");
+            Mastermind.LOG.fatal("Trying to draw submit buttons more than once");
         }
 
         final JPanel buttonPanel = new JPanel(new GridBagLayout());
@@ -52,7 +52,7 @@ public class CodeInput {
                 gbc.gridy = row;
 
                 final JButton button = new JButton(" ");
-                button.setBackground(GameBoard.codeColorToAwtColor.get(codeColors[codeColorIndex]));
+                button.setBackground(GameBoard.CODE_COLOR_TO_AWT_COLOR.get(codeColors[codeColorIndex]));
                 button.setOpaque(true);
                 button.setBorderPainted(false);
                 button.setFocusPainted(false);
@@ -76,7 +76,7 @@ public class CodeInput {
 
     private void addSubmitListener(final Consumer<List<Integer>> onCodeEntered) {
         if (submitButtons.isEmpty()) {
-            Mastermind.log.fatal("Trying to listen on submit buttons without drawing them first");
+            Mastermind.LOG.fatal("Trying to listen on submit buttons without drawing them first");
         }
 
         for (int i = 0; i < submitButtons.size(); ++i) {

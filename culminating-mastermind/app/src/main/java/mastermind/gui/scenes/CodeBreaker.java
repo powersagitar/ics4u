@@ -47,7 +47,7 @@ public class CodeBreaker extends Scene {
     public CodeBreaker(final JFrame frame, final MastermindAlgorithm algorithm) {
         super(frame);
 
-        Mastermind.log.info("Creating CodeBreaker scene");
+        Mastermind.LOG.info("Creating CodeBreaker scene");
 
         this.solver = algorithm;
 
@@ -304,11 +304,11 @@ public class CodeBreaker extends Scene {
         gameBoard.updateGuess(0, firstGuess.getColors());
         guesses.add(firstGuess);
 
-        Mastermind.log.info("Guess 0: " + firstGuess);
+        Mastermind.LOG.info("Guess 0: " + firstGuess);
 
 //        subsequent guesses
         proceedButton.addActionListener(event -> {
-            Mastermind.log.trace("Proceed button pressed");
+            Mastermind.LOG.trace("Proceed button pressed");
 
             final Response responseForPreviousGuess = new Response(new Tuple2<>(correctCount.get(), misplacementCount.get()));
             final int currentAttempt = solver.getAttempts();
@@ -316,11 +316,11 @@ public class CodeBreaker extends Scene {
 
             responses.add(responseForPreviousGuess);
 
-            Mastermind.log.info("Response: " + responseForPreviousGuess);
-            Mastermind.log.info("Solver status: " + result.first);
+            Mastermind.LOG.info("Response: " + responseForPreviousGuess);
+            Mastermind.LOG.info("Solver status: " + result.first);
 
             if (result.first == MastermindSolver.Status.Continue) {
-                Mastermind.log.info("Guess " + currentAttempt + ": " + result.second);
+                Mastermind.LOG.info("Guess " + currentAttempt + ": " + result.second);
 
                 guesses.add(result.second);
 

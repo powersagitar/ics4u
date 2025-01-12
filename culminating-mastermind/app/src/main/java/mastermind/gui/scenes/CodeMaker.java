@@ -41,7 +41,7 @@ public class CodeMaker extends Scene {
     public CodeMaker(final JFrame frame) {
         super(frame);
 
-        Mastermind.log.info("Creating CodeMaker scene");
+        Mastermind.LOG.info("Creating CodeMaker scene");
 
         frame.add(flowPanel);
 

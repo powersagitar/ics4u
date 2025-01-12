@@ -28,7 +28,7 @@ public class CodeMakerSelector extends Scene{
     public CodeMakerSelector(final JFrame frame) {
         super(frame);
 
-        Mastermind.log.info("Creating CodeBreakerSelector scene");
+        Mastermind.LOG.info("Creating CodeBreakerSelector scene");
 
         drawSelectorPanel();
 
@@ -124,18 +124,18 @@ public class CodeMakerSelector extends Scene{
      */
     private void registerProceedHandler() {
         proceedButton.addActionListener(event -> {
-            Mastermind.log.trace("Proceed button pressed");
+            Mastermind.LOG.trace("Proceed button pressed");
 
             if (randomButton.isSelected()) {
-                Mastermind.log.info("Random Code Maker selected");
+                Mastermind.LOG.info("Random Code Maker selected");
 
                 new CodeMaker(frame);
             } else if (preProgrammedButton.isSelected()) {
-                Mastermind.log.info("Pre-Programmed Code Maker selected");
+                Mastermind.LOG.info("Pre-Programmed Code Maker selected");
 
                 // TODO: add pre-programmed code maker
             } else {
-                Mastermind.log.fatal("No code maker algorithm selected");
+                Mastermind.LOG.fatal("No code maker algorithm selected");
             }
         });
     }

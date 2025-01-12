@@ -26,7 +26,7 @@ public class GameModeSelector extends Scene {
     public GameModeSelector(final JFrame frame) {
         super(frame);
 
-        Mastermind.log.info("Creating GameModeSelector scene");
+        Mastermind.LOG.info("Creating GameModeSelector scene");
 
         final int LINE_SEPARATOR = 20;
         final int CENTER_ALIGNMENT = 130;
@@ -107,18 +107,18 @@ public class GameModeSelector extends Scene {
     private void drawProceedButton() {
         proceedButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         proceedButton.addActionListener(event -> {
-            Mastermind.log.trace("Proceed button pressed");
+            Mastermind.LOG.trace("Proceed button pressed");
 
             if (codeBreakerButton.isSelected()) {
-                Mastermind.log.debug("Code breaker mode selected");
+                Mastermind.LOG.debug("Code breaker mode selected");
 
                 new CodeBreakerSelector(frame);
             } else if (codeMakerButton.isSelected()) {
-                Mastermind.log.debug("Code maker mode selected");
+                Mastermind.LOG.debug("Code maker mode selected");
 
                 new CodeMakerSelector(frame);
             } else {
-                Mastermind.log.fatal("No game mode selected");
+                Mastermind.LOG.fatal("No game mode selected");
             }
         });
     }

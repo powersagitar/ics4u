@@ -15,15 +15,15 @@ public class GameBoard {
     private final ArrayList<Tuple2<JPanel, JPanel>> boardRowPanels = new ArrayList<>(Mastermind.MAX_GUESSES);
     private final JPanel boardPanel = new JPanel(new GridBagLayout());
 
-    public static final HashMap<Code.Color, Color> codeColorToAwtColor = new HashMap<>(Mastermind.TOTAL_COLORS);
+    public static final HashMap<Code.Color, Color> CODE_COLOR_TO_AWT_COLOR = new HashMap<>(Mastermind.TOTAL_COLORS);
 
     static {
-        codeColorToAwtColor.put(Code.Color.Blue, Color.blue);
-        codeColorToAwtColor.put(Code.Color.Green, Color.green);
-        codeColorToAwtColor.put(Code.Color.Orange, Color.orange);
-        codeColorToAwtColor.put(Code.Color.Purple, new Color(139, 0, 255));
-        codeColorToAwtColor.put(Code.Color.Red, Color.red);
-        codeColorToAwtColor.put(Code.Color.Yellow, Color.yellow);
+        CODE_COLOR_TO_AWT_COLOR.put(Code.Color.Blue, Color.blue);
+        CODE_COLOR_TO_AWT_COLOR.put(Code.Color.Green, Color.green);
+        CODE_COLOR_TO_AWT_COLOR.put(Code.Color.Orange, Color.orange);
+        CODE_COLOR_TO_AWT_COLOR.put(Code.Color.Purple, new Color(139, 0, 255));
+        CODE_COLOR_TO_AWT_COLOR.put(Code.Color.Red, Color.red);
+        CODE_COLOR_TO_AWT_COLOR.put(Code.Color.Yellow, Color.yellow);
     }
 
     /**
@@ -251,7 +251,7 @@ public class GameBoard {
         final ArrayList<Color> awtColors = new ArrayList<>(Mastermind.CODE_LENGTH);
 
         for (final Code.Color codeColor : colors) {
-            final Color awtColor = codeColorToAwtColor.get(codeColor);
+            final Color awtColor = CODE_COLOR_TO_AWT_COLOR.get(codeColor);
             awtColors.add(awtColor);
         }
 

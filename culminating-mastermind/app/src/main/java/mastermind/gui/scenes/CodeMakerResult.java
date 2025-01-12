@@ -24,7 +24,7 @@ public class CodeMakerResult extends Scene {
     public CodeMakerResult(final JFrame frame, MastermindSolver.Status status, final Code correctCode) {
         super(frame);
 
-        Mastermind.log.info("Creating CodeMakerResult scene.");
+        Mastermind.LOG.info("Creating CodeMakerResult scene.");
 
         this.correctCode = correctCode;
 
@@ -33,7 +33,7 @@ public class CodeMakerResult extends Scene {
         } else if (status == MastermindSolver.Status.Lose) {
             drawLoseScreen();
         } else {
-            Mastermind.log.fatal("Status other than win and lose provided to CodeMakerResult.");
+            Mastermind.LOG.fatal("Status other than win and lose provided to CodeMakerResult.");
         }
 
         drawCorrectCode();
@@ -94,7 +94,7 @@ public class CodeMakerResult extends Scene {
         final ArrayList<Color> codeAwtColors = new ArrayList<>(Mastermind.CODE_LENGTH);
 
         for (final Code.Color codeColor : correctCode.getColors()) {
-            final Color awtColor = GameBoard.codeColorToAwtColor.get(codeColor);
+            final Color awtColor = GameBoard.CODE_COLOR_TO_AWT_COLOR.get(codeColor);
             codeAwtColors.add(awtColor);
         }
 

@@ -32,7 +32,7 @@ public class CodeBreakerSelector extends Scene {
     public CodeBreakerSelector(final JFrame frame) {
         super(frame);
 
-        Mastermind.log.info("Creating CodeBreakerSelector scene");
+        Mastermind.LOG.info("Creating CodeBreakerSelector scene");
 
         drawSelectorPanel();
 
@@ -129,22 +129,22 @@ public class CodeBreakerSelector extends Scene {
      */
     private void registerProceedHandler() {
         proceedButton.addActionListener(event -> {
-            Mastermind.log.trace("Proceed button pressed");
+            Mastermind.LOG.trace("Proceed button pressed");
 
             if (donaldKnuthButton.isSelected()) {
-                Mastermind.log.info("Donald Knuth 5-Guess Algorithm selected");
+                Mastermind.LOG.info("Donald Knuth 5-Guess Algorithm selected");
 
                 new CodeBreaker(frame, new DonaldKnuthAlgorithm());
             } else if (mediumAlgoButton.isSelected()) {
-                Mastermind.log.info("Medium Algorithm selected");
+                Mastermind.LOG.info("Medium Algorithm selected");
 
                 new CodeBreaker(frame, new MediumAlgorithm());
             } else if (basicAlgoButton.isSelected()) {
-                Mastermind.log.info("Basic Algorithm selected");
+                Mastermind.LOG.info("Basic Algorithm selected");
 
                 new CodeBreaker(frame, new EasyAlgorithm());
             } else {
-                Mastermind.log.fatal("No code breaker algorithm selected");
+                Mastermind.LOG.fatal("No code breaker algorithm selected");
             }
         });
     }
