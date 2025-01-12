@@ -3,6 +3,7 @@ package mastermind.gui.scenes;
 import mastermind.Mastermind;
 import mastermind.core.Code;
 import mastermind.core.Response;
+import mastermind.core.solvers.InvalidHintsException;
 import mastermind.core.solvers.MastermindAlgorithm;
 import mastermind.core.solvers.MastermindSolver;
 import mastermind.gui.panels.GameBoard;
@@ -312,7 +313,8 @@ public class CodeBreaker extends Scene {
 
             final Response responseForPreviousGuess = new Response(new Tuple2<>(correctCount.get(), misplacementCount.get()));
             final int currentAttempt = solver.getAttempts();
-            final Tuple2<MastermindSolver.Status, Code> result = solver.guess(responseForPreviousGuess);
+            final Tuple2<MastermindSolver.Status, Code> result =
+                makeSubsequentGuess(responseForPreviousGuess);
 
             responses.add(responseForPreviousGuess);
 
@@ -331,5 +333,14 @@ public class CodeBreaker extends Scene {
 
             new SecretCodePrompt(frame, result.first, guesses, responses);
         });
+    }
+
+    private Tuple2<MastermindSolver.Status, Code> makeSubsequentGuess(final Response response) {
+        try {
+            return solver.guess(response);
+        } catch (final InvalidHintsException e) {
+            Mastermind.log.error("Invalid hints provided: " + e.getMessage());
+            return new Tuple2<>(MastermindSolver.Status.Lose, null);
+        }
     }
 }

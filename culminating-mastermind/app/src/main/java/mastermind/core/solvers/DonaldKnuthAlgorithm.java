@@ -1,10 +1,12 @@
 package mastermind.core.solvers;
 
-import java.util.*;
-
 import mastermind.Mastermind;
-import mastermind.utils.*;
-import mastermind.core.*;
+import mastermind.core.Code;
+import mastermind.core.Response;
+import mastermind.utils.MathUtil;
+import mastermind.utils.Tuple2;
+
+import java.util.*;
 
 public class DonaldKnuthAlgorithm extends MastermindAlgorithm {
     private Code previousGuess = null;
@@ -62,31 +64,33 @@ public class DonaldKnuthAlgorithm extends MastermindAlgorithm {
      * <p>
      * The algorithm executes the following steps:
      * 1. Checks if the method is being called correctly for subsequent guesses.
-     *    Throws an {@code IllegalCallerException} if called for the initial guess.
+     * Throws an {@code IllegalCallerException} if called for the initial guess.
      * 2. Retrieves the validation counts (e.g., correct positions) from the response.
      * 3. If the number of correct positions equals the secret code length
-     *    ({@code Mastermind.CODE_LENGTH}), declares the player as a winner by
-     *    returning a {@code Tuple2} containing status {@code Status.Win} and the
-     *    last guess.
+     * ({@code Mastermind.CODE_LENGTH}), declares the player as a winner by
+     * returning a {@code Tuple2} containing status {@code Status.Win} and the
+     * last guess.
      * 4. If the maximum allowable guesses are exceeded and no match is found,
-     *    declares the player as a loser by returning a {@code Tuple2} containing
-     *    status {@code Status.Lose} and the last guess.
+     * declares the player as a loser by returning a {@code Tuple2} containing
+     * status {@code Status.Lose} and the last guess.
      * 5. Filters out invalid permutations that do not align with the response
-     *    feedback using the {@code reducePermutations} method.
+     * feedback using the {@code reducePermutations} method.
      * 6. Finds the next optimized guess using the {@code findNextGuess} method.
      * 7. Updates the last guess with the next guess and returns a {@code Tuple2}
-     *    containing status {@code Status.Continue} and the next guess.
+     * containing status {@code Status.Continue} and the next guess.
      * </p>
      *
      * @param response The feedback received for the previous guess,
      *                 containing the number of correct positions and other match details.
      * @return A {@code Tuple2<Status, Code>} object where {@code Status} represents
-     *         the current game status (e.g., Win, Lose, Continue), and {@code Code}
-     *         represents the next guess to be made.
+     * the current game status (e.g., Win, Lose, Continue), and {@code Code}
+     * represents the next guess to be made.
      * @throws IllegalCallerException If this method is invoked for the initial guess.
      */
+    @SuppressWarnings("DuplicatedCode")
     @Override
-    public Tuple2<Status, Code> guess(final Response response) {
+    public Tuple2<Status, Code> guess(final Response response)
+        throws InvalidHintsException {
         if (isInitialGuess()) {
             throw new IllegalCallerException("guess(Response) is meant for subsequent guesses.");
         }
@@ -133,12 +137,12 @@ public class DonaldKnuthAlgorithm extends MastermindAlgorithm {
      * <p>
      * The process is as follows:
      * 1. For each possible guess from the current permutations, generate all possible
-     *    responses when compared against every possible assumed secret permutation.
+     * responses when compared against every possible assumed secret permutation.
      * 2. Calculate the frequency of each response for the given guess.
      * 3. Identify the response with the highest frequency, representing the "max group size"
-     *    of remaining codes for that guess.
+     * of remaining codes for that guess.
      * 4. Save the guess along with its maximum group size into a {@code TreeMap}, ensuring
-     *    guesses are ranked in ascending order by their maximum group size.
+     * guesses are ranked in ascending order by their maximum group size.
      * 5. Select the guess with the smallest maximum group size as the next optimal guess.
      * </p>
      *
@@ -155,7 +159,7 @@ public class DonaldKnuthAlgorithm extends MastermindAlgorithm {
      *
      * @return The next optimal code to guess, determined by the minimax strategy.
      */
-    private Code findNextGuess() {
+    private Code findNextGuess() throws InvalidHintsException {
         TreeMap<Integer, Code> guessScores = new TreeMap<>();
 
         for (final Code guess : this.permutations) {
@@ -184,6 +188,10 @@ public class DonaldKnuthAlgorithm extends MastermindAlgorithm {
             guessScores.put(maxOccurrence, codeWithMaxOccurrence);
         }
 
-        return guessScores.firstEntry().getValue();
+        try {
+            return guessScores.firstEntry().getValue();
+        } catch (final NullPointerException e) {
+            throw new InvalidHintsException(e.getMessage());
+        }
     }
 }

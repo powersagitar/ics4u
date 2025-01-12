@@ -35,8 +35,9 @@ public abstract class MastermindAlgorithm extends MastermindSolver {
      * @param response The feedback from the last guess, containing information
      *                 used to compute the next guess.
      * @return A {@code Tuple2} containing the {@code Status} and the generated {@code Code}.
-     *         The {@code Status} represents the algorithm's state, and {@code Code} is the
-     *         next guess for evaluation.
+     * The {@code Status} represents the algorithm's state, and {@code Code} is the
+     * next guess for evaluation.
      */
-    public abstract Tuple2<Status, Code> guess(final Response response);
+    public abstract Tuple2<Status, Code> guess(final Response response)
+        throws InvalidHintsException;
 }
