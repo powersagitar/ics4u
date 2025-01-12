@@ -8,7 +8,18 @@ import java.util.List;
 import java.util.Random;
 import java.util.function.Function;
 
+/**
+ * Represents a code sequence in the Mastermind game.
+ */
 public class Code {
+    /**
+     * The code sequence represented as a list of {@code Color} objects.
+     */
+    private final ArrayList<Color> code;
+
+    /**
+     * Represents a color in the Mastermind game.
+     */
     public enum Color {
         Green, Red, Blue, Yellow, Orange, Purple;
 
@@ -24,8 +35,6 @@ public class Code {
         }
     }
 
-    private final ArrayList<Color> code;
-
     /**
      * Generates a random {@code Code} instance that satisfies the provided filters.
      *
@@ -35,7 +44,6 @@ public class Code {
      * that takes a {@code Code} as input and returns {@code true} if the code satisfies a
      * specific rule and {@code false} otherwise. The method continues generating random codes
      * until one satisfies all the filters.
-     * </p>
      *
      * @param filters a {@link List} of {@link Function} instances, where each function represents
      *                a condition the generated {@code Code} must satisfy.

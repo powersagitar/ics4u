@@ -10,7 +10,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * Represents the scene displayed to the user after the Mastermind game has
+ * concluded in the Code Maker mode.
+ */
 public class CodeMakerResult extends Scene {
+    /**
+     * The correct code that was to be guessed in the game.
+     */
     private final Code correctCode;
 
     /**
@@ -80,7 +87,6 @@ public class CodeMakerResult extends Scene {
      * in the code is mapped to its corresponding AWT color and displayed using the
      * {@code drawGuess} method from the {@code GameBoard} class. The components
      * are centrally aligned to match the layout of the scene.
-     * </p>
      */
     private void drawCorrectCode() {
         final JLabel correctCodeLabel = new JLabel("The correct code was:");
@@ -108,7 +114,6 @@ public class CodeMakerResult extends Scene {
      * The button is centrally aligned and appended to the frame. When clicked,
      * the button transitions the application to the game mode selection screen
      * by instantiating a new {@code GameModeSelector} with the current frame.
-     * </p>
      */
     private void drawProceedButton() {
         final JButton proceedButton = new JButton("Proceed");

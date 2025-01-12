@@ -46,7 +46,7 @@ public class HumanSolver extends MastermindSolver {
         }
 
         final Response response = new Response(secretCode, guess);
-        final int correctCount = response.getResponse().first;
+        final int correctCount = response.getResponse().first();
 
         if (correctCount >= Mastermind.CODE_LENGTH) {
             return new Tuple2<>(Status.Win, response);

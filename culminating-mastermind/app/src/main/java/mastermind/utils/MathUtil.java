@@ -3,6 +3,9 @@ package mastermind.utils;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ * Provides utility methods for mathematical operations.
+ */
 public class MathUtil {
     /**
      * Extracts the digits of a given number in a specified base and returns them in a list,

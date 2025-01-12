@@ -4,7 +4,13 @@ import mastermind.Mastermind;
 
 import javax.swing.*;
 
+/**
+ * Represents a scene in the Mastermind game.
+ */
 public abstract class Scene {
+    /**
+     * The JFrame associated with this scene.
+     */
     protected final JFrame frame;
 
     /**
@@ -13,7 +19,6 @@ public abstract class Scene {
      * <p>
      * The returned JFrame uses a vertical BoxLayout for its content pane, and its size, title, and visibility
      * settings are predefined. The JFrame is also resizable.
-     * </p>
      *
      * @return A configured JFrame instance.
      */
@@ -35,7 +40,6 @@ public abstract class Scene {
      * <p>
      * This constructor assigns the given JFrame to the Scene instance and ensures
      * that the content pane of the provided JFrame is cleared of all existing components.
-     * </p>
      *
      * @param frame The JFrame to be associated with this Scene. The content pane
      *              of this frame will be cleared during instantiation.
@@ -52,7 +56,6 @@ public abstract class Scene {
      * This method ensures that the visual representation of the frame is updated to
      * reflect any changes made to its components or layout. It is typically used
      * after modifying the frame's contents or its structure to force an immediate update.
-     * </p>
      */
     void refreshFrame() {
         frame.repaint();

@@ -15,14 +15,34 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
+/**
+ * Represents the game scene for the CodeMaker role in Mastermind.
+ */
 public class CodeMaker extends Scene {
-    private List<Integer> nextGuess = null;
+    /**
+     * The secret code generated for user to guess.
+     */
     private final Code secretCode = Code.generateRandomCode(List.of());
+    /**
+     * The solver used to process the user's guesses in the game.
+     */
     private final HumanSolver solver = new HumanSolver(secretCode);
-
+    /**
+     * The game board panel that displays the current game state.
+     */
     private final GameBoard gameBoard = new GameBoard();
+    /**
+     * The "Proceed" button that allows the user to submit their guess.
+     */
     private final JButton proceedButton = new JButton("Proceed");
+    /**
+     * The primary panel that manages the layout of the game's components.
+     */
     private final JPanel flowPanel = new JPanel(new FlowLayout());
+    /**
+     * The next guess from user to be processed by the game.
+     */
+    private List<Integer> nextGuess = null;
 
     /**
      * Constructs a new CodeMaker instance, initializing the game environment,
@@ -34,7 +54,6 @@ public class CodeMaker extends Scene {
      * the game board, color selection controls, and the proceed button. Additionally,
      * it establishes handlers for user interactions with the color selection buttons
      * and the proceed button.
-     * </p>
      *
      * @param frame the JFrame to which this game's components will be added
      */
@@ -71,12 +90,15 @@ public class CodeMaker extends Scene {
      * to the primary `JPanel` (`flowPanel`) that manages the layout of the game's
      * components. This ensures the game board is displayed as part of the overall
      * interface.
-     * </p>
      */
     private void drawGameBoard() {
         flowPanel.add(gameBoard.getBoardPanel());
     }
 
+    /**
+     * Draws the control panel for the game, including the color selection
+     * buttons and the "Proceed" button.
+     */
     private void drawControlPanel() {
         final CodeInput codeInput = new CodeInput();
         final JPanel controlPanel = codeInput.drawButtons();
@@ -97,8 +119,11 @@ public class CodeMaker extends Scene {
      *
      * <p>
      * This method attaches an `ActionListener` to the "Proceed" button. When the button is clicked:
+     * <br>
      * - It verifies that the current guess (`nextGuess`) meets the required length (`Mastermind.CODE_LENGTH`).
+     * <br>
      * - If the guess is incomplete, an `IllegalArgumentException` is thrown to indicate the error.
+     * <br>
      * - If the guess is valid, it creates a new `Code` object from the selected colors and clears the `nextGuess`.
      *
      * <p>
@@ -107,20 +132,20 @@ public class CodeMaker extends Scene {
      * - A status (`MastermindSolver.Status`) indicating whether the game should continue, or if a win/loss condition
      * is reached.
      * - A feedback response (`Response`) with hints for the current guess.
-     * </p>
      *
      * <p>
      * Based on the status:
      * - If the game is to continue, the method updates the game board with the provided response hints.
      * - If the game ends (win or loss), it displays a result dialog (`Result`) summarizing the outcome.
-     * </p>
      *
      * <p>
      * This method ensures that:
+     * <br>
      * - The game enforces a full guess before submission.
+     * <br>
      * - Hints are provided to guide the player for subsequent guesses.
+     * <br>
      * - The game flow transitions smoothly between turns or to an end condition.
-     * </p>
      */
     private void registerProceedHandlers() {
         proceedButton.addActionListener(event -> {
@@ -140,8 +165,8 @@ public class CodeMaker extends Scene {
             final int attempt = solver.getAttempts();
 
             final Tuple2<MastermindSolver.Status, Response> result = solver.guess(guess);
-            final MastermindSolver.Status status = result.first;
-            final Response response = result.second;
+            final MastermindSolver.Status status = result.first();
+            final Response response = result.second();
 
             if (status == MastermindSolver.Status.Continue) {
                 gameBoard.updateHints(attempt, response);

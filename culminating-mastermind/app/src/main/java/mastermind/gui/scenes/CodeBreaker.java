@@ -17,28 +17,71 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-
+/**
+ * Represents the CodeBreaker scene in the application, inheriting from the
+ * parent {@link mastermind.gui.scenes.Scene} class.
+ */
 public class CodeBreaker extends Scene {
+    /**
+     * The algorithm to be used for solving the Mastermind puzzle.
+     */
     private final MastermindAlgorithm solver;
+
+    /**
+     * The number of correctly positioned key pegs ("Black Key Pegs") in the
+     * game.
+     */
     private final AtomicInteger correctCount = new AtomicInteger(2);
+
+    /**
+     * The number of key pegs that are misplaced but still valid ("White Key
+     * Pegs").
+     */
     private final AtomicInteger misplacementCount = new AtomicInteger(2);
+
+    /**
+     * The list of guesses made by the {@link #solver} in the game.
+     */
     private final List<Code> guesses = new ArrayList<>(Mastermind.MAX_GUESSES);
+
+    /**
+     * The list of responses provided by the player in the game.
+     */
     private final List<Response> responses = new ArrayList<>(Mastermind.MAX_GUESSES);
 
+    /**
+     * The game board panel used to display the game state and hints.
+     */
     private final GameBoard gameBoard = new GameBoard();
+
+    /**
+     * The "Proceed" button used to trigger the next step in the game.
+     */
     private final JButton proceedButton = new JButton("Proceed");
+
+    /**
+     * The main panel for the {@link CodeBreaker} scene, containing the game
+     * board and control panel.
+     */
     private final JPanel flowPanel = new JPanel(new FlowLayout());
+
+    /**
+     * The control panel for managing user inputs and game progression.
+     */
     private final JPanel controlPanel = new JPanel();
 
     /**
-     * Represents the CodeBreaker scene in the application, inheriting from the parent `Scene` class.
-     * This scene manages the game logic and user interface for a Mastermind game implementation.
-     * It initializes necessary UI components, handles game interactions, and updates the game state.
+     * Represents the CodeBreaker scene in the application, inheriting from the
+     * parent `Scene` class.
+     *
+     * <p>
+     * This scene manages the game logic and user interface for a Mastermind
+     * game implementation. It initializes necessary UI components, handles
+     * game interactions, and updates the game state.
      *
      * <p>
      * The class uses a selected algorithm to solve the Mastermind puzzle and provides controls
      * for managing user responses and progression in the game.
-     * </p>
      *
      * @param frame     The parent `JFrame` that contains this scene.
      * @param algorithm The algorithm to be used for solving the Mastermind puzzle.
@@ -85,7 +128,6 @@ public class CodeBreaker extends Scene {
      * and adds it to the `flowPanel`, which is part of the main user interface.
      * It ensures that the visual representation of the game board is
      * displayed within the current scene.
-     * </p>
      */
     private void drawGameBoard() {
         flowPanel.add(gameBoard.getBoardPanel());
@@ -99,7 +141,6 @@ public class CodeBreaker extends Scene {
      * adds a title label ("Controls") to it, and integrates the panel into the main `flowPanel`.
      * The control panel serves as a container for various UI components, such as controls for
      * adjusting user inputs and the "Proceed" button.
-     * </p>
      */
     private void drawControlPanel() {
         controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.Y_AXIS));
@@ -119,18 +160,15 @@ public class CodeBreaker extends Scene {
      * display and adjust the number of correctly positioned key pegs ("Black Key Pegs").
      * It utilizes buttons for incrementing and decrementing the count, ensuring that the
      * user can control the precise feedback for the game's logic.
-     * </p>
      *
      * <p>
      * The panel aligns its components centrally and interacts with the `drawResponseControls`
      * method to populate the panel with the necessary UI elements linked to the `correctCount`
      * variable.
-     * </p>
      *
      * <p>
      * This method is a part of the initialization of the game's control panel and contributes
      * to providing feedback for the solver algorithm's next move.
-     * </p>
      */
     private void drawCorrectControls() {
         final JPanel correctPanel = new JPanel(new FlowLayout());
@@ -148,17 +186,14 @@ public class CodeBreaker extends Scene {
      * display and adjust the number of key pegs that are misplaced but still valid ("White Key Pegs").
      * It uses buttons for incrementing and decrementing the count, ensuring that the user can
      * provide accurate feedback for the solver's algorithm processing.
-     * </p>
      *
      * <p>
      * The panel aligns its components centrally and interacts with the `drawResponseControls`
      * method, which populates the panel with the appropriate UI elements tied to the `misplacementCount` variable.
-     * </p>
      *
      * <p>
      * This method is part of the initialization of the game's control panel and contributes to the feedback
      * system used by the algorithm to refine its guesses.
-     * </p>
      */
     private void drawMisplacementControls() {
         final JPanel misplacementPanel = new JPanel(new FlowLayout());
@@ -175,7 +210,6 @@ public class CodeBreaker extends Scene {
      * A count is considered invalid if it is less than 0 or greater than the constant
      * `Mastermind.CODE_LENGTH`. This method is used to validate user input or game logic
      * related to the permissible range of counts in the Mastermind game.
-     * </p>
      *
      * @param value The count to validate.
      * @return {@code true} if the count is invalid; {@code false} otherwise.
@@ -194,21 +228,21 @@ public class CodeBreaker extends Scene {
      * validity of the numeric value. Updates to the count are reflected dynamically
      * in the label. The increment and decrement buttons are enabled or disabled based
      * on the current value and its validity.
-     * </p>
      *
      * <p>
      * The constraints ensure that the count cannot exceed a maximum value (defined by
      * `Mastermind.CODE_LENGTH`) or fall below zero. When the count is updated to the maximum
      * or minimum permissible values, the respective button (increment or decrement) will be
      * disabled automatically to prevent further invalid changes.
-     * </p>
      *
      * @param parent      The JPanel container to which the label and buttons are added.
      * @param labelPrefix The prefix text to display before the count in the label.
      * @param count       An AtomicInteger representing the current count value, which
      *                    can be incremented or decremented using the created controls.
      */
-    private void drawResponseControls(final JPanel parent, final String labelPrefix, final AtomicInteger count) {
+    private void drawResponseControls(final JPanel parent,
+                                      final String labelPrefix,
+                                      final AtomicInteger count) {
         final JLabel label = new JLabel(labelPrefix + count);
         parent.add(label);
 
@@ -256,12 +290,10 @@ public class CodeBreaker extends Scene {
      * This method sets the horizontal alignment of the "Proceed" button to be centered within
      * the control panel. Once aligned, the button is added to the control panel to allow user
      * interaction for proceeding to the next step or action in the game workflow.
-     * </p>
      *
      * <p>
      * The button plays a key role in enabling the player to confirm their response or trigger
      * the next algorithmic action in the CodeBreaker game logic.
-     * </p>
      */
     private void drawProceedButton() {
         proceedButton.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -274,7 +306,7 @@ public class CodeBreaker extends Scene {
      *
      * <p>
      * This method sets up the game logic for the Mastermind puzzle by performing the following actions:
-     * </p>
+     *
      * <ul>
      *     <li>
      *         It initiates the first guess by invoking the `guess` method of the solver algorithm and updates
@@ -289,15 +321,14 @@ public class CodeBreaker extends Scene {
      * </ul>
      *
      * <p>
-     * If the solver determines that the puzzle is not yet solved (`MastermindSolver.Status.Continue`),
-     * the game board updates hints for the previous guess and displays the next guess. Otherwise,
-     * the game concludes, and a result window is displayed with the final outcome.
-     * </p>
+     * If the solver determines that the puzzle is not yet solved
+     * ({@link MastermindSolver.Status#Continue}), the game board updates
+     * hints for the previous guess and displays the next guess. Otherwise,
+     * the game concludes, and transitions to the next scene.
      *
      * <p>
      * This handler links the user interface with the solver algorithm, enabling interactive and
      * iterative gameplay through the "Proceed" button.
-     * </p>
      */
     private void registerGuessHandler() {
 //        first guess
@@ -319,22 +350,28 @@ public class CodeBreaker extends Scene {
             responses.add(responseForPreviousGuess);
 
             Mastermind.LOG.info("Response: " + responseForPreviousGuess);
-            Mastermind.LOG.info("Solver status: " + result.first);
+            Mastermind.LOG.info("Solver status: " + result.first());
 
-            if (result.first == MastermindSolver.Status.Continue) {
-                Mastermind.LOG.info("Guess " + currentAttempt + ": " + result.second);
+            if (result.first() == MastermindSolver.Status.Continue) {
+                Mastermind.LOG.info("Guess " + currentAttempt + ": " + result.second());
 
-                guesses.add(result.second);
+                guesses.add(result.second());
 
                 gameBoard.updateHints(currentAttempt - 1, responseForPreviousGuess);
-                gameBoard.updateGuess(currentAttempt, result.second.getColors());
+                gameBoard.updateGuess(currentAttempt, result.second().getColors());
                 return;
             }
 
-            new SecretCodePrompt(frame, result.first, guesses, responses);
+            new SecretCodePrompt(frame, result.first(), guesses, responses);
         });
     }
 
+    /**
+     * Makes a subsequent guess based on the provided response.
+     *
+     * @param response The response to the previous guess.
+     * @return A tuple containing the status of the solver and the next guess.
+     */
     private Tuple2<MastermindSolver.Status, Code> makeSubsequentGuess(final Response response) {
         try {
             return solver.guess(response);

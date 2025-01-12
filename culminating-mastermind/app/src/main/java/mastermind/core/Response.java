@@ -5,8 +5,16 @@ import mastermind.utils.Tuple2;
 
 import java.util.HashMap;
 
+/**
+ * Represents the response to a guess in the Mastermind game.
+ */
 public class Response {
-    //    (correct count, misplacement count)
+    /**
+     * A Tuple2 object containing the counts of correct and misplaced elements.
+     * <p>
+     * First element: count of correct matches.
+     * Second element: count of misplaced elements.
+     */
     private final Tuple2<Integer, Integer> response;
 
     /**
@@ -30,7 +38,6 @@ public class Response {
      * - Matches where both the position and color are correct.
      * - Matches where the color is correct but the position is incorrect.
      * The results are stored as a Tuple2 consisting of the count of correct matches and the count of misplaced elements.
-     * </p>
      *
      * @param code  the code to be matched, represented as a sequence of colors
      * @param guess the guessed code, represented as a sequence of colors
@@ -67,8 +74,8 @@ public class Response {
     }
 
     /**
-     * Validates the response by counting the number of correct and misplaced key
-     * pegs.
+     * Returns the Tuple2 object containing the counts of correct and
+     * misplaced elements.
      *
      * @return a Tuple2 containing two integers:
      * - The first integer represents the count of correct key pegs.
@@ -86,7 +93,6 @@ public class Response {
      * Next, it checks if the specified object is null or if its class differs from this Response object's class;
      * if either condition is true, they are not considered equal.
      * Finally, it compares the "response" field of the two Response objects for equality.
-     * </p>
      *
      * @param obj the object to compare with this Response instance
      * @return true if the specified object is equal to this Response instance, false otherwise
@@ -114,7 +120,6 @@ public class Response {
      * which is a Tuple2 containing the counts of correct and misplaced matches.
      * This ensures that the hash code is consistent with the definition of
      * equality provided in the `equals` method.
-     * </p>
      *
      * @return the hash code value for this Response object
      */
@@ -130,16 +135,14 @@ public class Response {
      * The returned string includes the count of correctly placed elements (correct count)
      * and the count of misplaced elements (misplacement count), both extracted from the
      * `response` field, formatted in the following structure:
-     * </p>
      *
      * <p>
      * "correct count: [value] misplacement count: [value]"
-     * </p>
      *
      * @return a string representation of this Response object
      */
     @Override
     public String toString() {
-        return "Black: " + this.response.first + ", White: " + this.response.second;
+        return "Black: " + this.response.first() + ", White: " + this.response.second();
     }
 }

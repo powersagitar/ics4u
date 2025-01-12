@@ -5,14 +5,11 @@ import mastermind.core.Response;
 import mastermind.core.solvers.DonaldKnuthAlgorithm;
 import mastermind.core.solvers.MastermindSolver;
 import mastermind.utils.Tuple2;
-
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 class DonaldKnuthAlgorithmTest {
     @Test
@@ -32,12 +29,12 @@ class DonaldKnuthAlgorithmTest {
 
         Tuple2<MastermindSolver.Status, Code> result = new Tuple2<>(MastermindSolver.Status.Continue, solver.guess());
 
-        while (result.first == MastermindSolver.Status.Continue) {
-            final Response hints = new Response(secretCode, result.second);
+        while (result.first() == MastermindSolver.Status.Continue) {
+            final Response hints = new Response(secretCode, result.second());
             result = solver.guess(hints);
         }
 
-        if (result.first == MastermindSolver.Status.Lose) {
+        if (result.first() == MastermindSolver.Status.Lose) {
             fail("Donald Knuth algorithm failed to solve the secret code");
         }
 

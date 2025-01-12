@@ -11,11 +11,30 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Represents the game board in the Mastermind GUI.
+ * <p>
+ * A gameboard consists of rows of panels, each containing two sub-panels:
+ * <br>
+ * - A panel for guesses, where the player inputs their code guesses.
+ * <br>
+ * - A panel for hints, which provides feedback on the guesses.
+ */
 public class GameBoard {
+    /**
+     * A mapping of {@link Code.Color} values to their corresponding
+     * {@link java.awt.Color} instances.
+     */
+    public static final HashMap<Code.Color, Color> CODE_COLOR_TO_AWT_COLOR =
+        new HashMap<>(Mastermind.TOTAL_COLORS);
+    /**
+     * A list of row panels, each containing a guess panel and a hint panel.
+     */
     private final ArrayList<Tuple2<JPanel, JPanel>> boardRowPanels = new ArrayList<>(Mastermind.MAX_GUESSES);
+    /**
+     * The main panel representing the game board.
+     */
     private final JPanel boardPanel = new JPanel(new GridBagLayout());
-
-    public static final HashMap<Code.Color, Color> CODE_COLOR_TO_AWT_COLOR = new HashMap<>(Mastermind.TOTAL_COLORS);
 
     static {
         CODE_COLOR_TO_AWT_COLOR.put(Code.Color.Blue, Color.blue);
@@ -28,25 +47,27 @@ public class GameBoard {
 
     /**
      * Constructs a new GameBoard instance and initializes the game board layout.
+     *
+     * <p>
      * The board consists of rows representing guesses and corresponding hint panels.
+     * <br>
      * Each row is divided into two panels:
+     * <br>
      * - A panel for guesses, where the player inputs their code guesses.
+     * <br>
      * - A panel for hints, which provides feedback on the guesses.
      *
      * <p>
      * The GameBoard layout is created using the GridBagLayout manager, and each row
      * is appended to the board with the necessary constraints.
-     * </p>
      *
      * <p>
      * Initializes four placeholders (light gray color) for guesses and four placeholders
      * (black and white feedback pegs) for hints in each row.
-     * </p>
      *
      * <p>
      * Additionally, individual rows of the board are stored in an internal list
      * for ease of future updates to guess and hint panels.
-     * </p>
      */
     public GameBoard() {
         GridBagConstraints gridBagConstraints = new GridBagConstraints();
@@ -78,13 +99,11 @@ public class GameBoard {
      * <p>
      * If the list of colors contains fewer elements than the required code length,
      * an IllegalArgumentException is thrown.
-     * </p>
      *
      * <p>
      * Each square is rendered as a JLabel with a border colored according to the
      * corresponding color in the list. The size of each square is standardized.
      * The updated panel layout is refreshed after rendering.
-     * </p>
      *
      * @param parent The JPanel where the guess will be rendered. This panel's
      *               content will be cleared before rendering.
@@ -119,18 +138,15 @@ public class GameBoard {
      * The method determines the number of black and white pegs needed from the response
      * and fills the remaining spaces with light gray. It then organizes these hints into
      * a 2x2 grid visual representation within the panel.
-     * </p>
      *
      * <p>
      * Each hint is represented as a small JLabel with a border colored according to the
      * response values. Black borders represent correct colors in the correct position,
      * white borders represent correct colors in the wrong position, and light gray borders
      * represent no matches.
-     * </p>
      *
      * <p>
      * The panel is refreshed to reflect the updated content after rendering the hints.
-     * </p>
      *
      * @param parent   The JPanel to which the hints will be added. This panel is cleared
      *                 before rendering the new hints.
@@ -143,11 +159,11 @@ public class GameBoard {
         final Tuple2<Integer, Integer> hints = response.getResponse();
         final ArrayList<Color> colors = new ArrayList<>(Mastermind.CODE_LENGTH);
 
-        for (int i = 0; i < hints.first; ++i) {
+        for (int i = 0; i < hints.first(); ++i) {
             colors.add(Color.black);
         }
 
-        for (int i = 0; i < hints.second; ++i) {
+        for (int i = 0; i < hints.second(); ++i) {
             colors.add(Color.white);
         }
 
@@ -164,7 +180,7 @@ public class GameBoard {
                 hintConstraints.gridx = col;
                 hintConstraints.gridy = row;
 
-                final JPanel hint = getHintPanel(colorIdx, colors);
+                final JPanel hint = drawHintPeg(colors.get(colorIdx));
                 parent.add(hint, hintConstraints);
 
                 ++colorIdx;
@@ -175,7 +191,13 @@ public class GameBoard {
         parent.repaint();
     }
 
-    private static JPanel getHintPanel(int colorIdx, ArrayList<Color> colors) {
+    /**
+     * Creates a JPanel representing a hint peg with the specified color.
+     *
+     * @param color The color of the hint peg.
+     * @return A JPanel representing a hint peg with the specified color.
+     */
+    private static JPanel drawHintPeg(final Color color) {
         final JPanel hint = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -186,7 +208,7 @@ public class GameBoard {
                 int padding = 2;
                 int diameter = Math.min(getWidth(), getHeight()) - 2 * padding;
 
-                g2d.setColor(colors.get(colorIdx));
+                g2d.setColor(color);
                 g2d.fillOval(padding, padding, diameter, diameter);
             }
         };
@@ -204,11 +226,9 @@ public class GameBoard {
      * {@link Code.Color} objects, which represent the color codes used in the game.
      * It then delegates the process of updating the guess visually on the game board to
      * {@link #updateGuess(int, List)}.
-     * </p>
      *
      * <p>
      * The indices in the list must correspond to valid colors defined in the {@link Code.Color} enumeration.
-     * </p>
      *
      * @param rowNumber    The row number on the game board where the guess should be updated.
      *                     Must be within the bounds of the game board's rows.
@@ -234,12 +254,10 @@ public class GameBoard {
      * game-specific color representations into corresponding {@link java.awt.Color} instances to render
      * on the visual game board. If the given list of colors contains fewer entries than the code length
      * required by the game, the remaining entries are filled with a placeholder color (light gray).
-     * </p>
      *
      * <p>
      * The method retrieves the associated guess panel for the specified row and updates it by calling
      * the {@link #drawGuess(JPanel, List)} method with the converted colors.
-     * </p>
      *
      * @param rowNumber The row number on the game board to update. This specifies which row will
      *                  display the given guess. Must be within the bounds of the game board's rows.
@@ -260,7 +278,7 @@ public class GameBoard {
         }
 
         final Tuple2<JPanel, JPanel> rowPanel = boardRowPanels.get(rowNumber);
-        final JPanel guessPanel = rowPanel.first;
+        final JPanel guessPanel = rowPanel.first();
 
         drawGuess(guessPanel, awtColors);
     }
@@ -272,11 +290,9 @@ public class GameBoard {
      * This method retrieves the hint panel corresponding to the specified row number and updates it
      * with visual feedback based on the given {@link Response}. The feedback typically consists of black,
      * white, and light gray markers to represent exact matches, partial matches, and no matches, respectively.
-     * </p>
      *
      * <p>
      * The visual update is performed by delegating the rendering of hints to the {@link #drawHints(JPanel, Response)} method.
-     * </p>
      *
      * @param rowNumber The row number on the game board whose hint panel should be updated. Must be
      *                  within the bounds of the game board's rows.
@@ -285,7 +301,7 @@ public class GameBoard {
      */
     public void updateHints(final int rowNumber, final Response hints) {
         final Tuple2<JPanel, JPanel> rowPanel = boardRowPanels.get(rowNumber);
-        final JPanel hintsPanel = rowPanel.second;
+        final JPanel hintsPanel = rowPanel.second();
 
         drawHints(hintsPanel, hints);
     }
@@ -297,12 +313,10 @@ public class GameBoard {
      * The returned panel, structured using a {@link GridBagLayout}, serves as the primary component
      * that visually represents the game board. It contains rows of panels, each consisting of a
      * guess panel and a hint panel representing player guesses and feedback respectively.
-     * </p>
      *
      * <p>
      * This panel is initialized and updated internally within the {@link GameBoard} class,
      * reflecting the current state of the game.
-     * </p>
      *
      * @return The {@link JPanel} representing the main game board.
      */

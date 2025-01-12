@@ -1,9 +1,14 @@
 package mastermind.core.solvers;
 
 import mastermind.Mastermind;
-import mastermind.core.*;
-import mastermind.utils.*;
-import java.util.*;
+import mastermind.core.Code;
+import mastermind.core.Response;
+import mastermind.utils.MathUtil;
+import mastermind.utils.Tuple2;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 
 public class MediumAlgorithm extends MastermindAlgorithm {
     private Code previousGuess = null;
@@ -60,7 +65,7 @@ public class MediumAlgorithm extends MastermindAlgorithm {
         }
 
         final Tuple2<Integer, Integer> validation = response.getResponse();
-        final int correctCount = validation.first;
+        final int correctCount = validation.first();
 
         if (correctCount >= Mastermind.CODE_LENGTH) {
             return new Tuple2<>(Status.Win, previousGuess);

@@ -1,15 +1,33 @@
 package mastermind.gui.scenes;
 
 import mastermind.Mastermind;
+import mastermind.gui.panels.Help;
 
 import javax.swing.*;
 import java.awt.*;
-import mastermind.gui.panels.Help;
 
+/**
+ * Represents a scene for selecting the game mode in Mastermind.
+ */
 public class GameModeSelector extends Scene {
+    /**
+     * The panel containing the game mode selection radio buttons.
+     */
     private final JPanel selectorPanel = new JPanel();
+
+    /**
+     * The radio button for selecting the Code Breaker game mode.
+     */
     private final JRadioButton codeBreakerButton = new JRadioButton("CODEBREAKER: Computer Guesses, Player Makes Code", true);
+
+    /**
+     * The radio button for selecting the Code Maker game mode.
+     */
     private final JRadioButton codeMakerButton = new JRadioButton("CODEMAKER: Player Guesses, Computer Makes Code");
+
+    /**
+     * The button for proceeding to the next scene after selecting a game mode.
+     */
     private final JButton proceedButton = new JButton("Proceed");
 
     /**
@@ -19,7 +37,6 @@ public class GameModeSelector extends Scene {
      * This constructor initializes the UI components required for the game mode selection. It configures
      * the selector panel and the proceed button, adds them to the provided JFrame, and refreshes the frame
      * to ensure the UI is updated.
-     * </p>
      *
      * @param frame The JFrame to which the game mode selection UI components will be added.
      */
@@ -51,7 +68,6 @@ public class GameModeSelector extends Scene {
      * <p>
      * This method adds a label to the frame welcoming the user to the game mode selection screen.
      * The label is centrally aligned within the frame.
-     * </p>
      */
     private void drawWelcomeMessage() {
         final JLabel welcomeMessage = new JLabel("WELCOME TO MASTERMIND!");
@@ -68,12 +84,10 @@ public class GameModeSelector extends Scene {
      * It adds the game mode radio buttons (Code Breaker and Code Maker) to the panel
      * and groups these buttons using a ButtonGroup to ensure only one can be selected
      * at a time.
-     * </p>
      *
      * <p>
      * The selector panel is visually structured to display the game modes vertically
      * with a centered alignment, and labeled with a titled border named "Game Modes".
-     * </p>
      */
     private void drawSelectorPanel() {
         selectorPanel.setLayout(new BoxLayout(selectorPanel, BoxLayout.Y_AXIS));
@@ -98,11 +112,9 @@ public class GameModeSelector extends Scene {
      * - If the "Code Breaker" mode is selected, a new instance of `CodeBreakerSelector` is created.
      * - If the "Code Maker" mode is selected, a new instance of `CodeMaker` is created.
      * - If no mode is selected, an `IllegalArgumentException` is thrown.
-     * </p>
      *
      * <p>
      * The "Proceed" button is aligned to the center for consistency with the overall UI design.
-     * </p>
      */
     private void drawProceedButton() {
         proceedButton.setAlignmentX(Component.CENTER_ALIGNMENT);

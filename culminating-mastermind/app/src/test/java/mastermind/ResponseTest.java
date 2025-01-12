@@ -19,8 +19,8 @@ class ResponseTest {
         final int expectedCorrectCount = 4;
         final int expectedMisplacementCount = 0;
 
-        assertEquals(expectedCorrectCount, response.getResponse().first);
-        assertEquals(expectedMisplacementCount, response.getResponse().second);
+        assertEquals(expectedCorrectCount, response.getResponse().first());
+        assertEquals(expectedMisplacementCount, response.getResponse().second());
     }
 
     @Test
@@ -31,8 +31,8 @@ class ResponseTest {
         final int expectedCorrectCount = 2;
         final int expectedMisplacementCount = 0;
 
-        assertEquals(expectedCorrectCount, response.getResponse().first);
-        assertEquals(expectedMisplacementCount, response.getResponse().second);
+        assertEquals(expectedCorrectCount, response.getResponse().first());
+        assertEquals(expectedMisplacementCount, response.getResponse().second());
     }
 
     @Test
@@ -43,8 +43,8 @@ class ResponseTest {
         final int expectedCorrectCount = 0;
         final int expectedMisplacementCount = 0;
 
-        assertEquals(expectedCorrectCount, response.getResponse().first);
-        assertEquals(expectedMisplacementCount, response.getResponse().second);
+        assertEquals(expectedCorrectCount, response.getResponse().first());
+        assertEquals(expectedMisplacementCount, response.getResponse().second());
     }
 
     @Test
@@ -55,8 +55,8 @@ class ResponseTest {
         final int expectedCorrectCount = 2;
         final int expectedMisplacementCount = 2;
 
-        assertEquals(expectedCorrectCount, response.getResponse().first);
-        assertEquals(expectedMisplacementCount, response.getResponse().second);
+        assertEquals(expectedCorrectCount, response.getResponse().first());
+        assertEquals(expectedMisplacementCount, response.getResponse().second());
     }
 
     @Test
@@ -67,8 +67,8 @@ class ResponseTest {
         final int expectedCorrectCount = 0;
         final int expectedMisplacementCount = 4;
 
-        assertEquals(expectedCorrectCount, response.getResponse().first);
-        assertEquals(expectedMisplacementCount, response.getResponse().second);
+        assertEquals(expectedCorrectCount, response.getResponse().first());
+        assertEquals(expectedMisplacementCount, response.getResponse().second());
     }
 
     @Test
@@ -79,8 +79,8 @@ class ResponseTest {
         final int expectedCorrectCount = 0;
         final int expectedMisplacementCount = 1;
 
-        assertEquals(expectedCorrectCount, response.getResponse().first);
-        assertEquals(expectedMisplacementCount, response.getResponse().second);
+        assertEquals(expectedCorrectCount, response.getResponse().first());
+        assertEquals(expectedMisplacementCount, response.getResponse().second());
     }
 
     @Test
@@ -91,8 +91,8 @@ class ResponseTest {
         final int expectedCorrectCount = 1;
         final int expectedMisplacementCount = 0;
 
-        assertEquals(expectedCorrectCount, response.getResponse().first);
-        assertEquals(expectedMisplacementCount, response.getResponse().second);
+        assertEquals(expectedCorrectCount, response.getResponse().first());
+        assertEquals(expectedMisplacementCount, response.getResponse().second());
     }
 
     @Test

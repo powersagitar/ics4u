@@ -9,11 +9,33 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
+/**
+ * Panel for the user to input the code.
+ */
 public class CodeInput {
+    /**
+     * List of buttons for the user to submit a color in the code.
+     */
     private final List<JButton> submitButtons = new ArrayList<>(Mastermind.CODE_LENGTH);
+
+    /**
+     * Button to clear all colors from the entered code.
+     */
     private final JButton clearButton = new JButton("Clear");
+
+    /**
+     * List of integers representing the code.
+     * <p>
+     * See {@link mastermind.core.Code.Color} for the mapping of integers to
+     * colors.
+     */
     private final List<Integer> code = new ArrayList<>(Mastermind.CODE_LENGTH);
 
+    /**
+     * Draws the buttons for the user to input the code.
+     *
+     * @return JPanel containing the buttons.
+     */
     public JPanel drawButtons() {
         final JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -28,6 +50,11 @@ public class CodeInput {
         return panel;
     }
 
+    /**
+     * Draws the buttons for the user to submit a color in the code.
+     *
+     * @param panel Panel to draw the buttons on.
+     */
     private void drawSubmitButtons(final JPanel panel) {
         if (!submitButtons.isEmpty()) {
             Mastermind.LOG.fatal("Trying to draw submit buttons more than once");
@@ -64,16 +91,39 @@ public class CodeInput {
         }
     }
 
+    /**
+     * Draws the button for the user to clear the code.
+     *
+     * @param panel Panel to draw the button on.
+     */
     private void drawClearButton(final JPanel panel) {
         clearButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         panel.add(clearButton);
     }
 
+    /**
+     * Listener is invoked after every modification to the code.
+     *
+     * @param onCodeModified Consumer to be invoked with the code after
+     *                       modification. The code is represented as a list
+     *                       of integers, where each integer represents a
+     *                       color. See {@link mastermind.core.Code.Color}
+     *                       for mapping of integers to colors.
+     */
     public void addActionListener(final Consumer<List<Integer>> onCodeModified) {
         addSubmitListener(onCodeModified);
         addClearListener(onCodeModified);
     }
 
+    /**
+     * Adds a listener to the submit buttons.
+     *
+     * @param onCodeEntered Consumer to be invoked with the code after a
+     *                      color is entered. The code is represented as a
+     *                      list of integers, where each integer represents a
+     *                      color. See {@link mastermind.core.Code.Color} for
+     *                      mapping of integers to colors.
+     */
     private void addSubmitListener(final Consumer<List<Integer>> onCodeEntered) {
         if (submitButtons.isEmpty()) {
             Mastermind.LOG.fatal("Trying to listen on submit buttons without drawing them first");
@@ -91,6 +141,15 @@ public class CodeInput {
         }
     }
 
+    /**
+     * Adds a listener to the clear button.
+     *
+     * @param onCodeCleared Consumer to be invoked with the code after it is
+     *                      cleared. The code is represented as a list of
+     *                      integers, where each integer represents a color.
+     *                      See {@link mastermind.core.Code.Color} for
+     *                      mapping of integers to colors.
+     */
     private void addClearListener(final Consumer<List<Integer>> onCodeCleared) {
         clearButton.addActionListener(event -> {
             code.clear();

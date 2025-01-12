@@ -1,13 +1,17 @@
 package mastermind.core.solvers;
 
 import mastermind.Mastermind;
-import mastermind.core.*;
-import mastermind.utils.*;
-import java.util.*;
+import mastermind.core.Code;
+import mastermind.core.Response;
+import mastermind.utils.Tuple2;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public class EasyAlgorithm extends MastermindAlgorithm {
     private Code previousGuess = null;
-    private Set<Code> previousGuesses;
+    private final Set<Code> previousGuesses;
 
     /**
      * Constructs a new instance of the `EasyAlgorithm` class.
@@ -41,7 +45,7 @@ public class EasyAlgorithm extends MastermindAlgorithm {
         }
 
         final Tuple2<Integer, Integer> validation = response.getResponse();
-        final int correctCount = validation.first;
+        final int correctCount = validation.first();
 
         if (correctCount >= Mastermind.CODE_LENGTH) {
             return new Tuple2<>(MastermindSolver.Status.Win, previousGuess);

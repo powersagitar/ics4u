@@ -4,17 +4,39 @@ import mastermind.Mastermind;
 import mastermind.core.solvers.DonaldKnuthAlgorithm;
 import mastermind.core.solvers.EasyAlgorithm;
 import mastermind.core.solvers.MediumAlgorithm;
-import mastermind.gui.panels.HomeButton;
 import mastermind.gui.panels.Help;
+import mastermind.gui.panels.HomeButton;
 
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Represents the scene where the user selects a code-breaking algorithm.
+ */
 public class CodeBreakerSelector extends Scene {
+    /**
+     * The panel containing the algorithm selection options.
+     */
     private final JPanel selectorPanel = new JPanel();
+
+    /**
+     * The radio button representing the Donald Knuth 5-Guess Algorithm.
+     */
     private final JRadioButton donaldKnuthButton = new JRadioButton("Donald Knuth 5-Guess Algorithm", true);
+
+    /**
+     * The radio buttons representing the medium algorithm.
+     */
     private final JRadioButton mediumAlgoButton = new JRadioButton("Medium Algorithm");
+
+    /**
+     * The radio buttons representing the basic algorithm.
+     */
     private final JRadioButton basicAlgoButton = new JRadioButton("Basic Algorithm");
+
+    /**
+     * The button to proceed to the next scene.
+     */
     private final JButton proceedButton = new JButton("Proceed");
 
     /**
@@ -25,7 +47,6 @@ public class CodeBreakerSelector extends Scene {
      * This constructor initializes the selection panel with several algorithm options,
      * a proceed button, and registers an event handler to handle user interaction.
      * It also refreshes the parent frame to reflect the changes.
-     * </p>
      *
      * @param frame The parent JFrame where this selector will be displayed.
      */
@@ -61,7 +82,6 @@ public class CodeBreakerSelector extends Scene {
      * and centers its alignment. A titled border is added to the panel
      * to denote its purpose as "Code Breaker Algorithms". After configuration,
      * the panel is added to the parent frame for display.
-     * </p>
      */
     private void drawSelectorPanel() {
         selectorPanel.setLayout(new BoxLayout(selectorPanel, BoxLayout.Y_AXIS));
@@ -79,11 +99,9 @@ public class CodeBreakerSelector extends Scene {
      * algorithm options: "Donald Knuth 5-Guess Algorithm", "Medium Algorithm", and "Basic Algorithm".
      * Each button is added to a ButtonGroup to enforce exclusivity, ensuring only one option
      * can be selected at a time. The buttons are then added to the selector panel for display.
-     * </p>
      *
      * <p>
      * This configuration provides a user-friendly interface for selecting the desired algorithm.
-     * </p>
      */
     private void drawSelectorButtons() {
         final ButtonGroup selectorButtonGroup = new ButtonGroup();
@@ -103,7 +121,6 @@ public class CodeBreakerSelector extends Scene {
      * This method sets the alignment of the proceed button to ensure
      * it is centered horizontally within its container. The button is then
      * added to the parent frame, making it available for user interaction.
-     * </p>
      */
     private void drawProceedButton() {
         proceedButton.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -117,13 +134,11 @@ public class CodeBreakerSelector extends Scene {
      * When the "Proceed" button is clicked, this method checks which algorithm
      * radio button is selected. Based on the user's selection, it determines
      * the chosen algorithm. If no algorithm is selected, an exception is thrown.
-     * </p>
      *
      * <p>
      * After the selection is validated, the method initializes the `CodeBreaker`
      * instance with the selected algorithm and the current frame, transitioning
      * to the next stage of the application.
-     * </p>
      *
      * @throws IllegalArgumentException if no algorithm is selected.
      */

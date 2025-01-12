@@ -14,12 +14,24 @@ import java.awt.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Represents a scene where the user is prompted to enter the correct code.
+ */
 public class SecretCodePrompt extends Scene {
     private Code secretCode = null;
     private final MastermindSolver.Status status;
     private final List<Code> guesses;
     private final List<Response> responses;
 
+    /**
+     * Initializes a new SecretCodePrompt scene with the specified JFrame, game
+     * status, guesses, and responses.
+     *
+     * @param frame     The JFrame to be associated with this scene.
+     * @param status    The current game status.
+     * @param guesses   The list of guesses made by the code breaker.
+     * @param responses The list of responses corresponding to each guess.
+     */
     public SecretCodePrompt(final JFrame frame,
                             final MastermindSolver.Status status,
                             final List<Code> guesses,
@@ -51,6 +63,11 @@ public class SecretCodePrompt extends Scene {
         refreshFrame();
     }
 
+    /**
+     * Draws the code panel that displays the code the user is entering.
+     *
+     * @return The code panel.
+     */
     private static JPanel drawCodePanel() {
         final JPanel codePanel = new JPanel(new FlowLayout());
 
@@ -62,6 +79,12 @@ public class SecretCodePrompt extends Scene {
         return codePanel;
     }
 
+    /**
+     * Draws the prompt panel that allows the user to enter the correct code.
+     *
+     * @param codePanel The code panel where the code is displayed.
+     * @return The prompt panel.
+     */
     private JPanel drawPromptPanel(final JPanel codePanel) {
         final CodeInput codeInput = new CodeInput();
         final JPanel buttonsPanel = codeInput.drawButtons();
@@ -93,6 +116,12 @@ public class SecretCodePrompt extends Scene {
         return buttonsPanelWrapper;
     }
 
+    /**
+     * Draws the proceed button that allows the user to proceed to the next
+     * scene.
+     *
+     * @return The proceed button.
+     */
     private JButton drawProceedButton() {
         final JButton proceedButton = new JButton("Proceed");
         proceedButton.setAlignmentX(Component.CENTER_ALIGNMENT);

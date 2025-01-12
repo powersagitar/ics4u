@@ -1,18 +1,22 @@
 package mastermind.core.solvers;
 
-import mastermind.core.*;
 import mastermind.Mastermind;
+import mastermind.core.Response;
 
+/**
+ * An abstract class that represents a Mastermind solver.
+ * <p>
+ * It defines a few utility methods that are common to all solvers.
+ */
 public abstract class MastermindSolver {
-    public enum Status {
-        Win, Lose, Continue
-    }
-
+    /**
+     * The number of attempts made by the solver.
+     */
     private int attempts = 0;
 
     /**
      * Retrieves the number of attempts made by the solver.
-     * 
+     *
      * @return the current number of attempts
      */
     public int getAttempts() {
@@ -23,10 +27,10 @@ public abstract class MastermindSolver {
      * Whether the solver guesses the code within {@link Mastermind#MAX_GUESSES}.
      *
      * <p>
-     * To ensure {@code isLosing} checks the losing status correctly, the method
-     * must be called by both {@link MastermindAlgorithm#guess()} and
+     * To ensure {@code hasExceededMaxGuesses} checks the losing status
+     * correctly, the method must be called by both
+     * {@link MastermindAlgorithm#guess()} and
      * {@link MastermindAlgorithm#guess(Response)}.
-     * </p>
      *
      * @return true if the solver fails to guess the code, and false otherwise
      */
@@ -37,6 +41,26 @@ public abstract class MastermindSolver {
             ++attempts;
             return false;
         }
+    }
+
+    /**
+     * The status of the solver after guessing the code.
+     */
+    public enum Status {
+        /**
+         * The solver has guessed the code correctly.
+         */
+        Win,
+
+        /**
+         * The solver failed to guess the code.
+         */
+        Lose,
+
+        /**
+         * The solver has made a guess, but the game is not over yet.
+         */
+        Continue
     }
 
     /**

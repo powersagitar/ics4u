@@ -1,22 +1,14 @@
 package mastermind.utils;
 
-import java.util.Objects;
-
-public class Tuple2<T, U> {
-    public final T first;
-    public final U second;
-
-    /**
-     * Constructs a Tuple2 with the specified values for the first and second elements.
-     *
-     * @param first  the first element of the tuple
-     * @param second the second element of the tuple
-     */
-    public Tuple2(final T first, final U second) {
-        this.first = first;
-        this.second = second;
-    }
-
+/**
+ * Represents a tuple of two elements.
+ *
+ * @param first  the first element
+ * @param second the second element
+ * @param <T>    the type of the first element
+ * @param <U>    the type of the second element
+ */
+public record Tuple2<T, U>(T first, U second) {
     /**
      * Compares this Tuple2 object with the specified object for equality.
      *
@@ -39,15 +31,4 @@ public class Tuple2<T, U> {
 
     }
 
-    /**
-     * Returns a hash code value for this Tuple2. The hash code is computed
-     * based on the hash codes of the `first` and `second` elements of the tuple.
-     * This implementation ensures that equal tuples will have the same hash code.
-     * 
-     * @return the hash code value of this tuple
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(this.first, this.second);
-    }
 }
