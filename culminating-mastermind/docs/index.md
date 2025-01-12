@@ -18,10 +18,16 @@ to make a code and guess themselves.
 
 ## Supported Features
 
-- [Algorithm Solvers](/ics4u/components-core/#mastermindalgorithm)
-  - Donald Knuth 5-Guess Algorithm
-  - Medium Algorithm
-  - Basic Algorithm
+- Gameplay
+  - [Algorithm Solvers](/ics4u/components-core/#mastermindalgorithm)
+    - Donald Knuth 5-Guess Algorithm
+    - Medium Algorithm
+    - Basic Algorithm
+  - User Response Validation (All Hints Provided Are Correct)
 - [GUI](/ics4u/components-gui/)
   - Gameplay
+  - Help Button (Instructions & Tutorial)
+  - Home Button
+- Misc
+  - Logging
 - [More to come!](https://github.com/powersagitar/ics4u/issues?q=is%3Aissue+is%3Aopen+has%3Amastermind)
