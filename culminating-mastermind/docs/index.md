@@ -19,12 +19,12 @@ to make a code and guess themselves.
 ## Supported Features
 
 - Gameplay
-  - [Algorithm Solvers](/ics4u/components-core/#mastermindalgorithm)
+  - Algorithm Solvers
     - Donald Knuth 5-Guess Algorithm
     - Medium Algorithm
     - Basic Algorithm
   - User Response Validation (All Hints Provided Are Correct)
-- [GUI](/ics4u/components-gui/)
+- GUI
   - Gameplay
   - Help Button (Instructions & Tutorial)
   - Home Button
