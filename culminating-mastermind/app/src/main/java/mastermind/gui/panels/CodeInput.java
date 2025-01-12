@@ -30,7 +30,7 @@ public class CodeInput {
 
     private void drawSubmitButtons(final JPanel panel) {
         if (!submitButtons.isEmpty()) {
-            throw new IllegalStateException("Buttons already drawn");
+            Mastermind.log.fatal("Trying to draw submit buttons more than once");
         }
 
         final JPanel buttonPanel = new JPanel(new GridBagLayout());
@@ -76,7 +76,7 @@ public class CodeInput {
 
     private void addSubmitListener(final Consumer<List<Integer>> onCodeEntered) {
         if (submitButtons.isEmpty()) {
-            throw new IllegalStateException("No buttons to add action listeners to");
+            Mastermind.log.fatal("Trying to listen on submit buttons without drawing them first");
         }
 
         for (int i = 0; i < submitButtons.size(); ++i) {
