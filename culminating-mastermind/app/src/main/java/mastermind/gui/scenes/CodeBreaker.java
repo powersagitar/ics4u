@@ -9,13 +9,13 @@ import mastermind.core.solvers.MastermindSolver;
 import mastermind.gui.panels.GameBoard;
 import mastermind.gui.panels.Help;
 import mastermind.gui.panels.HomeButton;
+import mastermind.gui.panels.KeyPegsCounter;
 import mastermind.utils.Tuple2;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Represents the CodeBreaker scene in the application, inheriting from the
@@ -26,18 +26,6 @@ public class CodeBreaker extends Scene {
      * The algorithm to be used for solving the Mastermind puzzle.
      */
     private final MastermindAlgorithm solver;
-
-    /**
-     * The number of correctly positioned key pegs ("Black Key Pegs") in the
-     * game.
-     */
-    private final AtomicInteger correctCount = new AtomicInteger(2);
-
-    /**
-     * The number of key pegs that are misplaced but still valid ("White Key
-     * Pegs").
-     */
-    private final AtomicInteger misplacementCount = new AtomicInteger(2);
 
     /**
      * The list of guesses made by the {@link #solver} in the game.
@@ -53,6 +41,11 @@ public class CodeBreaker extends Scene {
      * The game board panel used to display the game state and hints.
      */
     private final GameBoard gameBoard = new GameBoard();
+
+    /**
+     * The key pegs counter panel used to manage user inputs for black and white pegs.
+     */
+    private final KeyPegsCounter keyPegsCounter = new KeyPegsCounter();
 
     /**
      * The "Proceed" button used to trigger the next step in the game.
@@ -101,9 +94,7 @@ public class CodeBreaker extends Scene {
 
         drawControlPanel();
 
-        drawCorrectControls();
-
-        drawMisplacementControls();
+        controlPanel.add(keyPegsCounter);
 
         drawProceedButton();
 
@@ -115,7 +106,7 @@ public class CodeBreaker extends Scene {
 
         Help.registerHelpHandlers();
 
-        registerGuessHandler();
+        registerProceedHandler();
 
         refreshFrame();
     }
@@ -150,137 +141,6 @@ public class CodeBreaker extends Scene {
 
         controlPanel.add(title);
         flowPanel.add(controlPanel);
-    }
-
-    /**
-     * Draws the UI controls for managing the "Black Key Pegs" count in the CodeBreaker game.
-     *
-     * <p>
-     * This method creates and configures a dedicated panel within the main control panel to
-     * display and adjust the number of correctly positioned key pegs ("Black Key Pegs").
-     * It utilizes buttons for incrementing and decrementing the count, ensuring that the
-     * user can control the precise feedback for the game's logic.
-     *
-     * <p>
-     * The panel aligns its components centrally and interacts with the `drawResponseControls`
-     * method to populate the panel with the necessary UI elements linked to the `correctCount`
-     * variable.
-     *
-     * <p>
-     * This method is a part of the initialization of the game's control panel and contributes
-     * to providing feedback for the solver algorithm's next move.
-     */
-    private void drawCorrectControls() {
-        final JPanel correctPanel = new JPanel(new FlowLayout());
-        correctPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        controlPanel.add(correctPanel);
-
-        drawResponseControls(correctPanel, "Black Key Pegs: ", correctCount);
-    }
-
-    /**
-     * Draws the UI controls for managing the "White Key Pegs" count in the CodeBreaker game.
-     *
-     * <p>
-     * This method creates and configures a dedicated panel within the main control panel to
-     * display and adjust the number of key pegs that are misplaced but still valid ("White Key Pegs").
-     * It uses buttons for incrementing and decrementing the count, ensuring that the user can
-     * provide accurate feedback for the solver's algorithm processing.
-     *
-     * <p>
-     * The panel aligns its components centrally and interacts with the `drawResponseControls`
-     * method, which populates the panel with the appropriate UI elements tied to the `misplacementCount` variable.
-     *
-     * <p>
-     * This method is part of the initialization of the game's control panel and contributes to the feedback
-     * system used by the algorithm to refine its guesses.
-     */
-    private void drawMisplacementControls() {
-        final JPanel misplacementPanel = new JPanel(new FlowLayout());
-        misplacementPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        controlPanel.add(misplacementPanel);
-
-        drawResponseControls(misplacementPanel, "White Key Pegs: ", misplacementCount);
-    }
-
-    /**
-     * Determines if the given count is invalid based on predefined constraints.
-     *
-     * <p>
-     * A count is considered invalid if it is less than 0 or greater than the constant
-     * `Mastermind.CODE_LENGTH`. This method is used to validate user input or game logic
-     * related to the permissible range of counts in the Mastermind game.
-     *
-     * @param value The count to validate.
-     * @return {@code true} if the count is invalid; {@code false} otherwise.
-     */
-    private boolean isInvalidCount(final int value) {
-        return value < 0 || value > Mastermind.CODE_LENGTH;
-    }
-
-    /**
-     * Draws a set of response controls for managing a numeric value in a user interface.
-     *
-     * <p>
-     * This method creates and displays a label representing a count alongside increment
-     * and decrement buttons within a specified parent panel. The controls are used
-     * to adjust the integer count while adhering to predefined constraints to ensure
-     * validity of the numeric value. Updates to the count are reflected dynamically
-     * in the label. The increment and decrement buttons are enabled or disabled based
-     * on the current value and its validity.
-     *
-     * <p>
-     * The constraints ensure that the count cannot exceed a maximum value (defined by
-     * `Mastermind.CODE_LENGTH`) or fall below zero. When the count is updated to the maximum
-     * or minimum permissible values, the respective button (increment or decrement) will be
-     * disabled automatically to prevent further invalid changes.
-     *
-     * @param parent      The JPanel container to which the label and buttons are added.
-     * @param labelPrefix The prefix text to display before the count in the label.
-     * @param count       An AtomicInteger representing the current count value, which
-     *                    can be incremented or decremented using the created controls.
-     */
-    private void drawResponseControls(final JPanel parent,
-                                      final String labelPrefix,
-                                      final AtomicInteger count) {
-        final JLabel label = new JLabel(labelPrefix + count);
-        parent.add(label);
-
-        final JButton decrementButton = new JButton("-");
-        final JButton incrementButton = new JButton("+");
-
-        decrementButton.addActionListener(event -> {
-            incrementButton.setEnabled(true);
-
-            final int newCount = count.get() - 1;
-
-            if (newCount == 0) {
-                decrementButton.setEnabled(false);
-            } else if (isInvalidCount(newCount)) {
-                return;
-            }
-
-            count.set(newCount);
-            label.setText(labelPrefix + newCount);
-        });
-
-        incrementButton.addActionListener(event -> {
-            decrementButton.setEnabled(true);
-
-            final int newCount = count.get() + 1;
-
-            if (newCount == Mastermind.CODE_LENGTH) {
-                incrementButton.setEnabled(false);
-            } else if (isInvalidCount(newCount)) {
-                return;
-            }
-
-            count.set(newCount);
-            label.setText(labelPrefix + newCount);
-        });
-
-        parent.add(decrementButton);
-        parent.add(incrementButton);
     }
 
     /**
@@ -330,7 +190,7 @@ public class CodeBreaker extends Scene {
      * This handler links the user interface with the solver algorithm, enabling interactive and
      * iterative gameplay through the "Proceed" button.
      */
-    private void registerGuessHandler() {
+    private void registerProceedHandler() {
 //        first guess
         final Code firstGuess = solver.guess();
         gameBoard.updateGuess(0, firstGuess.getColors());
@@ -342,23 +202,30 @@ public class CodeBreaker extends Scene {
         proceedButton.addActionListener(event -> {
             Mastermind.LOG.trace("Proceed button pressed");
 
-            final Response responseForPreviousGuess = new Response(new Tuple2<>(correctCount.get(), misplacementCount.get()));
-            final int currentAttempt = solver.getAttempts();
-            final Tuple2<MastermindSolver.Status, Code> result =
-                makeSubsequentGuess(responseForPreviousGuess);
+            final Response responseForPreviousGuess =
+                new Response(new Tuple2<>(
+                    keyPegsCounter.getBlackPegs(),
+                    keyPegsCounter.getWhitePegs()));
 
             responses.add(responseForPreviousGuess);
 
             Mastermind.LOG.info("Response: " + responseForPreviousGuess);
+
+//            get the number of attempts BEFORE making the next guess
+            final int attempt = solver.getAttempts();
+
+            final Tuple2<MastermindSolver.Status, Code> result =
+                makeSubsequentGuess(responseForPreviousGuess);
+
             Mastermind.LOG.info("Solver status: " + result.first());
 
             if (result.first() == MastermindSolver.Status.Continue) {
-                Mastermind.LOG.info("Guess " + currentAttempt + ": " + result.second());
+                Mastermind.LOG.info("Guess " + attempt + ": " + result.second());
 
                 guesses.add(result.second());
 
-                gameBoard.updateHints(currentAttempt - 1, responseForPreviousGuess);
-                gameBoard.updateGuess(currentAttempt, result.second().getColors());
+                gameBoard.updateHints(attempt - 1, responseForPreviousGuess);
+                gameBoard.updateGuess(attempt, result.second().getColors());
                 return;
             }
 
