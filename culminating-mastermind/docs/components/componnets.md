@@ -17,9 +17,10 @@ Please see [Javadoc](/ics4u/javadoc) for component API documentation.
 
 ```mermaid
 sequenceDiagram
-  solver ->> gui: first guess
-  gui ->> solver: user response (hints)
-  solver ->> gui: subsequent guesses
+  gui ->> solver: query first guess (without hints)
+  solver -->> gui: first guess
+  gui ->> solver: query subsequent guess (with hints)
+  solver -->> gui: subsequent guess
 ```
 
 ### Human Solver ↔ GUI
@@ -27,5 +28,5 @@ sequenceDiagram
 ```mermaid
 sequenceDiagram
   gui ->> solver: user guess
-  solver ->> gui: response (hints)
+  solver -->> gui: validation (hints)
 ```
