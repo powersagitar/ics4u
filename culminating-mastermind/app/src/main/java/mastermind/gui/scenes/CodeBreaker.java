@@ -9,7 +9,7 @@ import mastermind.core.solvers.MastermindSolver;
 import mastermind.gui.panels.GameBoard;
 import mastermind.gui.panels.Help;
 import mastermind.gui.panels.HomeButton;
-import mastermind.gui.panels.KeyPegsCounter;
+import mastermind.gui.panels.KeyPegsPrompt;
 import mastermind.utils.Tuple2;
 
 import javax.swing.*;
@@ -45,7 +45,7 @@ public class CodeBreaker extends Scene {
     /**
      * The key pegs counter panel used to manage user inputs for black and white pegs.
      */
-    private final KeyPegsCounter keyPegsCounter = new KeyPegsCounter();
+    private final KeyPegsPrompt keyPegsCounter = new KeyPegsPrompt();
 
     /**
      * The "Proceed" button used to trigger the next step in the game.

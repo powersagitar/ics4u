@@ -9,18 +9,16 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * A panel that allows the user to set the number of black and white key pegs.
  */
-public class KeyPegsCounter extends JPanel {
+public class KeyPegsPrompt extends JPanel {
     /**
      * The number of black pegs.
      */
-    private final AtomicInteger blackPegs =
-        new AtomicInteger(Mastermind.CODE_LENGTH / 2);
+    private final AtomicInteger blackPegs = new AtomicInteger(1);
 
     /**
      * The number of white pegs.
      */
-    private final AtomicInteger whitePegs =
-        new AtomicInteger(Mastermind.CODE_LENGTH / 2);
+    private final AtomicInteger whitePegs = new AtomicInteger(1);
 
     /**
      * The decrement button for the black pegs.
@@ -45,7 +43,7 @@ public class KeyPegsCounter extends JPanel {
     /**
      * Creates a new key pegs counter panel.
      */
-    public KeyPegsCounter() {
+    public KeyPegsPrompt() {
         super();
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -80,9 +78,9 @@ public class KeyPegsCounter extends JPanel {
      * @param pegs            the number of pegs
      */
     private void drawPegControl(final String prefix,
-                                final JButton decrementButton,
-                                final JButton incrementButton,
-                                final AtomicInteger pegs) {
+            final JButton decrementButton,
+            final JButton incrementButton,
+            final AtomicInteger pegs) {
         final JLabel label = new JLabel(prefix + pegs.get());
 
         decrementButton.addActionListener(e -> {
