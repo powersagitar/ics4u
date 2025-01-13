@@ -51,3 +51,11 @@ Run the following command:
 ```zsh
 utils/start-local-wiki.sh
 ```
+
+## Building Javadoc
+
+Run the following command:
+
+```zsh
+./gradlew javadoc
+```
