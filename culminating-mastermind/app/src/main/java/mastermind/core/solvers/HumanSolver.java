@@ -7,6 +7,10 @@ import mastermind.utils.Tuple2;
 
 /**
  * A solver that allows a human player to guess the secret code.
+ * <p>
+ * It is the solver used for code maker mode.
+ * <p>
+ * It compares user input against generated secret code and provides hints.
  */
 public class HumanSolver extends MastermindSolver {
     /**

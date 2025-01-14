@@ -5,11 +5,13 @@ import mastermind.core.Response;
 import mastermind.utils.Tuple2;
 
 /**
- * An abstract class representing a Mastermind algorithm.
+ * The standard interface for all algorithmic solvers.
  * <p>
- * It extends the {@code MastermindSolver} class and provides 2 abstract
- * methods, {@code guess()} and {@code guess(Response response)},
+ * It extends the {@code MastermindSolver} class and exposes 2
+ * methods, {@link #guess()} and {@link #guess(Response)},
  * representing first and subsequent guesses, respectively.
+ * <p>
+ * The GUI depends on above interface to communicate with the solver.
  */
 public abstract class MastermindAlgorithm extends MastermindSolver {
     /**

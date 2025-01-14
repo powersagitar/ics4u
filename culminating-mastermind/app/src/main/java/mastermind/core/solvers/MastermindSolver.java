@@ -4,7 +4,7 @@ import mastermind.Mastermind;
 import mastermind.core.Response;
 
 /**
- * An abstract class that represents a Mastermind solver.
+ * The ultimate base class, all solvers are derived from this class.
  * <p>
  * It defines a few utility methods that are common to all solvers.
  */
