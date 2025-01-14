@@ -17,7 +17,13 @@ import java.util.Set;
  * have not guessed before.
  */
 public class EasyAlgorithm extends MastermindAlgorithm {
+    /**
+     * The previous guess made by the algorithm.
+     */
     private Code previousGuess = null;
+    /**
+     * A set containing all previous guesses made by the algorithm.
+     */
     private final Set<Code> previousGuesses;
 
     /**
