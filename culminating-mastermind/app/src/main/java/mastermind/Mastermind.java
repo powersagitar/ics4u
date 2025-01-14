@@ -53,7 +53,8 @@ public class Mastermind {
      */
     private static void initializeLogger() {
         try {
-            final FileOutputStream logFile = new FileOutputStream("mastermind.log", false);
+            final FileOutputStream logFile = new FileOutputStream("mastermind" +
+                ".log", true);
             Log.addSink(logFile);
         } catch (final FileNotFoundException e) {
             Log.error("Failed to open log file output stream: " + e.getMessage());
