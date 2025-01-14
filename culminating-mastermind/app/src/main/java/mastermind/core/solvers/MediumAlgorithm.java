@@ -15,6 +15,10 @@ import java.util.List;
  * An implementation of the medium algorithm, which is a modified and
  * less-optimal version of the Donald-Knuth algorithm, for solving the
  * Mastermind game.
+ *
+ * It will first guess 1 color for all 4 positions for the first 3 attempts.
+ * It will reduce the permutations after every guess and response. Then, it
+ * will guess the first permutation in the set of remaining permutations.
  */
 public class MediumAlgorithm extends MastermindAlgorithm {
     /**
