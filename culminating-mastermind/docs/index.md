@@ -12,9 +12,9 @@ This is the wiki for Mastermind (Code Breaker), the ICS4U1 culminating project.
 
 The game being implemented is the standard variant of the game, where the solver
 has to guess a secret code of length 4 in 10 attempts. The game is played on a
-grid, with 6 possible colors and 4 pegs (for each slot in the code) to provide hints. The operator can
-choose to make a code and ask the program to guess, or they can ask the program
-to make a code and guess themselves.
+grid, with 6 possible colors and 4 pegs (for each slot in the code) to provide 
+hints. The operator can  choose to make a code and ask the program to guess, or
+they can ask the program to make a code and guess themselves.
 
 ## Supported Features
 

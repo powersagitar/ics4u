@@ -11,6 +11,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * An implementation of the MastermindAlgorithm class that provides a simple
+ * algorithm for solving the Mastermind game, by randomly choosing codes that
+ * have not guessed before.
+ */
 public class EasyAlgorithm extends MastermindAlgorithm {
     private Code previousGuess = null;
     private final Set<Code> previousGuesses;
