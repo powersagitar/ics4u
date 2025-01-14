@@ -1,5 +1,6 @@
 package mastermind.gui.scenes;
 
+import mastermind.Mastermind;
 import mastermind.core.CodeFactory;
 import mastermind.gui.panels.Help;
 import mastermind.gui.panels.HomeButton;
@@ -7,6 +8,7 @@ import mastermind.utils.Log;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.FileNotFoundException;
 
 public class CodeMakerSelector extends Scene {
     private final JPanel selectorPanel = new JPanel();
@@ -80,8 +82,14 @@ public class CodeMakerSelector extends Scene {
 
             } else if (preProgrammedButton.isSelected()) {
                 Log.info("Pre-Programmed Code Maker selected");
-                // TODO: add pre-programmed code maker
 
+                try {
+                    new CodeMaker(frame, CodeFactory.getRandomFromFile(
+                        Mastermind.CODEMAKER_PREDEFINED_CODES));
+                } catch (final FileNotFoundException |
+                               IllegalArgumentException e) {
+                    Log.fatal("CodeMaker predefined code: " + e.getMessage());
+                }
             } else {
                 Log.fatal("No code maker algorithm selected");
             }

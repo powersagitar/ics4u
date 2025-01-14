@@ -6,6 +6,7 @@ import mastermind.utils.Log;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
@@ -32,6 +33,12 @@ public class Mastermind {
      * Total number of colors available to choose from.
      */
     public final static int TOTAL_COLORS = 6;
+
+    /**
+     * File containing predefined codes for the code maker.
+     */
+    public final static File CODEMAKER_PREDEFINED_CODES = new File(
+        "src/main/resources/codemaker-predefined-codes.txt");
 
     /**
      * Dimension of the canvas (screen) where the game is drawn.
