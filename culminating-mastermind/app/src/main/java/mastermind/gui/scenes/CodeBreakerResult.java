@@ -5,6 +5,7 @@ import mastermind.core.Code;
 import mastermind.core.Response;
 import mastermind.core.solvers.Status;
 import mastermind.gui.panels.GameBoard;
+import mastermind.utils.Log;
 
 import javax.swing.*;
 import java.awt.*;
@@ -118,6 +119,7 @@ public class CodeBreakerResult extends Scene {
      * Draws the invalid responses on a {@link GameBoard}.
      */
     private void drawInvalidResponses() {
+        Log.info("Invalid responses provided for the guesses by user");
         final String description = """
             You did not provide the correct hints for the following guesses,
             thus it is not possible to derive a win/lose endgame status:

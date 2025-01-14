@@ -153,6 +153,7 @@ public class CodeInput {
      */
     private void addClearListener(final Consumer<List<Integer>> onCodeCleared) {
         clearButton.addActionListener(event -> {
+            Log.debug("Current Code Cleared");
             code.clear();
             onCodeCleared.accept(code);
         });
