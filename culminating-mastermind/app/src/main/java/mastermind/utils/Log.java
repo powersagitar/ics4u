@@ -11,7 +11,6 @@ import java.util.Set;
  * Represents a singleton logger for recording messages with different severity
  * levels.
  */
-@SuppressWarnings("unused")
 public class Log {
     /**
      * The set of output streams to which log messages will be written, in
@@ -34,6 +33,7 @@ public class Log {
      * Disable the constructor as {@Code Log} being a singleton class.
      */
     private Log() {
+        throw new IllegalStateException("This singleton class should not be instantiated");
     };
 
     /**
