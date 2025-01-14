@@ -44,7 +44,7 @@ public class CodeMakerSelector extends Scene {
         selectorPanel.setLayout(new BoxLayout(selectorPanel, BoxLayout.Y_AXIS));
         selectorPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
         selectorPanel.setBorder(BorderFactory.createTitledBorder("Code Breaker Algorithms"));
-
+        Log.debug("Add selector panel to frame");
         frame.add(selectorPanel);
     }
 
@@ -53,7 +53,7 @@ public class CodeMakerSelector extends Scene {
         selectorButtonGroup.add(randomButton);
         selectorButtonGroup.add(preProgrammedButton);
 
-
+        Log.debug("Add selector buttons to selector panel");
         selectorPanel.add(randomButton);
         selectorPanel.add(preProgrammedButton);
     }
