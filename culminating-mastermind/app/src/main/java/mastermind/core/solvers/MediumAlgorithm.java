@@ -86,7 +86,7 @@ public class MediumAlgorithm extends MastermindAlgorithm {
             return code;
         }
 
-        return null;
+        throw new InvalidHintsException("No valid permutations found.");
     }
 
     /**
