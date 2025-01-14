@@ -11,7 +11,15 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * Represents the scene where the user selects a code-breaking algorithm.
+ * Prompts the user to select a code-breaking algorithm.
+ * <p>
+ * Options:
+ * <br>
+ * - Donald Knuth 5-Guess Algorithm
+ * <br>
+ * - Medium Algorithm
+ * <br>
+ * - Basic Algorithm
  */
 public class CodeBreakerSelector extends Scene {
     /**

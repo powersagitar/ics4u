@@ -17,7 +17,7 @@ import java.awt.*;
 import java.util.List;
 
 /**
- * Represents the game scene for the CodeMaker role in Mastermind.
+ * The Code Maker gameplay.
  */
 public class CodeMaker extends Scene {
     /**

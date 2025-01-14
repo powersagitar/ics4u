@@ -20,8 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Represents the CodeBreaker scene in the application, inheriting from the
- * parent {@link mastermind.gui.scenes.Scene} class.
+ * The Code Breaker gameplay.
  */
 public class CodeBreaker extends Scene {
     /**

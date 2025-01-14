@@ -19,6 +19,8 @@ import java.util.List;
  * - A panel for guesses, where the player inputs their code guesses.
  * <br>
  * - A panel for hints, which provides feedback on the guesses.
+ * <p>
+ * The gameboard is designed to look like a physical mastermind board.
  */
 public class GameBoard {
     /**

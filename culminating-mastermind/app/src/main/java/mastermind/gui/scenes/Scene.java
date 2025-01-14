@@ -5,7 +5,9 @@ import mastermind.Mastermind;
 import javax.swing.*;
 
 /**
- * Represents a scene in the Mastermind game.
+ * The ultimate base class of all {@link mastermind.gui.scenes}.
+ * <p>
+ * Every scene derives from {@code Scene}.
  */
 public abstract class Scene {
     /**
