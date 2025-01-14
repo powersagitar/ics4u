@@ -1,10 +1,11 @@
 package mastermind;
 
 import mastermind.core.Code;
+import mastermind.core.CodeFactory;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
 import java.util.HashMap;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
@@ -12,7 +13,7 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
 class CodeTest {
     @Test
     void testGenerateRandomCode() {
-        final Code randomCode = Code.generateRandomCode(List.of());
+        final Code randomCode = CodeFactory.getRandom();
         final int expectedCodeLength = Mastermind.CODE_LENGTH;
         final var colorArray = randomCode.getColors();
 
@@ -21,7 +22,7 @@ class CodeTest {
 
     @Test
     void testCodeFromIndices() {
-        final Code code = new Code(List.of(0, 1, 2, 3));
+        final Code code = CodeFactory.fromColorIndices(List.of(0, 1, 2, 3));
         final List<Code.Color> expectedColors = List.of(Code.Color.Green, Code.Color.Red, Code.Color.Blue,
                 Code.Color.Yellow);
 
@@ -30,7 +31,7 @@ class CodeTest {
 
     @Test
     void testGetColor() {
-        final Code code = new Code(List.of(0, 1, 2, 3));
+        final Code code = CodeFactory.fromColorIndices(List.of(0, 1, 2, 3));
         final List<Code.Color> expectedColors = List.of(Code.Color.Green, Code.Color.Red, Code.Color.Blue,
                 Code.Color.Yellow);
 
@@ -41,7 +42,7 @@ class CodeTest {
 
     @Test
     void testGetColors() {
-        final Code code = new Code(List.of(0, 1, 2, 3));
+        final Code code = CodeFactory.fromColorIndices(List.of(0, 1, 2, 3));
         final List<Code.Color> expectedColors = List.of(Code.Color.Green, Code.Color.Red, Code.Color.Blue,
                 Code.Color.Yellow);
 
@@ -50,7 +51,7 @@ class CodeTest {
 
     @Test
     void testGetOccurrences() {
-        final Code code = new Code(List.of(0, 1, 2, 3));
+        final Code code = CodeFactory.fromColorIndices(List.of(0, 1, 2, 3));
         HashMap<Code.Color, Integer> expectedOccurrences = new HashMap<>(4);
         expectedOccurrences.put(Code.Color.Green, 1);
         expectedOccurrences.put(Code.Color.Red, 1);

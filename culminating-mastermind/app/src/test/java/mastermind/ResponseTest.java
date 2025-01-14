@@ -1,6 +1,7 @@
 package mastermind;
 
 import mastermind.core.Code;
+import mastermind.core.CodeFactory;
 import mastermind.core.Response;
 import mastermind.utils.Tuple2;
 import org.junit.jupiter.api.Test;
@@ -13,8 +14,8 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 class ResponseTest {
     @Test
     void guessAllCorrect() {
-        final Code code = new Code(List.of(0, 0, 0, 0));
-        final Code guess = new Code(List.of(0, 0, 0, 0));
+        final Code code = CodeFactory.fromColorIndices(List.of(0, 0, 0, 0));
+        final Code guess = CodeFactory.fromColorIndices(List.of(0, 0, 0, 0));
         final Response response = new Response(code, guess);
         final int expectedCorrectCount = 4;
         final int expectedMisplacementCount = 0;
@@ -25,8 +26,8 @@ class ResponseTest {
 
     @Test
     void guessPartialCorrectNoMisplacement() {
-        final Code code = new Code(List.of(0, 1, 2, 3));
-        final Code guess = new Code(List.of(0, 1, 4, 5));
+        final Code code = CodeFactory.fromColorIndices(List.of(0, 1, 2, 3));
+        final Code guess = CodeFactory.fromColorIndices(List.of(0, 1, 4, 5));
         final Response response = new Response(code, guess);
         final int expectedCorrectCount = 2;
         final int expectedMisplacementCount = 0;
@@ -37,8 +38,8 @@ class ResponseTest {
 
     @Test
     void guessNoCorrectNoMisplacement() {
-        final Code code = new Code(List.of(0, 0, 0, 0));
-        final Code guess = new Code(List.of(1, 1, 1, 1));
+        final Code code = CodeFactory.fromColorIndices(List.of(0, 0, 0, 0));
+        final Code guess = CodeFactory.fromColorIndices(List.of(1, 1, 1, 1));
         final Response response = new Response(code, guess);
         final int expectedCorrectCount = 0;
         final int expectedMisplacementCount = 0;
@@ -49,8 +50,8 @@ class ResponseTest {
 
     @Test
     void guessPartialCorrectWithMisplacement() {
-        final Code code = new Code(List.of(0, 1, 2, 3));
-        final Code guess = new Code(List.of(0, 1, 3, 2));
+        final Code code = CodeFactory.fromColorIndices(List.of(0, 1, 2, 3));
+        final Code guess = CodeFactory.fromColorIndices(List.of(0, 1, 3, 2));
         final Response response = new Response(code, guess);
         final int expectedCorrectCount = 2;
         final int expectedMisplacementCount = 2;
@@ -61,8 +62,8 @@ class ResponseTest {
 
     @Test
     void guessAllMisplacement() {
-        final Code code = new Code(List.of(0, 1, 2, 3));
-        final Code guess = new Code(List.of(3, 2, 1, 0));
+        final Code code = CodeFactory.fromColorIndices(List.of(0, 1, 2, 3));
+        final Code guess = CodeFactory.fromColorIndices(List.of(3, 2, 1, 0));
         final Response response = new Response(code, guess);
         final int expectedCorrectCount = 0;
         final int expectedMisplacementCount = 4;
@@ -73,8 +74,8 @@ class ResponseTest {
 
     @Test
     void guessAllMisplacementWithDuplicates() {
-        final Code code = new Code(List.of(0, 1, 2, 3));
-        final Code guess = new Code(List.of(3, 3, 3, 4));
+        final Code code = CodeFactory.fromColorIndices(List.of(0, 1, 2, 3));
+        final Code guess = CodeFactory.fromColorIndices(List.of(3, 3, 3, 4));
         final Response response = new Response(code, guess);
         final int expectedCorrectCount = 0;
         final int expectedMisplacementCount = 1;
@@ -85,8 +86,8 @@ class ResponseTest {
 
     @Test
     void guessMisplacementIsCorrect() {
-        final Code code = new Code(List.of(0, 1, 2, 3));
-        final Code guess = new Code(List.of(0, 0, 0, 0));
+        final Code code = CodeFactory.fromColorIndices(List.of(0, 1, 2, 3));
+        final Code guess = CodeFactory.fromColorIndices(List.of(0, 0, 0, 0));
         final Response response = new Response(code, guess);
         final int expectedCorrectCount = 1;
         final int expectedMisplacementCount = 0;

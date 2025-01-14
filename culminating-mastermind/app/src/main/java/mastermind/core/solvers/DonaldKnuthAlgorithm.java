@@ -2,6 +2,7 @@ package mastermind.core.solvers;
 
 import mastermind.Mastermind;
 import mastermind.core.Code;
+import mastermind.core.CodeFactory;
 import mastermind.core.Response;
 import mastermind.utils.MathUtil;
 import mastermind.utils.Tuple2;
@@ -42,10 +43,10 @@ public class DonaldKnuthAlgorithm extends MastermindAlgorithm {
         permutations = new HashSet<>(possibilities);
 
         for (int i = 0; i < possibilities; ++i) {
-            final ArrayList<Integer> codeInDigits = MathUtil.digitsFromBase(i, Mastermind.TOTAL_COLORS,
-                Mastermind.CODE_LENGTH);
-            final Code code = new Code(codeInDigits);
-            permutations.add(code);
+            final ArrayList<Integer> colorIndices =
+                MathUtil.digitsFromBase(i, Mastermind.TOTAL_COLORS, Mastermind.CODE_LENGTH);
+
+            permutations.add(CodeFactory.fromColorIndices(colorIndices));
         }
     }
 
@@ -64,7 +65,7 @@ public class DonaldKnuthAlgorithm extends MastermindAlgorithm {
 
         hasExceededMaxGuesses();
 
-        final Code nextGuess = new Code(Arrays.asList(0, 0, 1, 1));
+        final Code nextGuess = CodeFactory.fromColorIndices(List.of(0, 0, 1, 1));
         previousGuess = nextGuess;
 
         return nextGuess;

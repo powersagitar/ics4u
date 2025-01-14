@@ -93,16 +93,17 @@ public class SecretCodePrompt extends Scene {
         final JPanel buttonsPanelWrapper = new JPanel(new BorderLayout());
         buttonsPanelWrapper.add(buttonsPanel, BorderLayout.PAGE_START);
 
-        codeInput.addActionListener(codeIdxList -> {
-            final Code code = new Code(codeIdxList);
+        codeInput.addActionListener(codeColorIndices -> {
+            final List<Code.Color> codeColors = codeColorIndices
+                .stream()
+                .map(Code.Color::fromIndex)
+                .toList();
 
-            if (codeIdxList.size() >= Mastermind.CODE_LENGTH) {
-                secretCode = code;
-            } else {
-                secretCode = null;
+            if (codeColors.size() == Mastermind.CODE_LENGTH) {
+                this.secretCode = new Code(codeColors);
             }
 
-            final List<Color> codeAWTColors = code.getColors()
+            final List<Color> codeAWTColors = codeColors
                 .stream()
                 .map(GameBoard.CODE_COLOR_TO_AWT_COLOR::get)
                 .collect(Collectors.toList());

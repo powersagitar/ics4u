@@ -2,11 +2,8 @@ package mastermind.core;
 
 import mastermind.Mastermind;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
-import java.util.function.Function;
 
 /**
  * Represents a code sequence in the Mastermind game.
@@ -15,7 +12,7 @@ public class Code {
     /**
      * The code sequence represented as a list of {@code Color} objects.
      */
-    private final ArrayList<Color> code;
+    private final List<Color> code;
 
     /**
      * Represents a color in the Mastermind game.
@@ -35,65 +32,13 @@ public class Code {
         }
     }
 
-    /**
-     * Generates a random {@code Code} instance that satisfies the provided filters.
-     *
-     * <p>
-     * This method generates random sequences of colors, represented as a {@code Code}, and
-     * evaluates each sequence against the provided filters. A filter is a {@link Function}
-     * that takes a {@code Code} as input and returns {@code true} if the code satisfies a
-     * specific rule and {@code false} otherwise. The method continues generating random codes
-     * until one satisfies all the filters.
-     *
-     * @param filters a {@link List} of {@link Function} instances, where each function represents
-     *                a condition the generated {@code Code} must satisfy.
-     * @return a {@code Code} instance that passes all the provided filters.
-     */
-    public static Code generateRandomCode(List<Function<Code, Boolean>> filters) {
-        final Random random = new Random();
-
-        while (true) {
-            ArrayList<Integer> codeBuilder = new ArrayList<>(Mastermind.CODE_LENGTH);
-
-            for (int i = 0; i < Mastermind.CODE_LENGTH; ++i) {
-                final int randomColor = random.nextInt(Mastermind.TOTAL_COLORS);
-                codeBuilder.add(randomColor);
-            }
-
-            final Code code = new Code(codeBuilder);
-            boolean satisfiesAllFilters = true;
-
-            for (final Function<Code, Boolean> filter : filters) {
-                if (!filter.apply(code)) {
-                    satisfiesAllFilters = false;
-                    break;
-                }
-            }
-
-            if (satisfiesAllFilters) {
-                return code;
-            }
-        }
-    }
-
-    /**
-     * Constructs a {@code Code} object from a list of integer values representing colors.
-     * Each integer in the provided list corresponds to a color, which is mapped to the
-     * appropriate {@link Color} enum using the {@link Color#fromIndex(int)} method.
-     *
-     * @param code a {@link List} of integers, where each integer is the index of a {@code Color}.
-     *             The indices must be within the range of valid {@code Color} values.
-     * @throws ArrayIndexOutOfBoundsException if any index in the provided list is out of range
-     *                                        for the {@code Color} enum.
-     */
-    public Code(final List<Integer> code) {
-        ArrayList<Color> codeBuilder = new ArrayList<>(Mastermind.CODE_LENGTH);
-
-        for (final int color : code) {
-            codeBuilder.add(Color.fromIndex(color));
+    public Code(final List<Color> code) {
+        if (code.size() != Mastermind.CODE_LENGTH) {
+            throw new IllegalArgumentException(
+                "Code length must be equal to " + Mastermind.CODE_LENGTH);
         }
 
-        this.code = codeBuilder;
+        this.code = code;
     }
 
     /**
@@ -110,9 +55,10 @@ public class Code {
     /**
      * Retrieves the list of {@code Color} objects contained in this code sequence.
      *
-     * @return an {@link ArrayList} of {@code Color} objects representing the current code sequence.
+     * @return an {@link List} of {@code Color} objects representing the current
+     * code sequence.
      */
-    public ArrayList<Color> getColors() {
+    public List<Color> getColors() {
         return code;
     }
 

@@ -2,6 +2,7 @@ package mastermind.gui.scenes;
 
 import mastermind.Mastermind;
 import mastermind.core.Code;
+import mastermind.core.CodeFactory;
 import mastermind.core.Response;
 import mastermind.core.solvers.HumanSolver;
 import mastermind.core.solvers.Status;
@@ -23,11 +24,11 @@ public class CodeMaker extends Scene {
     /**
      * The secret code generated for user to guess.
      */
-    private final Code secretCode = Code.generateRandomCode(List.of());
+    private final Code secretCode;
     /**
      * The solver used to process the user's guesses in the game.
      */
-    private final HumanSolver solver = new HumanSolver(secretCode);
+    private final HumanSolver solver;
     /**
      * The game board panel that displays the current game state.
      */
@@ -58,10 +59,13 @@ public class CodeMaker extends Scene {
      *
      * @param frame the JFrame to which this game's components will be added
      */
-    public CodeMaker(final JFrame frame) {
+    public CodeMaker(final JFrame frame, final Code secretCode) {
         super(frame);
 
         Log.info("Creating CodeMaker scene");
+
+        this.secretCode = secretCode;
+        this.solver = new HumanSolver(secretCode);
 
         frame.add(flowPanel);
 
@@ -160,7 +164,7 @@ public class CodeMaker extends Scene {
                 return;
             }
 
-            final Code guess = new Code(nextGuess);
+            final Code guess = CodeFactory.fromColorIndices(nextGuess);
             nextGuess.clear();
 
             final int attempt = solver.getAttempts();

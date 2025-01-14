@@ -2,11 +2,13 @@ package mastermind.core.solvers;
 
 import mastermind.Mastermind;
 import mastermind.core.Code;
+import mastermind.core.CodeFactory;
 import mastermind.core.Response;
 import mastermind.utils.Tuple2;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class EasyAlgorithm extends MastermindAlgorithm {
@@ -22,7 +24,6 @@ public class EasyAlgorithm extends MastermindAlgorithm {
     }
 
     /**
-     *
      * @return
      */
     public Code guess() {
@@ -62,7 +63,11 @@ public class EasyAlgorithm extends MastermindAlgorithm {
     private Code findNextGuess() {
         Code code;
         do {
-            code = new Code(Arrays.asList(getRandomNumber(0, 5), getRandomNumber(0, 5), getRandomNumber(0, 5), getRandomNumber(0, 5)));
+            code = CodeFactory.fromColorIndices(new ArrayList<>(List.of(
+                getRandomNumber(0, 5),
+                getRandomNumber(0, 5),
+                getRandomNumber(0, 5),
+                getRandomNumber(0, 5))));
         } while (previousGuesses.contains(code));
         previousGuesses.add(code);
         return code;

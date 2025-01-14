@@ -2,13 +2,14 @@ package mastermind.core.solvers;
 
 import mastermind.Mastermind;
 import mastermind.core.Code;
+import mastermind.core.CodeFactory;
 import mastermind.core.Response;
 import mastermind.utils.MathUtil;
 import mastermind.utils.Tuple2;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 
 public class MediumAlgorithm extends MastermindAlgorithm {
     private Code previousGuess = null;
@@ -20,15 +21,15 @@ public class MediumAlgorithm extends MastermindAlgorithm {
 
     private void generatePermutations() {
         final int possibilities = (int) Math.pow(Mastermind.TOTAL_COLORS, Mastermind.CODE_LENGTH);
-       permutations = new HashSet<>();
-       for (int i = 0; i < possibilities; i++) {
-           final ArrayList<Integer> codeInDigits = MathUtil.digitsFromBase(i, Mastermind.TOTAL_COLORS, Mastermind.CODE_LENGTH);
-           final Code code = new Code(codeInDigits);
-           permutations.add(code);
-       }
+        permutations = new HashSet<>();
+        for (int i = 0; i < possibilities; i++) {
+            final ArrayList<Integer> codeInDigits = MathUtil.digitsFromBase(i, Mastermind.TOTAL_COLORS, Mastermind.CODE_LENGTH);
+            final Code code = CodeFactory.fromColorIndices(codeInDigits);
+            permutations.add(code);
+        }
     }
 
-    private void reducePermutations(final Response response){
+    private void reducePermutations(final Response response) {
         this.permutations.removeIf(permutation -> {
             final Response testResponse = new Response(permutation, this.previousGuess);
             return !response.equals(testResponse);
@@ -37,7 +38,8 @@ public class MediumAlgorithm extends MastermindAlgorithm {
 
     private Code findNextGuess(int numAttempts) {
         if (numAttempts < 4) {
-            return new Code(Arrays.asList(numAttempts, numAttempts, numAttempts, numAttempts));
+            return CodeFactory.fromColorIndices(List.of(
+                numAttempts, numAttempts, numAttempts, numAttempts));
         }
         for (Code code : permutations) {
             return code;
@@ -53,7 +55,7 @@ public class MediumAlgorithm extends MastermindAlgorithm {
 
         hasExceededMaxGuesses();
 
-        final Code nextGuess = new Code(Arrays.asList(0, 0, 0, 0));
+        final Code nextGuess = CodeFactory.fromColorIndices(List.of(0, 0, 0, 0));
         previousGuess = nextGuess;
 
         return nextGuess;

@@ -1,6 +1,7 @@
 package mastermind.solvers;
 
 import mastermind.core.Code;
+import mastermind.core.CodeFactory;
 import mastermind.core.Response;
 import mastermind.core.solvers.DonaldKnuthAlgorithm;
 import mastermind.core.solvers.Status;
@@ -16,7 +17,7 @@ class DonaldKnuthAlgorithmTest {
     void testFirstGuess() {
         final DonaldKnuthAlgorithm solver = new DonaldKnuthAlgorithm();
         final Code firstGuess = solver.guess();
-        final Code expectedFirstGuess = new Code(List.of(0, 0, 1, 1));
+        final Code expectedFirstGuess = CodeFactory.fromColorIndices(List.of(0, 0, 1, 1));
 
         assertEquals(expectedFirstGuess.getColors(), firstGuess.getColors());
     }
@@ -24,7 +25,7 @@ class DonaldKnuthAlgorithmTest {
     @Test
     void testGuesses() {
         // Secret code is purple yellow blue red
-        final Code secretCode = new Code(List.of(5, 3, 2, 1));
+        final Code secretCode = CodeFactory.fromColorIndices(List.of(5, 3, 2, 1));
         final DonaldKnuthAlgorithm solver = new DonaldKnuthAlgorithm();
 
         Tuple2<Status, Code> result = new Tuple2<>(Status.Continue, solver.guess());
