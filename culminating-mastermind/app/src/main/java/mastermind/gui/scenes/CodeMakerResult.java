@@ -5,6 +5,7 @@ import mastermind.core.Code;
 import mastermind.core.solvers.Status;
 import mastermind.gui.panels.GameBoard;
 import mastermind.gui.panels.Help;
+import mastermind.gui.panels.HomeButton;
 import mastermind.utils.Log;
 
 import javax.swing.*;
@@ -47,6 +48,10 @@ public class CodeMakerResult extends Scene {
         drawCorrectCode();
 
         drawProceedButton();
+
+        HomeButton.drawHomeButton(frame);
+
+        HomeButton.registerHomeHandlers(frame);
 
         Help.drawHelpButton(frame);
 
