@@ -5,7 +5,6 @@ import mastermind.core.Code;
 import mastermind.core.Response;
 import mastermind.core.solvers.InvalidHintsException;
 import mastermind.core.solvers.MastermindAlgorithm;
-import mastermind.core.solvers.MastermindSolver;
 import mastermind.core.solvers.Status;
 import mastermind.gui.panels.GameBoard;
 import mastermind.gui.panels.Help;
@@ -183,7 +182,7 @@ public class CodeBreaker extends Scene {
      *
      * <p>
      * If the solver determines that the puzzle is not yet solved
-     * ({@link MastermindSolver.Status#Continue}), the game board updates
+     * ({@link Status#Continue}), the game board updates
      * hints for the previous guess and displays the next guess. Otherwise,
      * the game concludes, and transitions to the next scene.
      *
