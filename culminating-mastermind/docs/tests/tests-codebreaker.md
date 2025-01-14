@@ -79,7 +79,7 @@ Secret Code: Yellow Purple Green Blue
 
 ## Basic Algorithm
 
-Basic algorithm would not find the secret code.
+Basic algorithm would almost never find the secret code (did not find the secret code in this case).
 
 This is intended behavior.
 
