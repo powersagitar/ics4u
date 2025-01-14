@@ -3,7 +3,7 @@ package mastermind.gui.scenes;
 import mastermind.Mastermind;
 import mastermind.core.Code;
 import mastermind.core.Response;
-import mastermind.core.solvers.MastermindSolver;
+import mastermind.core.solvers.Status;
 import mastermind.gui.panels.GameBoard;
 
 import javax.swing.*;
@@ -45,7 +45,7 @@ public class CodeBreakerResult extends Scene {
      * @param responses  The responses to the guesses made by the program.
      */
     public CodeBreakerResult(final JFrame frame,
-                             final MastermindSolver.Status status,
+                             final Status status,
                              final Code secretCode,
                              final List<Code> guesses,
                              final List<Response> responses) {
@@ -62,7 +62,7 @@ public class CodeBreakerResult extends Scene {
         } else {
             final JLabel descriptionLabel;
 
-            if (status == MastermindSolver.Status.Win) {
+            if (status == Status.Win) {
                 descriptionLabel = new JLabel("Program successfully guessed the code.");
             } else {
                 descriptionLabel = new JLabel("Program failed to guess the code.");

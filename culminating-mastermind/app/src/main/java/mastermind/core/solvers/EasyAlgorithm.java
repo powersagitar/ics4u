@@ -39,7 +39,7 @@ public class EasyAlgorithm extends MastermindAlgorithm {
         return nextGuess;
     }
 
-    public Tuple2<MastermindSolver.Status, Code> guess(final Response response) {
+    public Tuple2<Status, Code> guess(final Response response) {
         if (isInitialGuess()) {
             throw new IllegalCallerException("guess(Response) is meant for subsequent guesses.");
         }
@@ -48,15 +48,15 @@ public class EasyAlgorithm extends MastermindAlgorithm {
         final int correctCount = validation.first();
 
         if (correctCount >= Mastermind.CODE_LENGTH) {
-            return new Tuple2<>(MastermindSolver.Status.Win, previousGuess);
+            return new Tuple2<>(Status.Win, previousGuess);
         } else if (hasExceededMaxGuesses()) {
-            return new Tuple2<>(MastermindSolver.Status.Lose, previousGuess);
+            return new Tuple2<>(Status.Lose, previousGuess);
         }
 
         final Code nextGuess = findNextGuess();
         previousGuess = nextGuess;
 
-        return new Tuple2<>(MastermindSolver.Status.Continue, nextGuess);
+        return new Tuple2<>(Status.Continue, nextGuess);
     }
 
     private Code findNextGuess() {

@@ -3,7 +3,7 @@ package mastermind.solvers;
 import mastermind.core.Code;
 import mastermind.core.Response;
 import mastermind.core.solvers.DonaldKnuthAlgorithm;
-import mastermind.core.solvers.MastermindSolver;
+import mastermind.core.solvers.Status;
 import mastermind.utils.Tuple2;
 import org.junit.jupiter.api.Test;
 
@@ -27,14 +27,14 @@ class DonaldKnuthAlgorithmTest {
         final Code secretCode = new Code(List.of(5, 3, 2, 1));
         final DonaldKnuthAlgorithm solver = new DonaldKnuthAlgorithm();
 
-        Tuple2<MastermindSolver.Status, Code> result = new Tuple2<>(MastermindSolver.Status.Continue, solver.guess());
+        Tuple2<Status, Code> result = new Tuple2<>(Status.Continue, solver.guess());
 
-        while (result.first() == MastermindSolver.Status.Continue) {
+        while (result.first() == Status.Continue) {
             final Response hints = new Response(secretCode, result.second());
             result = solver.guess(hints);
         }
 
-        if (result.first() == MastermindSolver.Status.Lose) {
+        if (result.first() == Status.Lose) {
             fail("Donald Knuth algorithm failed to solve the secret code");
         }
 

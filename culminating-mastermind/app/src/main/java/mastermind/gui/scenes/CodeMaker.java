@@ -4,7 +4,7 @@ import mastermind.Mastermind;
 import mastermind.core.Code;
 import mastermind.core.Response;
 import mastermind.core.solvers.HumanSolver;
-import mastermind.core.solvers.MastermindSolver;
+import mastermind.core.solvers.Status;
 import mastermind.gui.panels.CodeInput;
 import mastermind.gui.panels.GameBoard;
 import mastermind.gui.panels.Help;
@@ -165,11 +165,11 @@ public class CodeMaker extends Scene {
 
             final int attempt = solver.getAttempts();
 
-            final Tuple2<MastermindSolver.Status, Response> result = solver.guess(guess);
-            final MastermindSolver.Status status = result.first();
+            final Tuple2<Status, Response> result = solver.guess(guess);
+            final Status status = result.first();
             final Response response = result.second();
 
-            if (status == MastermindSolver.Status.Continue) {
+            if (status == Status.Continue) {
                 gameBoard.updateHints(attempt, response);
                 return;
             }

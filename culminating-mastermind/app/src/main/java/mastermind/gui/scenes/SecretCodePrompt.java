@@ -3,7 +3,7 @@ package mastermind.gui.scenes;
 import mastermind.Mastermind;
 import mastermind.core.Code;
 import mastermind.core.Response;
-import mastermind.core.solvers.MastermindSolver;
+import mastermind.core.solvers.Status;
 import mastermind.gui.panels.CodeCircle;
 import mastermind.gui.panels.CodeInput;
 import mastermind.gui.panels.GameBoard;
@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
  */
 public class SecretCodePrompt extends Scene {
     private Code secretCode = null;
-    private final MastermindSolver.Status status;
+    private final Status status;
     private final List<Code> guesses;
     private final List<Response> responses;
 
@@ -34,7 +34,7 @@ public class SecretCodePrompt extends Scene {
      * @param responses The list of responses corresponding to each guess.
      */
     public SecretCodePrompt(final JFrame frame,
-                            final MastermindSolver.Status status,
+                            final Status status,
                             final List<Code> guesses,
                             final List<Response> responses) {
         super(frame);

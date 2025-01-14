@@ -2,7 +2,7 @@ package mastermind.gui.scenes;
 
 import mastermind.Mastermind;
 import mastermind.core.Code;
-import mastermind.core.solvers.MastermindSolver;
+import mastermind.core.solvers.Status;
 import mastermind.gui.panels.GameBoard;
 import mastermind.gui.panels.Help;
 import mastermind.utils.Log;
@@ -29,16 +29,16 @@ public class CodeMakerResult extends Scene {
      * @param correctCode The correct code that was to be guessed in the game.
      * @throws IllegalArgumentException If the provided status is not MastermindSolver.Status.Win or MastermindSolver.Status.Lose.
      */
-    public CodeMakerResult(final JFrame frame, MastermindSolver.Status status, final Code correctCode) {
+    public CodeMakerResult(final JFrame frame, Status status, final Code correctCode) {
         super(frame);
 
         Log.info("Creating CodeMakerResult scene.");
 
         this.correctCode = correctCode;
 
-        if (status == MastermindSolver.Status.Win) {
+        if (status == Status.Win) {
             drawWinScreen();
-        } else if (status == MastermindSolver.Status.Lose) {
+        } else if (status == Status.Lose) {
             drawLoseScreen();
         } else {
             Log.fatal("Status other than win and lose provided to CodeMakerResult.");

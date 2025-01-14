@@ -6,6 +6,7 @@ import mastermind.core.Response;
 import mastermind.core.solvers.InvalidHintsException;
 import mastermind.core.solvers.MastermindAlgorithm;
 import mastermind.core.solvers.MastermindSolver;
+import mastermind.core.solvers.Status;
 import mastermind.gui.panels.GameBoard;
 import mastermind.gui.panels.Help;
 import mastermind.gui.panels.HomeButton;
@@ -215,12 +216,12 @@ public class CodeBreaker extends Scene {
 //            get the number of attempts BEFORE making the next guess
             final int attempt = solver.getAttempts();
 
-            final Tuple2<MastermindSolver.Status, Code> result =
+            final Tuple2<Status, Code> result =
                 makeSubsequentGuess(responseForPreviousGuess);
 
             Log.info("Solver status: " + result.first());
 
-            if (result.first() == MastermindSolver.Status.Continue) {
+            if (result.first() == Status.Continue) {
                 Log.info("Guess " + attempt + ": " + result.second());
 
                 guesses.add(result.second());
@@ -240,12 +241,12 @@ public class CodeBreaker extends Scene {
      * @param response The response to the previous guess.
      * @return A tuple containing the status of the solver and the next guess.
      */
-    private Tuple2<MastermindSolver.Status, Code> makeSubsequentGuess(final Response response) {
+    private Tuple2<Status, Code> makeSubsequentGuess(final Response response) {
         try {
             return solver.guess(response);
         } catch (final InvalidHintsException e) {
             Log.error("Invalid hints provided: " + e.getMessage());
-            return new Tuple2<>(MastermindSolver.Status.Lose, null);
+            return new Tuple2<>(Status.Lose, null);
         }
     }
 }
