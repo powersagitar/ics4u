@@ -15,13 +15,12 @@ public class CodeFactory {
     }
 
     public static Code fromColorIndices(final List<Integer> indices) {
-        final List<Code.Color> code = new ArrayList<>(Mastermind.CODE_LENGTH);
+        final List<Code.Color> colors = indices
+                .stream()
+                .map(Code.Color::fromIndex)
+                .toList();
 
-        for (final int idx : indices) {
-            code.add(Code.Color.fromIndex(idx));
-        }
-
-        return new Code(code);
+        return new Code(colors);
     }
 
     public static Code getRandom() {
