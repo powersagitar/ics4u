@@ -7,6 +7,7 @@ import mastermind.core.solvers.Status;
 import mastermind.gui.panels.CodeCircle;
 import mastermind.gui.panels.CodeInput;
 import mastermind.gui.panels.GameBoard;
+import mastermind.gui.panels.HomeButton;
 import mastermind.gui.panels.Help;
 import mastermind.utils.Log;
 
@@ -57,6 +58,9 @@ public class SecretCodePrompt extends Scene {
 
         final JButton proceedButton = drawProceedButton();
         frame.add(proceedButton);
+
+        HomeButton.drawHomeButton(frame);
+        HomeButton.registerHomeHandlers(frame);
 
         Help.drawHelpButton(frame);
         Help.registerHelpHandlers();
