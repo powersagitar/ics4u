@@ -109,6 +109,7 @@ public class CodeMaker extends Scene {
         final JPanel controlPanel = codeInput.drawButtons();
 
         codeInput.addActionListener(guess -> {
+            Log.info("User selected colors: " + guess);
             gameBoard.updateGuessFromColorIndices(solver.getAttempts(), guess);
             nextGuess = guess;
         });
@@ -155,6 +156,7 @@ public class CodeMaker extends Scene {
     private void registerProceedHandlers() {
         proceedButton.addActionListener(event -> {
             if (nextGuess.size() < Mastermind.CODE_LENGTH) {
+                Log.info("User guessed an incomplete guess: " + nextGuess);
                 JOptionPane.showMessageDialog(
                     frame,
                     "Please choose all 4 colors for your guess",
@@ -175,6 +177,7 @@ public class CodeMaker extends Scene {
 
             if (status == Status.Continue) {
                 gameBoard.updateHints(attempt, response);
+                Log.info("Guess " + attempt + ": " + guess);
                 return;
             }
 
