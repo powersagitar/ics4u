@@ -10,6 +10,7 @@ import mastermind.gui.panels.GameBoard;
 import mastermind.gui.panels.Help;
 import mastermind.gui.panels.HomeButton;
 import mastermind.gui.panels.KeyPegsPrompt;
+import mastermind.utils.Log;
 import mastermind.utils.Tuple2;
 
 import javax.swing.*;
@@ -84,7 +85,7 @@ public class CodeBreaker extends Scene {
     public CodeBreaker(final JFrame frame, final MastermindAlgorithm algorithm) {
         super(frame);
 
-        Mastermind.LOG.info("Creating CodeBreaker scene");
+        Log.info("Creating CodeBreaker scene");
 
         this.solver = algorithm;
 
@@ -196,11 +197,11 @@ public class CodeBreaker extends Scene {
         gameBoard.updateGuess(0, firstGuess.getColors());
         guesses.add(firstGuess);
 
-        Mastermind.LOG.info("Guess 0: " + firstGuess);
+        Log.info("Guess 0: " + firstGuess);
 
 //        subsequent guesses
         proceedButton.addActionListener(event -> {
-            Mastermind.LOG.trace("Proceed button pressed");
+            Log.trace("Proceed button pressed");
 
             final Response responseForPreviousGuess =
                 new Response(new Tuple2<>(
@@ -209,7 +210,7 @@ public class CodeBreaker extends Scene {
 
             responses.add(responseForPreviousGuess);
 
-            Mastermind.LOG.info("Response: " + responseForPreviousGuess);
+            Log.info("Response: " + responseForPreviousGuess);
 
 //            get the number of attempts BEFORE making the next guess
             final int attempt = solver.getAttempts();
@@ -217,10 +218,10 @@ public class CodeBreaker extends Scene {
             final Tuple2<MastermindSolver.Status, Code> result =
                 makeSubsequentGuess(responseForPreviousGuess);
 
-            Mastermind.LOG.info("Solver status: " + result.first());
+            Log.info("Solver status: " + result.first());
 
             if (result.first() == MastermindSolver.Status.Continue) {
-                Mastermind.LOG.info("Guess " + attempt + ": " + result.second());
+                Log.info("Guess " + attempt + ": " + result.second());
 
                 guesses.add(result.second());
 
@@ -243,7 +244,7 @@ public class CodeBreaker extends Scene {
         try {
             return solver.guess(response);
         } catch (final InvalidHintsException e) {
-            Mastermind.LOG.error("Invalid hints provided: " + e.getMessage());
+            Log.error("Invalid hints provided: " + e.getMessage());
             return new Tuple2<>(MastermindSolver.Status.Lose, null);
         }
     }

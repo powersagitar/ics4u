@@ -8,33 +8,40 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Represents a logger for recording messages with different severity levels.
+ * Represents a singleton logger for recording messages with different severity
+ * levels.
  */
 @SuppressWarnings("unused")
-public class Logger {
+public class Log {
     /**
      * The set of output streams to which log messages will be written, in
      * addition to stdout, which is configured by {@link #logToStdout}.
      */
-    private final Set<OutputStream> sinks = new HashSet<>();
+    private static final Set<OutputStream> sinks = new HashSet<>();
     /**
      * The severity level of the logger.
      * <p>
      * Only messages with a severity level greater than or equal to this level
      * will be logged.
      */
-    private Severity level = Severity.INFO;
+    private static Severity level = Severity.INFO;
     /**
      * A flag indicating whether log messages should be written to stdout.
      */
-    private boolean logToStdout = true;
+    private static boolean logToStdout = true;
+
+    /**
+     * Disable the constructor as {@Code Log} being a singleton class.
+     */
+    private Log() {
+    };
 
     /**
      * Adds sink to which log messages will be written.
      *
      * @param sink The output stream to add.
      */
-    public void addSink(final OutputStream sink) {
+    public static void addSink(final OutputStream sink) {
         sinks.add(sink);
     }
 
@@ -46,8 +53,8 @@ public class Logger {
      *
      * @param level The severity level to set.
      */
-    public void setLevel(final Severity level) {
-        this.level = level;
+    public static void setLevel(final Severity level) {
+        Log.level = level;
     }
 
     /**
@@ -55,8 +62,8 @@ public class Logger {
      *
      * @param logToStdout The flag to set.
      */
-    public void setLogToStdout(final boolean logToStdout) {
-        this.logToStdout = logToStdout;
+    public static void setLogToStdout(final boolean logToStdout) {
+        Log.logToStdout = logToStdout;
     }
 
     /**
@@ -64,7 +71,7 @@ public class Logger {
      *
      * @param msg The message to log.
      */
-    public void trace(final String msg) {
+    public static void trace(final String msg) {
         log(Severity.TRACE, msg);
     }
 
@@ -73,7 +80,7 @@ public class Logger {
      *
      * @param msg The message to log.
      */
-    public void debug(final String msg) {
+    public static void debug(final String msg) {
         log(Severity.DEBUG, msg);
     }
 
@@ -82,7 +89,7 @@ public class Logger {
      *
      * @param msg The message to log.
      */
-    public void info(final String msg) {
+    public static void info(final String msg) {
         log(Severity.INFO, msg);
     }
 
@@ -91,7 +98,7 @@ public class Logger {
      *
      * @param msg The message to log.
      */
-    public void warning(final String msg) {
+    public static void warning(final String msg) {
         log(Severity.WARNING, msg);
     }
 
@@ -100,7 +107,7 @@ public class Logger {
      *
      * @param msg The message to log.
      */
-    public void error(final String msg) {
+    public static void error(final String msg) {
         log(Severity.ERROR, msg);
     }
 
@@ -109,7 +116,7 @@ public class Logger {
      *
      * @param msg The message to log.
      */
-    public void fatal(final String msg) {
+    public static void fatal(final String msg) {
         log(Severity.FATAL, msg);
         System.exit(1);
     }
@@ -123,7 +130,7 @@ public class Logger {
      * @param severity The severity level of the message.
      * @param msg      The message to log.
      */
-    private void log(final Severity severity, final String msg) {
+    private static void log(final Severity severity, final String msg) {
         if (severity.ordinal() < level.ordinal()) {
             return;
         }
@@ -188,12 +195,12 @@ public class Logger {
         /**
          * A map of severity levels to their respective ANSI colors.
          */
-        final static Map<Severity, ANSIColor> COLOR_MAP = Map.of(
-            TRACE, ANSIColor.GRAY,
-            DEBUG, ANSIColor.GREEN,
-            INFO, ANSIColor.CYAN,
-            WARNING, ANSIColor.YELLOW,
-            ERROR, ANSIColor.RED,
-            FATAL, ANSIColor.RED_BACKGROUND);
+        private static final Map<Severity, ANSIColor> COLOR_MAP = Map.of(
+                TRACE, ANSIColor.GRAY,
+                DEBUG, ANSIColor.GREEN,
+                INFO, ANSIColor.CYAN,
+                WARNING, ANSIColor.YELLOW,
+                ERROR, ANSIColor.RED,
+                FATAL, ANSIColor.RED_BACKGROUND);
     }
 }

@@ -1,7 +1,7 @@
 package mastermind.gui.scenes;
 
-import mastermind.Mastermind;
 import mastermind.gui.panels.Help;
+import mastermind.utils.Log;
 
 import javax.swing.*;
 import java.awt.*;
@@ -43,7 +43,7 @@ public class GameModeSelector extends Scene {
     public GameModeSelector(final JFrame frame) {
         super(frame);
 
-        Mastermind.LOG.info("Creating GameModeSelector scene");
+        Log.info("Creating GameModeSelector scene");
 
         final int LINE_SEPARATOR = 20;
         final int CENTER_ALIGNMENT = 130;
@@ -119,18 +119,18 @@ public class GameModeSelector extends Scene {
     private void drawProceedButton() {
         proceedButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         proceedButton.addActionListener(event -> {
-            Mastermind.LOG.trace("Proceed button pressed");
+            Log.trace("Proceed button pressed");
 
             if (codeBreakerButton.isSelected()) {
-                Mastermind.LOG.debug("Code breaker mode selected");
+                Log.debug("Code breaker mode selected");
 
                 new CodeBreakerSelector(frame);
             } else if (codeMakerButton.isSelected()) {
-                Mastermind.LOG.debug("Code maker mode selected");
+                Log.debug("Code maker mode selected");
 
                 new CodeMakerSelector(frame);
             } else {
-                Mastermind.LOG.fatal("No game mode selected");
+                Log.fatal("No game mode selected");
             }
         });
     }

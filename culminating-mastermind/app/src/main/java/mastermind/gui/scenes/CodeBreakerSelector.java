@@ -1,11 +1,11 @@
 package mastermind.gui.scenes;
 
-import mastermind.Mastermind;
 import mastermind.core.solvers.DonaldKnuthAlgorithm;
 import mastermind.core.solvers.EasyAlgorithm;
 import mastermind.core.solvers.MediumAlgorithm;
 import mastermind.gui.panels.Help;
 import mastermind.gui.panels.HomeButton;
+import mastermind.utils.Log;
 
 import javax.swing.*;
 import java.awt.*;
@@ -53,7 +53,7 @@ public class CodeBreakerSelector extends Scene {
     public CodeBreakerSelector(final JFrame frame) {
         super(frame);
 
-        Mastermind.LOG.info("Creating CodeBreakerSelector scene");
+        Log.info("Creating CodeBreakerSelector scene");
 
         drawSelectorPanel();
 
@@ -144,22 +144,22 @@ public class CodeBreakerSelector extends Scene {
      */
     private void registerProceedHandler() {
         proceedButton.addActionListener(event -> {
-            Mastermind.LOG.trace("Proceed button pressed");
+            Log.trace("Proceed button pressed");
 
             if (donaldKnuthButton.isSelected()) {
-                Mastermind.LOG.info("Donald Knuth 5-Guess Algorithm selected");
+                Log.info("Donald Knuth 5-Guess Algorithm selected");
 
                 new CodeBreaker(frame, new DonaldKnuthAlgorithm());
             } else if (mediumAlgoButton.isSelected()) {
-                Mastermind.LOG.info("Medium Algorithm selected");
+                Log.info("Medium Algorithm selected");
 
                 new CodeBreaker(frame, new MediumAlgorithm());
             } else if (basicAlgoButton.isSelected()) {
-                Mastermind.LOG.info("Basic Algorithm selected");
+                Log.info("Basic Algorithm selected");
 
                 new CodeBreaker(frame, new EasyAlgorithm());
             } else {
-                Mastermind.LOG.fatal("No code breaker algorithm selected");
+                Log.fatal("No code breaker algorithm selected");
             }
         });
     }

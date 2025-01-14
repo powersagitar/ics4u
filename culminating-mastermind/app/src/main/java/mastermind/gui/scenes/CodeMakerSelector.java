@@ -1,8 +1,8 @@
 package mastermind.gui.scenes;
 
-import mastermind.Mastermind;
 import mastermind.gui.panels.Help;
 import mastermind.gui.panels.HomeButton;
+import mastermind.utils.Log;
 
 import javax.swing.*;
 import java.awt.*;
@@ -28,7 +28,7 @@ public class CodeMakerSelector extends Scene{
     public CodeMakerSelector(final JFrame frame) {
         super(frame);
 
-        Mastermind.LOG.info("Creating CodeBreakerSelector scene");
+        Log.info("Creating CodeBreakerSelector scene");
 
         drawSelectorPanel();
 
@@ -124,18 +124,18 @@ public class CodeMakerSelector extends Scene{
      */
     private void registerProceedHandler() {
         proceedButton.addActionListener(event -> {
-            Mastermind.LOG.trace("Proceed button pressed");
+            Log.trace("Proceed button pressed");
 
             if (randomButton.isSelected()) {
-                Mastermind.LOG.info("Random Code Maker selected");
+                Log.info("Random Code Maker selected");
 
                 new CodeMaker(frame);
             } else if (preProgrammedButton.isSelected()) {
-                Mastermind.LOG.info("Pre-Programmed Code Maker selected");
+                Log.info("Pre-Programmed Code Maker selected");
 
                 // TODO: add pre-programmed code maker
             } else {
-                Mastermind.LOG.fatal("No code maker algorithm selected");
+                Log.fatal("No code maker algorithm selected");
             }
         });
     }

@@ -5,6 +5,7 @@ import mastermind.core.Code;
 import mastermind.core.solvers.MastermindSolver;
 import mastermind.gui.panels.GameBoard;
 import mastermind.gui.panels.Help;
+import mastermind.utils.Log;
 
 import javax.swing.*;
 import java.awt.*;
@@ -31,7 +32,7 @@ public class CodeMakerResult extends Scene {
     public CodeMakerResult(final JFrame frame, MastermindSolver.Status status, final Code correctCode) {
         super(frame);
 
-        Mastermind.LOG.info("Creating CodeMakerResult scene.");
+        Log.info("Creating CodeMakerResult scene.");
 
         this.correctCode = correctCode;
 
@@ -40,7 +41,7 @@ public class CodeMakerResult extends Scene {
         } else if (status == MastermindSolver.Status.Lose) {
             drawLoseScreen();
         } else {
-            Mastermind.LOG.fatal("Status other than win and lose provided to CodeMakerResult.");
+            Log.fatal("Status other than win and lose provided to CodeMakerResult.");
         }
 
         drawCorrectCode();

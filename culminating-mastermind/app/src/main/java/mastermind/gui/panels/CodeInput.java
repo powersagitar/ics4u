@@ -2,6 +2,7 @@ package mastermind.gui.panels;
 
 import mastermind.Mastermind;
 import mastermind.core.Code;
+import mastermind.utils.Log;
 
 import javax.swing.*;
 import java.awt.*;
@@ -57,7 +58,7 @@ public class CodeInput {
      */
     private void drawSubmitButtons(final JPanel panel) {
         if (!submitButtons.isEmpty()) {
-            Mastermind.LOG.fatal("Trying to draw submit buttons more than once");
+            Log.fatal("Trying to draw submit buttons more than once");
         }
 
         final JPanel buttonPanel = new JPanel(new GridBagLayout());
@@ -126,7 +127,7 @@ public class CodeInput {
      */
     private void addSubmitListener(final Consumer<List<Integer>> onCodeEntered) {
         if (submitButtons.isEmpty()) {
-            Mastermind.LOG.fatal("Trying to listen on submit buttons without drawing them first");
+            Log.fatal("Trying to listen on submit buttons without drawing them first");
         }
 
         for (int i = 0; i < submitButtons.size(); ++i) {

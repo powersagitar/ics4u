@@ -8,6 +8,7 @@ import mastermind.gui.panels.CodeCircle;
 import mastermind.gui.panels.CodeInput;
 import mastermind.gui.panels.GameBoard;
 import mastermind.gui.panels.Help;
+import mastermind.utils.Log;
 
 import javax.swing.*;
 import java.awt.*;
@@ -38,7 +39,7 @@ public class SecretCodePrompt extends Scene {
                             final List<Response> responses) {
         super(frame);
 
-        Mastermind.LOG.info("Creating CorrectCodePrompt scene");
+        Log.info("Creating CorrectCodePrompt scene");
 
         this.status = status;
         this.guesses = guesses;

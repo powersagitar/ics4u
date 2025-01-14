@@ -9,6 +9,7 @@ import mastermind.gui.panels.CodeInput;
 import mastermind.gui.panels.GameBoard;
 import mastermind.gui.panels.Help;
 import mastermind.gui.panels.HomeButton;
+import mastermind.utils.Log;
 import mastermind.utils.Tuple2;
 
 import javax.swing.*;
@@ -60,7 +61,7 @@ public class CodeMaker extends Scene {
     public CodeMaker(final JFrame frame) {
         super(frame);
 
-        Mastermind.LOG.info("Creating CodeMaker scene");
+        Log.info("Creating CodeMaker scene");
 
         frame.add(flowPanel);
 
