@@ -6,6 +6,7 @@ import mastermind.gui.scenes.GameModeSelector;
 public class HomeButton {
     private final static JButton HOME_BUTTON;
     private final static JPanel BUTTON_PANEL;
+    private static boolean isHandlerRegistered = false;
 
     static {
         HOME_BUTTON = new JButton("Home");
@@ -14,7 +15,10 @@ public class HomeButton {
     }
 
     public static void registerHomeHandlers(final JFrame frame) {
-        HOME_BUTTON.addActionListener(event -> new GameModeSelector(frame));
+        if (!isHandlerRegistered) {
+            HOME_BUTTON.addActionListener(event -> new GameModeSelector(frame));
+            isHandlerRegistered = true;
+        }
     }
 
     public static void drawHomeButton(final JFrame frame) {
