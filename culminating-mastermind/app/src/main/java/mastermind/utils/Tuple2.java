@@ -30,5 +30,4 @@ public record Tuple2<T, U>(T first, U second) {
         return this.first.equals(otherTuple.first) && this.second.equals(otherTuple.second);
 
     }
-
 }

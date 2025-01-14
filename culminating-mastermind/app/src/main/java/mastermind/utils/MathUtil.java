@@ -8,6 +8,13 @@ import java.util.Collections;
  */
 public class MathUtil {
     /**
+     * This class should not be instantiated.
+     */
+    private MathUtil() {
+        throw new IllegalStateException("This class should not be instantiated");
+    }
+
+    /**
      * Extracts the digits of a given number in a specified base and returns them in a list,
      * padded with leading zeros to ensure the resulting list has the specified length.
      *
