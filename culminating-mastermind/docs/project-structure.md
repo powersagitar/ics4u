@@ -8,11 +8,21 @@ nav_order: 2
 
 # Project Structure
 
+## Project Root
+
+The repository this project resides in is a compilation of all coursework
+throughout the semester.
+
+Thus, the project root is [`/culminating-mastermind`](https://github.com/powersagitar/ics4u/tree/main/culminating-mastermind).
+
+## Worktree
+
 ```tree
 .
 ├── app
-│   ├── bin
 │   ├── build
+│   │   └── docs
+│   │       └── javadoc
 │   └── src
 │       ├── main
 │       │   ├── java
@@ -25,44 +35,15 @@ nav_order: 2
 │       │   │       └── utils
 │       │   └── resources
 │       └── test
-│           ├── java
-│           │   └── mastermind
-│           └── resources
-├── build
-└── gradle
+├── docs
+└── utils
 ```
 
-## Project Root
-
-The repository this project resides in is a compilation of all coursework
-throughout the semester.
-
-Thus, the project root is [`/culminating-mastermind`](https://github.com/powersagitar/ics4u/tree/main/culminating-mastermind).
-
-## Build Directories
-
-- `app/bin`
-- `app/build`
-- `build`
-
-## Gradle Directory
-
-- `gradle`
-
-## Project Sources
-
-- `app/src/main/java/mastermind/core` core (non-gui) components of program
-- `app/src/main/java/mastermind/core/solvers` algorithms for solving mastermind game
-- `app/src/main/java/mastermind/gui` gui components of program
-- `app/src/main/java/mastermind/gui/panels` shareable gui components
-- `app/src/main/java/mastermind/gui/scenes` scenes/stages/pages/screens of the game
-  - each page/stage/screen of the program is a scene
-  - e.g., game mode selector, code breaker gameplay, code maker gameplay
-- `app/src/main/java/mastermind/utils` general utilities that are not directly
-  associated with program logic
-  - i.e., components that can be reused by other projects
-  - e.g., helper methods, data structures
-
-## Unit Tests
-
-- `app/src/test/java/mastermind`
+- **app**: Primary source code and assets
+  - **app/build/docs/javadoc**: Output directory of [`./gradlew
+javadoc`](/ics4u/building/#building-javadoc)
+  - **app/src/main/java/mastermind**: See [Javadoc](https://powersagitar.github.io/ics4u/javadoc/)
+    and [design](/ics4u/design)
+  - **app/src/test**: Unit tests
+- **docs**: project documentation
+- **utils**: utility scripts and resources
