@@ -21,25 +21,20 @@ to make a code and guess themselves.
 ### Required
 
 - [x] Gameplay with GUI
-
   - Algorithm Solvers (Program Guesses)
-
     - Donald Knuth 5-Guess Algorithm
     - Medium Algorithm
     - Basic Algorithm
-
   - Human Solver (User Guesses)
-
 - [x] File Handling
-
   - Logging
+  - Different Code Maker Levels
 
 ### Additional
 
 - Gameplay
-
   - User Response Validation (All Hints Provided Are Correct)
-
+  - Different Code Maker Levels
 - GUI
   - Help Button (Instructions & Tutorial)
   - Home Button
