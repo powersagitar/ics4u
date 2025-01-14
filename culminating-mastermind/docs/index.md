@@ -18,16 +18,32 @@ to make a code and guess themselves.
 
 ## Supported Features
 
-- Gameplay
-  - Algorithm Solvers
+### Required
+
+- [x] Gameplay with GUI
+
+  - Algorithm Solvers (Program Guesses)
+
     - Donald Knuth 5-Guess Algorithm
     - Medium Algorithm
     - Basic Algorithm
+
+  - Human Solver (User Guesses)
+
+- [x] File Handling
+
+  - Logging
+
+### Additional
+
+- Gameplay
+
   - User Response Validation (All Hints Provided Are Correct)
+
 - GUI
-  - Gameplay
   - Help Button (Instructions & Tutorial)
   - Home Button
-- Misc
-  - Logging
-- [More to come!](https://github.com/powersagitar/ics4u/issues?q=is%3Aissue+is%3Aopen+has%3Amastermind)
+
+### More to Come
+
+- [See bug tracker](https://github.com/powersagitar/ics4u/issues?q=is%3Aissue+is%3Aopen+has%3Amastermind)
