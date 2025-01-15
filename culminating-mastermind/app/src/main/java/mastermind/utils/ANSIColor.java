@@ -62,6 +62,6 @@ public enum ANSIColor {
      * @return The colorized string.
      */
     public static String colorize(final ANSIColor color, final String msg) {
-        return colorMap.get(color) + msg + colorMap.get(RESET);
+        return colorMap.get(color) + msg + colorMap.get(RESET); // Reset color after coloring the string
     }
 }

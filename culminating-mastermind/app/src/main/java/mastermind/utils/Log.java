@@ -17,6 +17,7 @@ public class Log {
      * addition to stdout, which is configured by {@link #logToStdout}.
      */
     private static final Set<OutputStream> sinks = new HashSet<>();
+
     /**
      * The severity level of the logger.
      * <p>
@@ -24,17 +25,18 @@ public class Log {
      * will be logged.
      */
     private static Severity level = Severity.INFO;
+
     /**
      * A flag indicating whether log messages should be written to stdout.
      */
     private static boolean logToStdout = true;
 
     /**
-     * Disable the constructor as {@Code Log} being a singleton class.
+     * Disable the constructor as {{@code @Code} Log} being a singleton class.
      */
     private Log() {
         throw new IllegalStateException("This singleton class should not be instantiated");
-    };
+    }
 
     /**
      * Adds sink to which log messages will be written.
@@ -42,6 +44,7 @@ public class Log {
      * @param sink The output stream to add.
      */
     public static void addSink(final OutputStream sink) {
+        // Add the provided output stream to the set of sinks
         sinks.add(sink);
     }
 
@@ -54,6 +57,7 @@ public class Log {
      * @param level The severity level to set.
      */
     public static void setLevel(final Severity level) {
+        // Set the logging level to the provided severity level
         Log.level = level;
     }
 
@@ -63,6 +67,7 @@ public class Log {
      * @param logToStdout The flag to set.
      */
     public static void setLogToStdout(final boolean logToStdout) {
+        // Set the flag indicating whether to log to stdout
         Log.logToStdout = logToStdout;
     }
 
@@ -72,6 +77,7 @@ public class Log {
      * @param msg The message to log.
      */
     public static void trace(final String msg) {
+        // Log the message with TRACE severity
         log(Severity.TRACE, msg);
     }
 
@@ -81,6 +87,7 @@ public class Log {
      * @param msg The message to log.
      */
     public static void debug(final String msg) {
+        // Log the message with DEBUG severity
         log(Severity.DEBUG, msg);
     }
 
@@ -90,6 +97,7 @@ public class Log {
      * @param msg The message to log.
      */
     public static void info(final String msg) {
+        // Log the message with INFO severity
         log(Severity.INFO, msg);
     }
 
@@ -99,6 +107,7 @@ public class Log {
      * @param msg The message to log.
      */
     public static void warning(final String msg) {
+        // Log the message with WARNING severity
         log(Severity.WARNING, msg);
     }
 
@@ -108,6 +117,7 @@ public class Log {
      * @param msg The message to log.
      */
     public static void error(final String msg) {
+        // Log the message with ERROR severity
         log(Severity.ERROR, msg);
     }
 
@@ -117,6 +127,7 @@ public class Log {
      * @param msg The message to log.
      */
     public static void fatal(final String msg) {
+        // Log the message with FATAL severity and exit the program
         log(Severity.FATAL, msg);
         System.exit(1);
     }
@@ -131,28 +142,41 @@ public class Log {
      * @param msg      The message to log.
      */
     private static void log(final Severity severity, final String msg) {
+        // Check if the severity level is less than the current logging level
         if (severity.ordinal() < level.ordinal()) {
             return;
         }
 
+        // Get the current timestamp
         final Instant now = Instant.now();
 
+        // Convert the severity level to a string
         final String severityStr = severity.toString();
+
+        // Colorize the severity string using ANSI color codes
         final String coloredSeverityStr = ANSIColor.colorize(Severity.COLOR_MAP.get(severity), severityStr);
 
+        // Define the format string for log messages
         final String msgFormatString = "[%s][%s] %s%n";
 
+        // Format the full log message with the timestamp, severity, and message
         final String fullMsg = String.format(msgFormatString, now.toString(), severityStr, msg);
+
+        // Format the colored log message with the timestamp, colored severity, and message
         final String coloredFullMsg = String.format(msgFormatString, now, coloredSeverityStr, msg);
 
+        // If logging to stdout is enabled, print the colored log message to stdout
         if (logToStdout) {
             System.out.print(coloredFullMsg);
         }
 
+        // Iterate over each output stream in the set of sinks
         for (OutputStream sink : sinks) {
             try {
+                // Write the log message to the output stream
                 sink.write(fullMsg.getBytes());
             } catch (final IOException e) {
+                // Print an error message to stderr if writing to the sink fails
                 System.err.println("Failed to log to sink: " + e.getMessage());
             }
         }
