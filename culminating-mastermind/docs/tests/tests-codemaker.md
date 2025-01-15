@@ -88,7 +88,7 @@ guess it within 3 tries. The computer provided correct feedback to the guesses.
 
 ### Test Case 2
 
-Secret Code:
+Secret Code: Red Red Red Red
 
 | Number of Attempts |           Attempt           |       Hints        |
 |:------------------:|:---------------------------:|:------------------:|
