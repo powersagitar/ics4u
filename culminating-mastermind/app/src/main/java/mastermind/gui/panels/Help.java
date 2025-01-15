@@ -42,20 +42,39 @@ public class Help {
      */
     private final static JPanel POPUP_PANEL = new JPanel();
 
+    // Static block to initialize the help popup frame and panel
     static {
+        // Set the layout of the popup frame to BorderLayout
         POPUP_FRAME.setLayout(new BorderLayout());
 
+        // Set the layout of the popup panel to BoxLayout (Y_AXIS)
         POPUP_PANEL.setLayout(new BoxLayout(POPUP_PANEL, BoxLayout.Y_AXIS));
+
+        // Set the font of the help title label
         HELP_TITLE.setFont(new Font("Default", Font.BOLD, 20));
+
+        // Add the help title label to the popup panel
         POPUP_PANEL.add(HELP_TITLE);
+
+        // Add a rigid area (spacer) to the popup panel
         POPUP_PANEL.add(Box.createRigidArea(new Dimension(0, 10)));
+
+        // Add the gameplay instructions button to the popup panel
         POPUP_PANEL.add(GAMEPLAY_INSTRUCTIONS_BUTTON);
+
+        // Add another rigid area (spacer) to the popup panel
         POPUP_PANEL.add(Box.createRigidArea(new Dimension(0, 10)));
+
+        // Add the navigation instructions button to the popup panel
         POPUP_PANEL.add(NAVIGATION_INSTRUCTIONS_BUTTON);
+
+        // Add the popup panel to the center of the popup frame
         POPUP_FRAME.add(POPUP_PANEL, BorderLayout.CENTER);
 
+        // Add the help button to the help panel
         HELP_PANEL.add(HELP_BUTTON);
 
+        // Register action listeners for the help button and instruction buttons
         registerHelpHandlers();
         registerGameplayInstructionsHandler();
         registerNavigationInstructionsHandler();
@@ -73,6 +92,7 @@ public class Help {
      * @param frame the frame to draw the help button on
      */
     public static void drawHelpButton(final JFrame frame) {
+        // Add the help panel (containing the help button) to the frame
         frame.add(HELP_PANEL);
     }
 
@@ -80,9 +100,15 @@ public class Help {
      * Registers the help button action listeners.
      */
     public static void registerHelpHandlers() {
+        // Add an action listener to the help button
         HELP_BUTTON.addActionListener(event -> {
+            // Set the size of the popup frame
             POPUP_FRAME.setSize(400, 500);
+
+            // Set the default close operation of the popup frame
             POPUP_FRAME.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+            // Make the popup frame visible
             POPUP_FRAME.setVisible(true);
         });
     }
@@ -91,6 +117,7 @@ public class Help {
      * Registers the gameplay instructions button action listener.
      */
     private static void registerGameplayInstructionsHandler() {
+        // Add an action listener to the gameplay instructions button
         GAMEPLAY_INSTRUCTIONS_BUTTON.addActionListener(event -> showGameplayInstructions());
     }
 
@@ -98,6 +125,7 @@ public class Help {
      * Registers the navigation instructions button action listener.
      */
     private static void registerNavigationInstructionsHandler() {
+        // Add an action listener to the navigation instructions button
         NAVIGATION_INSTRUCTIONS_BUTTON.addActionListener(event -> showNavigationInstructions());
     }
 
@@ -105,18 +133,31 @@ public class Help {
      * Shows the navigation instructions in the help popup.
      */
     private static void showNavigationInstructions() {
+        // Remove all components from the popup panel
         POPUP_PANEL.removeAll();
 
+        // Create a label with the navigation instructions text
         JLabel instructionsLabel = new JLabel("<html>" + getNavigationInstructionsText() + "</html>", SwingConstants.CENTER);
+
+        // Set the border of the instructions label
         instructionsLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
+        // Create a back button to return to the help menu
         JButton backButton = new JButton("Back");
+
+        // Add an action listener to the back button
         backButton.addActionListener(event -> showHelpMenu());
 
+        // Set the layout of the popup panel to BorderLayout
         POPUP_PANEL.setLayout(new BorderLayout());
+
+        // Add the instructions label to the center of the popup panel
         POPUP_PANEL.add(instructionsLabel, BorderLayout.CENTER);
+
+        // Add the back button to the bottom of the popup panel
         POPUP_PANEL.add(backButton, BorderLayout.SOUTH);
 
+        // Revalidate and repaint the popup panel to update the UI
         POPUP_PANEL.revalidate();
         POPUP_PANEL.repaint();
     }
@@ -125,17 +166,31 @@ public class Help {
      * Shows the gameplay instructions in the help popup.
      */
     private static void showGameplayInstructions() {
+        // Remove all components from the popup panel
         POPUP_PANEL.removeAll();
 
+        // Create a label with the gameplay instructions text
         JLabel instructionsLabel = new JLabel("<html>" + getGameplayInstructionsText() + "</html>", SwingConstants.CENTER);
+
+        // Set the border of the instructions label
         instructionsLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        // Create a back button to return to the help menu
         JButton backButton = new JButton("Back");
+
+        // Add an action listener to the back button
         backButton.addActionListener(event -> showHelpMenu());
 
+        // Set the layout of the popup panel to BorderLayout
         POPUP_PANEL.setLayout(new BorderLayout());
+
+        // Add the instructions label to the center of the popup panel
         POPUP_PANEL.add(instructionsLabel, BorderLayout.CENTER);
+
+        // Add the back button to the bottom of the popup panel
         POPUP_PANEL.add(backButton, BorderLayout.SOUTH);
 
+        // Revalidate and repaint the popup panel to update the UI
         POPUP_PANEL.revalidate();
         POPUP_PANEL.repaint();
     }
@@ -144,15 +199,28 @@ public class Help {
      * Shows the help menu in the help popup.
      */
     private static void showHelpMenu() {
+        // Remove all components from the popup panel
         POPUP_PANEL.removeAll();
 
+        // Set the layout of the popup panel to BoxLayout (Y_AXIS)
         POPUP_PANEL.setLayout(new BoxLayout(POPUP_PANEL, BoxLayout.Y_AXIS));
+
+        // Add the help title label to the popup panel
         POPUP_PANEL.add(HELP_TITLE);
+
+        // Add a rigid area (spacer) to the popup panel
         POPUP_PANEL.add(Box.createRigidArea(new Dimension(0, 10)));
+
+        // Add the gameplay instructions button to the popup panel
         POPUP_PANEL.add(GAMEPLAY_INSTRUCTIONS_BUTTON);
+
+        // Add another rigid area (spacer) to the popup panel
         POPUP_PANEL.add(Box.createRigidArea(new Dimension(0, 10)));
+
+        // Add the navigation instructions button to the popup panel
         POPUP_PANEL.add(NAVIGATION_INSTRUCTIONS_BUTTON);
 
+        // Revalidate and repaint the popup panel to update the UI
         POPUP_PANEL.revalidate();
         POPUP_PANEL.repaint();
     }
