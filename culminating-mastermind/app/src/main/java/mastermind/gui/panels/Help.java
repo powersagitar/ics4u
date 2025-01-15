@@ -254,14 +254,16 @@ public class Help {
      */
     private static String getNavigationInstructionsText() {
         return """
+            In all screens, you can press 'Proceed' to continue to the next screen.
+            
             In the first screen, you can choose to play as the code maker or the code breaker.
             As the code breaker, you will set a secret code for the code breaker (the computer) to guess.
-            As the code maker, you will guess the secret code that the code breaker (the computer) creates.
+            As the code maker, you will guess the secret code that the code maker (the computer) creates.
             
             If you selected code breaker, you will choose the difficulty of the computer guesser algorithm.
             You will secretly select a code for the computer to guess.
             You will then view the code breaker's guesses and provide feedback on each guess, using the white and black pegs.
-            If the computer is unsuccessful in guessing, then you will input the correct code.
+            After the game, then you will be prompted to input the correct code, and the game will double-check to see if you have inputted the correct hints.
             
             If you selected code maker, you will guess the code that the computer secretly selected.
             You will input your guesses and receive feedback on each guess, using the white and black pegs.
