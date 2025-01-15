@@ -19,9 +19,12 @@ public class CodeCircle extends JPanel {
      * @param color The color of the circle.
      */
     public CodeCircle(final Color color) {
+        // constructor to create a new code circle with the given color
         super();
 
+        // set the color of the circle
         this.color = color;
+        // set the preferred size of the circle
         this.setPreferredSize(new Dimension(20, 20));
     }
 
@@ -32,6 +35,7 @@ public class CodeCircle extends JPanel {
      */
     @Override
     protected void paintComponent(Graphics g) {
+        // method to paint the circle with the given color
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
