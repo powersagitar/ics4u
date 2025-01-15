@@ -100,6 +100,7 @@ public class CodeBreakerResult extends Scene {
             }
         }
 
+        Log.info("Indices of invalid responses: " + invalidResponses);
         return invalidResponses;
     }
 
@@ -119,7 +120,6 @@ public class CodeBreakerResult extends Scene {
      * Draws the invalid responses on a {@link GameBoard}.
      */
     private void drawInvalidResponses() {
-        Log.info("Invalid responses provided for the guesses by user");
         final String description = """
             You did not provide the correct hints for the following guesses,
             thus it is not possible to derive a win/lose endgame status:
