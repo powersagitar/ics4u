@@ -19,7 +19,7 @@ public class CodeMakerSelector extends Scene {
     public CodeMakerSelector(final JFrame frame) {
         super(frame);
 
-        Log.info("Creating CodeBreakerSelector scene");
+        Log.info("Creating CodeMakerSelector scene");
 
         drawSelectorPanel();
 
@@ -43,7 +43,7 @@ public class CodeMakerSelector extends Scene {
     private void drawSelectorPanel() {
         selectorPanel.setLayout(new BoxLayout(selectorPanel, BoxLayout.Y_AXIS));
         selectorPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        selectorPanel.setBorder(BorderFactory.createTitledBorder("Code Breaker Algorithms"));
+        selectorPanel.setBorder(BorderFactory.createTitledBorder("Code Maker Options"));
         Log.debug("Add selector panel to frame");
         frame.add(selectorPanel);
     }
@@ -85,9 +85,8 @@ public class CodeMakerSelector extends Scene {
 
                 try {
                     new CodeMaker(frame, CodeFactory.getRandomFromFile(
-                        Mastermind.CODEMAKER_PREDEFINED_CODES));
-                } catch (final FileNotFoundException |
-                               IllegalArgumentException e) {
+                            Mastermind.CODEMAKER_PREDEFINED_CODES));
+                } catch (final FileNotFoundException | IllegalArgumentException e) {
                     Log.fatal("CodeMaker predefined code: " + e.getMessage());
                 }
             } else {
