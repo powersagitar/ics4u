@@ -1,5 +1,6 @@
 package mastermind.gui.scenes;
 
+// Import necessary classes and packages
 import mastermind.core.solvers.DonaldKnuthAlgorithm;
 import mastermind.core.solvers.EasyAlgorithm;
 import mastermind.core.solvers.MediumAlgorithm;
@@ -61,24 +62,34 @@ public class CodeBreakerSelector extends Scene {
     public CodeBreakerSelector(final JFrame frame) {
         super(frame);
 
+        // Log the creation of the CodeBreakerSelector scene
         Log.info("Creating CodeBreakerSelector scene");
 
+        // Draw the selector panel
         drawSelectorPanel();
 
+        // Draw the selector buttons
         drawSelectorButtons();
 
+        // Draw the proceed button
         drawProceedButton();
 
+        // Draw the home button
         HomeButton.drawHomeButton(frame);
 
+        // Draw the help button
         Help.drawHelpButton(frame);
 
+        // Register event handlers for the home button
         HomeButton.registerHomeHandlers(frame);
 
+        // Register event handlers for the help button
         Help.registerHelpHandlers();
 
+        // Register the event handler for the proceed button
         registerProceedHandler();
 
+        // Refresh the frame to apply changes
         refreshFrame();
     }
 
@@ -92,10 +103,14 @@ public class CodeBreakerSelector extends Scene {
      * the panel is added to the parent frame for display.
      */
     private void drawSelectorPanel() {
+        // Set the layout of the selector panel to a vertical box layout
         selectorPanel.setLayout(new BoxLayout(selectorPanel, BoxLayout.Y_AXIS));
+        // Center align the selector panel
         selectorPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        // Add a titled border to the selector panel
         selectorPanel.setBorder(BorderFactory.createTitledBorder("Code Breaker Algorithms"));
 
+        // Add the selector panel to the parent frame
         frame.add(selectorPanel);
     }
 
@@ -112,13 +127,20 @@ public class CodeBreakerSelector extends Scene {
      * This configuration provides a user-friendly interface for selecting the desired algorithm.
      */
     private void drawSelectorButtons() {
+        // Create a button group to enforce exclusivity among the radio buttons
         final ButtonGroup selectorButtonGroup = new ButtonGroup();
+        // Add the Donald Knuth button to the button group
         selectorButtonGroup.add(donaldKnuthButton);
+        // Add the medium algorithm button to the button group
         selectorButtonGroup.add(mediumAlgoButton);
+        // Add the basic algorithm button to the button group
         selectorButtonGroup.add(basicAlgoButton);
 
+        // Add the Donald Knuth button to the selector panel
         selectorPanel.add(donaldKnuthButton);
+        // Add the medium algorithm button to the selector panel
         selectorPanel.add(mediumAlgoButton);
+        // Add the basic algorithm button to the selector panel
         selectorPanel.add(basicAlgoButton);
     }
 
@@ -131,7 +153,9 @@ public class CodeBreakerSelector extends Scene {
      * added to the parent frame, making it available for user interaction.
      */
     private void drawProceedButton() {
+        // Center align the proceed button
         proceedButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        // Add the proceed button to the parent frame
         frame.add(proceedButton);
     }
 
@@ -151,22 +175,32 @@ public class CodeBreakerSelector extends Scene {
      * @throws IllegalArgumentException if no algorithm is selected.
      */
     private void registerProceedHandler() {
+        // Add an action listener to the proceed button
         proceedButton.addActionListener(event -> {
+            // Log that the proceed button was pressed
             Log.trace("Proceed button pressed");
 
+            // Check if the Donald Knuth button is selected
             if (donaldKnuthButton.isSelected()) {
+                // Log the selection of the Donald Knuth algorithm
                 Log.info("Donald Knuth 5-Guess Algorithm selected");
 
+                // Initialize the CodeBreaker with the Donald Knuth algorithm
                 new CodeBreaker(frame, new DonaldKnuthAlgorithm());
             } else if (mediumAlgoButton.isSelected()) {
+                // Log the selection of the medium algorithm
                 Log.info("Medium Algorithm selected");
 
+                // Initialize the CodeBreaker with the medium algorithm
                 new CodeBreaker(frame, new MediumAlgorithm());
             } else if (basicAlgoButton.isSelected()) {
+                // Log the selection of the basic algorithm
                 Log.info("Basic Algorithm selected");
 
+                // Initialize the CodeBreaker with the basic algorithm
                 new CodeBreaker(frame, new EasyAlgorithm());
             } else {
+                // Log a fatal error if no algorithm is selected
                 Log.fatal("No code breaker algorithm selected");
             }
         });
