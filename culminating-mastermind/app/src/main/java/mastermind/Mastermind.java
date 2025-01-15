@@ -69,6 +69,7 @@ public class Mastermind {
     public static void main(String[] args) {
         initializeLogger();
 
+        Log.info("=".repeat(80));
         Log.info("Starting Mastermind");
         Log.debug("Total colors: " + TOTAL_COLORS);
         Log.debug("Code length: " + CODE_LENGTH);

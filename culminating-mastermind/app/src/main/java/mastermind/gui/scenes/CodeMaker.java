@@ -177,7 +177,8 @@ public class CodeMaker extends Scene {
             final Status status = result.first();
             final Response response = result.second();
 
-            Log.info("User submission(" + attempt + "): " + guess + ", response: " + response);
+            Log.info("User submission(" + attempt + "): " + guess);
+            Log.info("Response: " + response);
             Log.info("Status: " + status);
 
             if (status == Status.Continue) {
