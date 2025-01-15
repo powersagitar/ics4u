@@ -255,6 +255,8 @@ public class CodeBreaker extends Scene {
      * @return A tuple containing the status of the solver and the next guess.
      */
     private Tuple2<Status, Code> makeSubsequentGuess(final Response response) {
+        // Attempt to make the next guess based on the response
+        // If the hints are invalid, log an error and return a lose status
         try {
             return solver.guess(response);
         } catch (final InvalidHintsException e) {
