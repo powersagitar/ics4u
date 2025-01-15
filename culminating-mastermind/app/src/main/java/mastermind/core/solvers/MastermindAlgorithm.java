@@ -15,6 +15,13 @@ import mastermind.utils.Tuple2;
  */
 public abstract class MastermindAlgorithm extends MastermindSolver {
     /**
+     * Default constructor.
+     */
+    public MastermindAlgorithm() {
+        super();
+    }
+
+    /**
      * This is the first guess an algorithm will make.
      *
      * @return The first guess as an instance of {@code Code}.

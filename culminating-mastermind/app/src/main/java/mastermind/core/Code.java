@@ -15,10 +15,52 @@ public class Code {
     private final List<Color> code;
 
     /**
+     * Initializes a new {@code Code} object with the specified code sequence.
+     *
+     * @param code a list of {@code Color} objects representing the code sequence.
+     */
+    public Code(final List<Color> code) {
+        if (code.size() != Mastermind.CODE_LENGTH) {
+            throw new IllegalArgumentException(
+                "Code length must be equal to " + Mastermind.CODE_LENGTH);
+        }
+
+        this.code = code;
+    }
+
+    /**
      * Represents a color in the Mastermind game.
      */
     public enum Color {
-        Green, Red, Blue, Yellow, Orange, Purple;
+        /**
+         * The green code in the Mastermind game.
+         */
+        Green,
+
+        /**
+         * The red code in the Mastermind game.
+         */
+        Red,
+
+        /**
+         * The blue code in the Mastermind game.
+         */
+        Blue,
+
+        /**
+         * The yellow code in the Mastermind game.
+         */
+        Yellow,
+
+        /**
+         * The orange code in the Mastermind game.
+         */
+        Orange,
+
+        /**
+         * The purple code in the Mastermind game.
+         */
+        Purple;
 
         /**
          * Retrieves the {@code Color} constant at the specified index.
@@ -30,15 +72,6 @@ public class Code {
         public static Color fromIndex(final int index) {
             return Color.values()[index];
         }
-    }
-
-    public Code(final List<Color> code) {
-        if (code.size() != Mastermind.CODE_LENGTH) {
-            throw new IllegalArgumentException(
-                "Code length must be equal to " + Mastermind.CODE_LENGTH);
-        }
-
-        this.code = code;
     }
 
     /**

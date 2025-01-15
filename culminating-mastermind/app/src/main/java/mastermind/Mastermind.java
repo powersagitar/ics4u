@@ -46,6 +46,12 @@ public class Mastermind {
     public final static Dimension CANVAS_DIMENSION = new Dimension(640, 480);
 
     /**
+     * Private constructor to prevent instantiation.
+     */
+    private Mastermind() {
+    }
+
+    /**
      * Initializes the logger.
      * <p>
      * The default log lever is INFO, and the log messages are written to stdout

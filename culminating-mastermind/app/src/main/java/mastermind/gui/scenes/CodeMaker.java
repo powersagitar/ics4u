@@ -47,17 +47,9 @@ public class CodeMaker extends Scene {
     private List<Integer> nextGuess = null;
 
     /**
-     * Constructs a new CodeMaker instance, initializing the game environment,
-     * components, and event listeners for the Mastermind game.
-     *
-     * <p>
-     * This constructor creates a random secret code and initializes a human solver
-     * for gameplay. It sets up the user interface using the provided JFrame, including
-     * the game board, color selection controls, and the proceed button. Additionally,
-     * it establishes handlers for user interactions with the color selection buttons
-     * and the proceed button.
-     *
-     * @param frame the JFrame to which this game's components will be added
+     * Constructs the CodeMaker scene with the secret code.
+     * @param frame The main frame of the application.
+     * @param secretCode The secret code generated for the user to guess.
      */
     public CodeMaker(final JFrame frame, final Code secretCode) {
         super(frame);

@@ -3,13 +3,43 @@ package mastermind.gui.panels;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Help class that displays the help button and the help popup.
+ */
 public class Help {
+    /**
+     * Help button that displays the help popup.
+     */
     private final static JButton HELP_BUTTON = new JButton("Help");
+
+    /**
+     * Help panel that contains the help button.
+     */
     private final static JPanel HELP_PANEL = new JPanel();
+
+    /**
+     * Popup frame that displays the help popup.
+     */
     private final static JFrame POPUP_FRAME = new JFrame("Help");
+
+    /**
+     * Title label for the help popup.
+     */
     private final static JLabel HELP_TITLE = new JLabel("Mastermind Help", SwingConstants.CENTER);
+
+    /**
+     * Button to display the gameplay instructions.
+     */
     private final static JButton GAMEPLAY_INSTRUCTIONS_BUTTON = new JButton("Gameplay Instructions");
+
+    /**
+     * Button to display the navigation instructions.
+     */
     private final static JButton NAVIGATION_INSTRUCTIONS_BUTTON = new JButton("Navigation Instructions");
+
+    /**
+     * Panel that contains the buttons for the help popup.
+     */
     private final static JPanel POPUP_PANEL = new JPanel();
 
     static {
@@ -31,10 +61,24 @@ public class Help {
         registerNavigationInstructionsHandler();
     }
 
+    /**
+     * Private constructor to prevent instantiation.
+     */
+    private Help() {
+    }
+
+    /**
+     * Draws the help button on the frame.
+     *
+     * @param frame the frame to draw the help button on
+     */
     public static void drawHelpButton(final JFrame frame) {
         frame.add(HELP_PANEL);
     }
 
+    /**
+     * Registers the help button action listeners.
+     */
     public static void registerHelpHandlers() {
         HELP_BUTTON.addActionListener(event -> {
             POPUP_FRAME.setSize(400, 500);
@@ -43,14 +87,23 @@ public class Help {
         });
     }
 
+    /**
+     * Registers the gameplay instructions button action listener.
+     */
     private static void registerGameplayInstructionsHandler() {
         GAMEPLAY_INSTRUCTIONS_BUTTON.addActionListener(event -> showGameplayInstructions());
     }
 
+    /**
+     * Registers the navigation instructions button action listener.
+     */
     private static void registerNavigationInstructionsHandler() {
         NAVIGATION_INSTRUCTIONS_BUTTON.addActionListener(event -> showNavigationInstructions());
     }
 
+    /**
+     * Shows the navigation instructions in the help popup.
+     */
     private static void showNavigationInstructions() {
         POPUP_PANEL.removeAll();
 
@@ -68,6 +121,9 @@ public class Help {
         POPUP_PANEL.repaint();
     }
 
+    /**
+     * Shows the gameplay instructions in the help popup.
+     */
     private static void showGameplayInstructions() {
         POPUP_PANEL.removeAll();
 
@@ -84,6 +140,9 @@ public class Help {
         POPUP_PANEL.repaint();
     }
 
+    /**
+     * Shows the help menu in the help popup.
+     */
     private static void showHelpMenu() {
         POPUP_PANEL.removeAll();
 
@@ -98,6 +157,10 @@ public class Help {
         POPUP_PANEL.repaint();
     }
 
+    /**
+     * Returns the gameplay instructions text.
+     * @return the gameplay instructions text
+     */
     private static String getGameplayInstructionsText() {
         return """
             Mastermind is a code-breaking game where a setter sets a secret code and a guesser must guess that secret code.
@@ -111,6 +174,10 @@ public class Help {
             """.replace("\n", "<br>");
     }
 
+    /**
+     * Returns the navigation instructions text.
+     * @return the navigation instructions text
+     */
     private static String getNavigationInstructionsText() {
         return """
             In the first screen, you can choose to play as the code maker or the code breaker.

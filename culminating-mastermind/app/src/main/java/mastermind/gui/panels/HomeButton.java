@@ -1,8 +1,12 @@
 package mastermind.gui.panels;
 
-import javax.swing.*;
 import mastermind.gui.scenes.GameModeSelector;
 
+import javax.swing.*;
+
+/**
+ * A class to create a home button that will take the user back to GameModeSelector
+ */
 public class HomeButton {
     /**
      * A button to go back to the home screen on frames that are not the home
@@ -27,7 +31,17 @@ public class HomeButton {
         BUTTON_PANEL.add(HOME_BUTTON);
     }
 
+    /**
+     * Private constructor to prevent instantiation.
+     */
+    private HomeButton() {
+    }
 
+    /**
+     * Register the home button handler.
+     *
+     * @param frame Frame of the program.
+     */
     public static void registerHomeHandlers(final JFrame frame) {
         if (!isHandlerRegistered) {
             HOME_BUTTON.addActionListener(event -> new GameModeSelector(frame));
@@ -35,6 +49,10 @@ public class HomeButton {
         }
     }
 
+    /**
+     * Draw the home button on the frame.
+     * @param frame Frame of the program.
+     */
     public static void drawHomeButton(final JFrame frame) {
         frame.add(BUTTON_PANEL);
     }

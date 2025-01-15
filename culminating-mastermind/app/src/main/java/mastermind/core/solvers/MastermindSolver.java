@@ -24,6 +24,12 @@ public abstract class MastermindSolver {
     }
 
     /**
+     * Default constructor.
+     */
+    public MastermindSolver() {
+    }
+
+    /**
      * Whether the solver guesses the code within {@link Mastermind#MAX_GUESSES}.
      *
      * <p>

@@ -10,12 +10,31 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.FileNotFoundException;
 
+/**
+ * The Code Maker selection screen.
+ */
 public class CodeMakerSelector extends Scene {
+    /**
+     * The panel containing the code maker selection options.
+     */
     private final JPanel selectorPanel = new JPanel();
+
+    /**
+     * The radio buttons for the user to select the code maker algorithm.
+     */
     private final JRadioButton randomButton = new JRadioButton("Random Code", true);
     private final JRadioButton preProgrammedButton = new JRadioButton("Pre-Programmed Code");
+
+    /**
+     * The "Proceed" button that allows the user to proceed to the Code Maker gameplay.
+     */
     private final JButton proceedButton = new JButton("Proceed");
 
+    /**
+     * Constructs the CodeMakerSelector scene.
+     *
+     * @param frame The main frame of the application.
+     */
     public CodeMakerSelector(final JFrame frame) {
         super(frame);
 

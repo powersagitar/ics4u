@@ -33,6 +33,12 @@ public class CodeInput {
     private final List<Integer> code = new ArrayList<>(Mastermind.CODE_LENGTH);
 
     /**
+     * Constructs the CodeInput panel.
+     */
+    public CodeInput() {
+    }
+
+    /**
      * Draws the buttons for the user to input the code.
      *
      * @return JPanel containing the buttons.

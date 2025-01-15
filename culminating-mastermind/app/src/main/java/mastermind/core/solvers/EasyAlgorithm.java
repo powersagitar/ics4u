@@ -38,11 +38,11 @@ public class EasyAlgorithm extends MastermindAlgorithm {
      * This simple guess algorithm generates a random guess that has not been
      * made before.
      * <p>
-     *     The algorithm generates a random guess by selecting a random color for
-     *     each of the four positions in the code. If the generated guess has
-     *     already been made, the algorithm generates a new guess until a unique
-     *     guess is found.
-     * <p>
+     * The algorithm generates a random guess by selecting a random color for
+     * each of the four positions in the code. If the generated guess has
+     * already been made, the algorithm generates a new guess until a unique
+     * guess is found.
+     *
      * @return The initial guess to be made by the algorithm.
      */
     @Override
@@ -63,14 +63,14 @@ public class EasyAlgorithm extends MastermindAlgorithm {
     /**
      * Determines the next guess for the Mastermind game.
      * <p>
-     *     The algorithm generates a random guess by selecting a random color for
-     *     each of the four positions in the code. If the generated guess has
-     *     already been made, the algorithm generates a new guess until a unique
-     *     guess is found.
-     * <p>
+     * The algorithm generates a random guess by selecting a random color for
+     * each of the four positions in the code. If the generated guess has
+     * already been made, the algorithm generates a new guess until a unique
+     * guess is found.
+     *
      * @param response The response to the previous guess made by the algorithm.
      * @return A tuple containing the status of the game and the next guess to be
-     *         made by the algorithm.
+     * made by the algorithm.
      * @throws IllegalCallerException If this method is invoked for the initial
      *                                guess.
      */
@@ -97,6 +97,7 @@ public class EasyAlgorithm extends MastermindAlgorithm {
     /**
      * Finds the next guess for the Mastermind game by randomly generating a
      * code and checking to ensure that it has not been guessed before.
+     *
      * @return The next guess to be made by the algorithm.
      */
     private Code findNextGuess() {
@@ -115,11 +116,12 @@ public class EasyAlgorithm extends MastermindAlgorithm {
 
     /**
      * Generates a random number within the specified range.
-     * @param low The lower bound of the random number.
+     *
+     * @param low  The lower bound of the random number.
      * @param high The upper bound of the random number.
      * @return A random number within the specified range.
      */
-    private int getRandomNumber(final int low,final int high) {
+    private int getRandomNumber(final int low, final int high) {
         return (int) (Math.random() * (high - low + 1) + low);
     }
 }
