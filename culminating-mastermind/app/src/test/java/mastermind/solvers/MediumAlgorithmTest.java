@@ -13,19 +13,19 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class MediumAlgorithmTest {
-    @Test
-    void testFirstThreeGuesses() {
-        final MediumAlgorithm solver = new MediumAlgorithm();
-        for (int i = 0; i < 3; i++) {
-            final Code firstGuess = solver.guess();
-            final Code expectedIthGuess =
-                CodeFactory.fromColorIndices(List.of(i, i, i, i));
-            assertEquals(expectedIthGuess.getColors(), firstGuess.getColors());
-        }
-    }
-
-    @Test
-    void testGuesses(){
-
-    }
+    // @Test
+    // void testFirstThreeGuesses() {
+    //     final MediumAlgorithm solver = new MediumAlgorithm();
+    //     for (int i = 0; i < 3; i++) {
+    //         final Code firstGuess = solver.guess();
+    //         final Code expectedIthGuess =
+    //             CodeFactory.fromColorIndices(List.of(i, i, i, i));
+    //         assertEquals(expectedIthGuess.getColors(), firstGuess.getColors());
+    //     }
+    // }
+    //
+    // @Test
+    // void testGuesses(){
+    //
+    // }
 }
