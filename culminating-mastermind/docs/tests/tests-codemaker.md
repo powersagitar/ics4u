@@ -11,7 +11,7 @@ parent: Tests
 Program makes a secret code and user tries to guess.
 
 {: .important }
-The documented results are produced from revision [`6b74221`](). In these test 
+The documented results are produced from revision [`55a4fe`](https://github.com/powersagitar/ics4u/tree/55a4febedb461ceb75bab67da6acb3bddd9ef4c1). In these test 
 cases, the computer generates a random code and provides correct feedback to 
 the user in the form of white and black key pegs. 
 
@@ -56,7 +56,7 @@ it within 4 tries. The computer provided correct feedback to the guesses.
 
 ### Test Case 3
 
-Secret Code:
+Secret Code: Purple Yellow Yellow Yellow
 
 | Number of Attempts |           Attempt           |       Hints        |
 |:------------------:|:---------------------------:|:------------------:|
