@@ -1,3 +1,9 @@
+/*
+    Authors: Mohan Dong, Kenneth Chen
+    Date: 01/15/2024
+    Title: CodeInput.java
+ */
+
 package mastermind.gui.panels;
 
 import mastermind.Mastermind;

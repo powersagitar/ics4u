@@ -1,3 +1,9 @@
+/*
+    Authors: Mohan Dong
+    Date: 01/15/2024
+    Title: ResponseTest.java
+ */
+
 package mastermind;
 
 // Import necessary classes from the mastermind.core package

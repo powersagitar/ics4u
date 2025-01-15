@@ -1,3 +1,9 @@
+/*
+    Authors: Mohan Dong
+    Date: 01/15/2024
+    Title: CodeBreakerSelector.java
+ */
+
 package mastermind.gui.scenes;
 
 // Import necessary classes and packages

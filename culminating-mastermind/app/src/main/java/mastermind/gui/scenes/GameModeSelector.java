@@ -1,3 +1,9 @@
+/*
+    Authors: Mohan Dong, Kenneth Chen
+    Date: 01/15/2024
+    Title: GameModeSelector.java
+ */
+
 package mastermind.gui.scenes;
 
 import mastermind.gui.panels.Help;

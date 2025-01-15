@@ -1,3 +1,9 @@
+/*
+    Authors: Kenneth Chen
+    Date: 01/15/2024
+    Title: MediumAlgorithmTest.java
+ */
+
 package mastermind.solvers;
 
 import mastermind.core.Code;

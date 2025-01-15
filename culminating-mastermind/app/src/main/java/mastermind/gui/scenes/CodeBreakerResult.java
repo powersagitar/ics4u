@@ -1,3 +1,9 @@
+/*
+    Authors: Mohan Dong, Kenneth Chen
+    Date: 01/15/2024
+    Title: CodeBreakerResult.java
+ */
+
 package mastermind.gui.scenes;
 
 // Import necessary classes and packages

@@ -1,3 +1,9 @@
+/*
+    Authors: Kenneth Chen, Mohan Dong
+    Date: 01/15/2024
+    Title: HomeButton.java
+ */
+
 package mastermind.gui.panels;
 
 import mastermind.gui.scenes.GameModeSelector;

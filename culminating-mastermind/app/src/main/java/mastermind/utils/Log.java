@@ -1,3 +1,9 @@
+/*
+    Authors: Mohan Dong
+    Date: 01/15/2024
+    Title: Log.java
+ */
+
 package mastermind.utils;
 
 import java.io.IOException;

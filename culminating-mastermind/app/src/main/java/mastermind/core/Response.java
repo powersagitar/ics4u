@@ -1,3 +1,9 @@
+/*
+    Authors: Mohan Dong
+    Date: 01/15/2024
+    Title: Response.java
+ */
+
 package mastermind.core;
 
 import mastermind.Mastermind;

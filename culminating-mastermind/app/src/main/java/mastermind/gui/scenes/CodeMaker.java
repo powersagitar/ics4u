@@ -1,3 +1,9 @@
+/*
+    Authors: Mohan Dong
+    Date: 01/15/2024
+    Title: CodeMaker.java
+ */
+
 package mastermind.gui.scenes;
 
 import mastermind.Mastermind;

@@ -1,3 +1,9 @@
+/*
+    Authors: Mohan Dong, Kenneth Chen
+    Date: 01/15/2024
+    Title: MathUtil.java
+ */
+
 package mastermind.utils;
 
 import java.util.ArrayList;

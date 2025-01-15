@@ -1,3 +1,9 @@
+/*
+    Authors: Kenneth Chen, Mohan Dong
+    Date: 01/15/2024
+    Title: Help.java
+ */
+
 package mastermind.gui.panels;
 
 import javax.swing.*;

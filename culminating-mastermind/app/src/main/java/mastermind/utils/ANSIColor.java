@@ -1,3 +1,9 @@
+/*
+    Authors: Mohan Dong
+    Date: 01/15/2024
+    Title: ANSIColor.java
+ */
+
 package mastermind.utils;
 
 import java.util.Map;

@@ -1,3 +1,9 @@
+/*
+    Authors: Kenneth Chen
+    Date: 01/15/2024
+    Title: EasyAlgorithm.java
+ */
+
 package mastermind.core.solvers;
 
 import mastermind.Mastermind;

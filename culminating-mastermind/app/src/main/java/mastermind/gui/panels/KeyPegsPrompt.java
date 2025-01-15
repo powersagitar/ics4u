@@ -1,3 +1,9 @@
+/*
+    Authors: Mohan Dong
+    Date: 01/15/2024
+    Title: KeyPegsPrompt.java
+ */
+
 package mastermind.gui.panels;
 
 import mastermind.Mastermind;

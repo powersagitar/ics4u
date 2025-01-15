@@ -1,3 +1,9 @@
+/*
+    Authors: Mohan Dong
+    Date: 01/15/2024
+    Title: DonaldKnuthAlgorithm.java
+ */
+
 package mastermind.core.solvers;
 
 import mastermind.Mastermind;

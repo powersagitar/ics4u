@@ -1,3 +1,9 @@
+/*
+    Authors: Mohan Dong, Kenneth Chen
+    Date: 01/15/2024
+    Title: CodeTest.java
+ */
+
 package mastermind;
 
 // Import necessary classes from the mastermind.core package
