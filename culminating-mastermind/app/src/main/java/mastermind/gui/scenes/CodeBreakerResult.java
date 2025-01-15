@@ -64,14 +64,17 @@ public class CodeBreakerResult extends Scene {
             final JLabel descriptionLabel;
 
             if (status == Status.Win) {
+                Log.info("Program successfully guessed the code.");
                 descriptionLabel = new JLabel("Program successfully guessed the code.");
             } else {
+                Log.info("Program failed to guess the code.");
                 descriptionLabel = new JLabel("Program failed to guess the code.");
             }
 
             descriptionLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
             frame.add(descriptionLabel);
 
+            Log.info("Secret code: " + secretCode);
             drawCorrectCode();
         }
 
