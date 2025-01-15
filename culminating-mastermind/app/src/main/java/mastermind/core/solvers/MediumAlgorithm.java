@@ -20,9 +20,7 @@ import java.util.List;
  * will guess the first permutation in the set of remaining permutations.
  */
 public class MediumAlgorithm extends MastermindAlgorithm {
-    /**
-     *
-     */
+
     private Code previousGuess = null;
     private HashSet<Code> permutations;
 
@@ -81,7 +79,6 @@ public class MediumAlgorithm extends MastermindAlgorithm {
      *
      * @param numAttempts The number of attempts made so far.
      * @return The next guess to be made by the algorithm.
-     *
      */
     private Code findNextGuess(int numAttempts) {
         // If the number of attempts is less than 4, the next guess is determined
@@ -159,10 +156,8 @@ public class MediumAlgorithm extends MastermindAlgorithm {
             throw new IllegalCallerException("guess(Response) is meant for subsequent guesses.");
         }
 
-
         // Retrieve the validation counts (e.g., correct positions) from the response.
         final Tuple2<Integer, Integer> validation = response.getResponse();
-
         final int correctCount = validation.first();
 
         // If the maximum number of guesses has been exceeded, the game status is set to
@@ -183,5 +178,4 @@ public class MediumAlgorithm extends MastermindAlgorithm {
 
         return new Tuple2<>(Status.Continue, nextGuess); // returns the next guess
     }
-
 }

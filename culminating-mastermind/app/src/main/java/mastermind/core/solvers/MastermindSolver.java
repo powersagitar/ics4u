@@ -41,8 +41,8 @@ public abstract class MastermindSolver {
      * @return true if the solver fails to guess the code, and false otherwise
      */
     protected boolean hasExceededMaxGuesses() {
-        // If the solver has made the maximum number of guesses, it has lost
-        // otherwise, it has not lost, and increments the number of attempts
+        /*If the solver has made the maximum number of guesses, it has lost
+        otherwise, it has not lost, and increments the number of attempts */
         if (attempts >= Mastermind.MAX_GUESSES) {
             return true;
         } else {
