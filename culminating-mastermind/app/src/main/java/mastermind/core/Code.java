@@ -20,12 +20,14 @@ public class Code {
      * @param code a list of {@code Color} objects representing the code sequence.
      */
     public Code(final List<Color> code) {
+        // Ensure that the code length is equal to the constant defined in the Mastermind class.
         if (code.size() != Mastermind.CODE_LENGTH) {
             throw new IllegalArgumentException(
-                "Code length must be equal to " + Mastermind.CODE_LENGTH);
+                "Code length must be equal to " + Mastermind.CODE_LENGTH); //
+            // Throws an exception if the code length is not equal to the constant defined in the Mastermind class.
         }
 
-        this.code = code;
+        this.code = code; // Assigns the code sequence to the code field.
     }
 
     /**
@@ -70,7 +72,7 @@ public class Code {
          * @throws ArrayIndexOutOfBoundsException if the specified index is out of range.
          */
         public static Color fromIndex(final int index) {
-            return Color.values()[index];
+            return Color.values()[index]; // Returns the Color constant at the specified index.
         }
     }
 
@@ -110,21 +112,24 @@ public class Code {
      * code sequence.
      */
     public HashMap<Color, Integer> getOccurrences() {
+        // Initialize a HashMap to store the occurrence count of each color.
         HashMap<Color, Integer> occurrences = new HashMap<>(Mastermind.TOTAL_COLORS);
 
+        // Initialize the count of each color to zero.
         for (final Color color : Color.values()) {
             occurrences.put(color, 0);
         }
 
+        // Update the count of each color in the code sequence.
         for (final Color color : code) {
             occurrences.put(color, occurrences.get(color) + 1);
         }
 
-        return occurrences;
+        return occurrences; // Returns the HashMap containing the occurrence count of each color.
     }
 
     @Override
     public String toString() {
         return code.toString();
-    }
+    } // Returns the code sequence as a string.
 }
