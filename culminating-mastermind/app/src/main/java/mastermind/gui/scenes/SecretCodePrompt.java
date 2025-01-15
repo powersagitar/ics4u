@@ -59,7 +59,18 @@ public class SecretCodePrompt extends Scene {
         this.responses = responses;
 
         // Create and configure a label to prompt the user to enter the correct code
-        final JLabel promptLabel = new JLabel("Please enter the correct code:");
+        final JLabel promptLabel = new JLabel("""
+            <html>
+            <div align="center">
+            You are now on this scene for one of the following reasons:
+            1. The program successfully guessed the code
+            2. The program failed to guess the code
+            3. The hints you entered are invalid
+            
+            Please enter the correct code:
+            </div>
+            </html>
+            """.replace("\n", "<br>"), SwingConstants.CENTER);
         promptLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         frame.add(promptLabel);
 
