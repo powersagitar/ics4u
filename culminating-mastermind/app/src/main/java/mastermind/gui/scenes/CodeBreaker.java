@@ -86,28 +86,40 @@ public class CodeBreaker extends Scene {
 
         Log.info("Creating CodeBreaker scene");
 
+        // Initialize the solver with the provided algorithm
         this.solver = algorithm;
 
+        // Add the main flow panel to the frame
         frame.add(flowPanel);
 
+        // Draw the game board on the flow panel
         drawGameBoard();
 
+        // Draw the control panel on the flow panel
         drawControlPanel();
 
+        // Add the key pegs counter to the control panel
         controlPanel.add(keyPegsCounter);
 
+        // Draw the "Proceed" button on the control panel
         drawProceedButton();
 
+        // Draw the home button on the frame
         HomeButton.drawHomeButton(frame);
 
+        // Draw the help button on the frame
         Help.drawHelpButton(frame);
 
+        // Register handlers for the home button
         HomeButton.registerHomeHandlers(frame);
 
+        // Register handlers for the help button
         Help.registerHelpHandlers();
 
+        // Register the handler for the "Proceed" button
         registerProceedHandler();
 
+        // Refresh the frame to apply changes
         refreshFrame();
     }
 
@@ -160,7 +172,6 @@ public class CodeBreaker extends Scene {
         controlPanel.add(proceedButton);
     }
 
-
     /**
      * Registers a handler for processing guesses and updating the game state in the CodeBreaker game.
      *
@@ -191,17 +202,18 @@ public class CodeBreaker extends Scene {
      * iterative gameplay through the "Proceed" button.
      */
     private void registerProceedHandler() {
-//        first guess
+        // Make the first guess using the solver algorithm
         final Code firstGuess = solver.guess();
         gameBoard.updateGuess(0, firstGuess.getColors());
         guesses.add(firstGuess);
 
         Log.info("Guess 0: " + firstGuess);
 
-//        subsequent guesses
+        // Add an action listener to the "Proceed" button for subsequent guesses
         proceedButton.addActionListener(event -> {
             Log.trace("Proceed button pressed");
 
+            // Create a response for the previous guess using the key pegs counter
             final Response responseForPreviousGuess =
                 new Response(new Tuple2<>(
                     keyPegsCounter.getBlackPegs(),
@@ -211,14 +223,16 @@ public class CodeBreaker extends Scene {
 
             Log.info("Response: " + responseForPreviousGuess);
 
-//            get the number of attempts BEFORE making the next guess
+            // Get the number of attempts before making the next guess
             final int attempt = solver.getAttempts();
 
+            // Make the next guess based on the response
             final Tuple2<Status, Code> result =
                 makeSubsequentGuess(responseForPreviousGuess);
 
             Log.info("Solver status: " + result.first());
 
+            // If the solver status is "Continue", update the game board with the next guess
             if (result.first() == Status.Continue) {
                 Log.info("Guess " + attempt + ": " + result.second());
 
@@ -229,6 +243,7 @@ public class CodeBreaker extends Scene {
                 return;
             }
 
+            // If the solver status is not "Continue", show the secret code prompt
             new SecretCodePrompt(frame, result.first(), guesses, responses);
         });
     }
