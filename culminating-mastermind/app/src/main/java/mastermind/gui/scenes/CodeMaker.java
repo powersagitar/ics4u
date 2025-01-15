@@ -62,10 +62,11 @@ public class CodeMaker extends Scene {
     public CodeMaker(final JFrame frame, final Code secretCode) {
         super(frame);
 
-        Log.info("Creating CodeMaker scene");
-
         this.secretCode = secretCode;
         this.solver = new HumanSolver(secretCode);
+
+        Log.info("Creating CodeMaker scene");
+        Log.info("Secret code: " + secretCode);
 
         frame.add(flowPanel);
 
@@ -156,7 +157,8 @@ public class CodeMaker extends Scene {
     private void registerProceedHandlers() {
         proceedButton.addActionListener(event -> {
             if (nextGuess.size() < Mastermind.CODE_LENGTH) {
-                Log.warning("User guessed an incomplete guess: " + nextGuess);
+                Log.warning("User submitted incomplete guess: " + nextGuess);
+
                 JOptionPane.showMessageDialog(
                     frame,
                     "Please choose all 4 colors for your guess",
@@ -175,9 +177,11 @@ public class CodeMaker extends Scene {
             final Status status = result.first();
             final Response response = result.second();
 
+            Log.info("User submission(" + attempt + "): " + guess + ", response: " + response);
+            Log.info("Status: " + status);
+
             if (status == Status.Continue) {
                 gameBoard.updateHints(attempt, response);
-                Log.debug("Intermediate Code Input" + attempt + ": " + guess);
                 return;
             }
 
