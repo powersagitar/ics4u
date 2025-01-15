@@ -25,14 +25,25 @@ public abstract class Scene {
      * @return A configured JFrame instance.
      */
     public static JFrame createDefaultScene() {
+        // Create a new JFrame instance
         final JFrame frame = new JFrame();
+
+        // Set the layout of the frame's content pane to a vertical BoxLayout
         frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
 
+        // Set the size of the frame using a predefined dimension from the Mastermind class
         frame.setSize(Mastermind.CANVAS_DIMENSION);
+
+        // Set the title of the frame
         frame.setTitle("Mastermind");
+
+        // Allow the frame to be resizable
         frame.setResizable(true);
+
+        // Make the frame visible
         frame.setVisible(true);
 
+        // Return the configured JFrame instance
         return frame;
     }
 
@@ -47,7 +58,10 @@ public abstract class Scene {
      *              of this frame will be cleared during instantiation.
      */
     Scene(final JFrame frame) {
+        // Assign the provided JFrame to the frame field
         this.frame = frame;
+
+        // Clear all existing components from the content pane of the frame
         this.frame.getContentPane().removeAll();
     }
 
@@ -60,7 +74,10 @@ public abstract class Scene {
      * after modifying the frame's contents or its structure to force an immediate update.
      */
     void refreshFrame() {
+        // Repaint the frame to update its visual representation
         frame.repaint();
+
+        // Revalidate the frame to ensure its layout is updated
         frame.revalidate();
     }
 }
