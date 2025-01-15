@@ -9,20 +9,37 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
+/**
+ * Factory class for creating {@link Code} objects.
+ */
 public class CodeFactory {
+    /**
+     * Private constructor to prevent instantiation.
+     */
     private CodeFactory() {
         throw new IllegalStateException("Factory class should not be instantiated.");
     }
 
+    /**
+     * Creates a {@link Code} object from a list of color indices.
+     *
+     * @param indices List of color indices.
+     * @return A {@link Code} object.
+     */
     public static Code fromColorIndices(final List<Integer> indices) {
         final List<Code.Color> colors = indices
-                .stream()
-                .map(Code.Color::fromIndex)
-                .toList();
+            .stream()
+            .map(Code.Color::fromIndex)
+            .toList();
 
         return new Code(colors);
     }
 
+    /**
+     * Creates a random {@link Code} object.
+     *
+     * @return A random {@link Code} object.
+     */
     public static Code getRandom() {
         final Random random = new Random();
         final ArrayList<Integer> codeBuilder = new ArrayList<>(Mastermind.CODE_LENGTH);
@@ -35,9 +52,18 @@ public class CodeFactory {
         return fromColorIndices(codeBuilder);
     }
 
+    /**
+     * Creates a random {@link Code} object from a file.
+     *
+     * @param file File containing the codes.
+     * @return A random {@link Code} object.
+     * @throws FileNotFoundException    If the file is not found.
+     * @throws IllegalArgumentException If the file is empty, the code length
+     *                                  is invalid, or the color index is invalid.
+     */
     @SuppressWarnings("ExtractMethodRecommender")
     public static Code getRandomFromFile(final File file)
-            throws FileNotFoundException {
+        throws FileNotFoundException {
         final List<String> lines = new ArrayList<>();
         final Scanner scanner = new Scanner(file);
 
