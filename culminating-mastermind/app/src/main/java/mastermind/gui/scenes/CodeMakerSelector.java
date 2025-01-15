@@ -29,7 +29,8 @@ public class CodeMakerSelector extends Scene {
      * The radio buttons for the user to select the code maker algorithm.
      */
     private final JRadioButton randomButton = new JRadioButton("Random Code", true);
-    private final JRadioButton preProgrammedButton = new JRadioButton("Pre-Programmed Code");
+    private final JRadioButton preProgrammedButton = new JRadioButton(
+        "Pre-Defined Code");
 
     /**
      * The "Proceed" button that allows the user to proceed to the Code Maker gameplay.
