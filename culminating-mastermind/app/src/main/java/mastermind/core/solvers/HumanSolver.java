@@ -53,9 +53,12 @@ public class HumanSolver extends MastermindSolver {
             return new Tuple2<>(Status.Lose, null);
         }
 
+        // Create a response object based on the guess
         final Response response = new Response(secretCode, guess);
+        // The number of correct matches in the response
         final int correctCount = response.getResponse().first();
 
+        // Check if the player has won/lost the game, return appropriate status
         if (correctCount >= Mastermind.CODE_LENGTH) {
             return new Tuple2<>(Status.Win, response);
         } else if (getAttempts() == Mastermind.MAX_GUESSES) {
