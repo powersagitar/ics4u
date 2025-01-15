@@ -33,6 +33,8 @@ public class MediumAlgorithm extends MastermindAlgorithm {
      * solving algorithm.
      */
     public MediumAlgorithm() {
+        // Calls the superclass constructor to initialize the number of attempts
+        // and the maximum number of guesses.
         generatePermutations();
     }
 
@@ -41,8 +43,12 @@ public class MediumAlgorithm extends MastermindAlgorithm {
      * in permutations, which is a HashSet of Code objects.
      */
     private void generatePermutations() {
+        // The total number of possibilities is calculated using the formula
+        // Math.pow(Mastermind.TOTAL_COLORS, Mastermind.CODE_LENGTH).
         final int possibilities = (int) Math.pow(Mastermind.TOTAL_COLORS, Mastermind.CODE_LENGTH);
+        // The permutations set is initialized as a HashSet of Code objects.
         permutations = new HashSet<>();
+        // A loop is used to generate all possible permutations of the secret code.
         for (int i = 0; i < possibilities; i++) {
             final ArrayList<Integer> codeInDigits = MathUtil.digitsFromBase(i, Mastermind.TOTAL_COLORS, Mastermind.CODE_LENGTH);
             final Code code = CodeFactory.fromColorIndices(codeInDigits);
@@ -56,9 +62,11 @@ public class MediumAlgorithm extends MastermindAlgorithm {
      * @param response The feedback from the last guess.
      */
     private void reducePermutations(final Response response) {
+        // Filters out invalid permutations that do not align with the
+        // response feedback, calling the removeIf method on the permutations set.
         this.permutations.removeIf(permutation -> {
             final Response testResponse = new Response(permutation, this.previousGuess);
-            return !response.equals(testResponse);
+            return !response.equals(testResponse); // returns true if the response is not equal to testResponse
         });
     }
 
@@ -76,15 +84,23 @@ public class MediumAlgorithm extends MastermindAlgorithm {
      *
      */
     private Code findNextGuess(int numAttempts) {
+        // If the number of attempts is less than 4, the next guess is determined
+        // by the number of attempts made so far. To elaborate, the color from
+        // index numAttempts will be guessed for all four positions.
         if (numAttempts < 4) {
             return CodeFactory.fromColorIndices(List.of(
                 numAttempts, numAttempts, numAttempts, numAttempts));
         }
+
+        // Otherwise, the next guess is determined by the first element in the
+        // permutations set, which contains all the possible remaining
+        // permutations from the set.
         for (Code code : permutations) { // returns the first element in the
             // set, regardless of efficiency or optimality
             return code;
         }
 
+        // If no valid permutations are found, an InvalidHintsException is thrown.
         throw new InvalidHintsException("No valid permutations found.");
     }
 
@@ -94,16 +110,21 @@ public class MediumAlgorithm extends MastermindAlgorithm {
      */
     @Override
     public Code guess() {
+        // Check if the method is being called correctly for the initial guess
+        // and throw an IllegalCallerException if called for subsequent guesses.
         if (!isInitialGuess()) {
             throw new IllegalCallerException("guess() is meant for the first guess.");
         }
 
+        // If the maximum number of guesses has been exceeded, the game status is set to
+        // Lose, and the previous guess is returned.
         hasExceededMaxGuesses();
 
+        // The initial guess is always the same, regardless of the secret code.
         final Code nextGuess = CodeFactory.fromColorIndices(List.of(0, 0, 0, 0));
         previousGuess = nextGuess;
 
-        return nextGuess;
+        return nextGuess; // return nextGuess
     }
 
     /**
@@ -132,24 +153,35 @@ public class MediumAlgorithm extends MastermindAlgorithm {
      */
     @Override
     public Tuple2<Status, Code> guess(final Response response) {
+        // Check if the method is being called correctly for subsequent guesses
+        // and throw an IllegalCallerException if called for the initial guess.
         if (isInitialGuess()) {
             throw new IllegalCallerException("guess(Response) is meant for subsequent guesses.");
         }
 
+
+        // Retrieve the validation counts (e.g., correct positions) from the response.
         final Tuple2<Integer, Integer> validation = response.getResponse();
+
         final int correctCount = validation.first();
 
+        // If the maximum number of guesses has been exceeded, the game status is set to
+        // Lose, and the previous guess is returned.
+        // If the number of correct positions equals the secret code length, the game
+        // status is set to Win, and the previous guess is returned.
         if (correctCount >= Mastermind.CODE_LENGTH) {
             return new Tuple2<>(Status.Win, previousGuess);
         } else if (hasExceededMaxGuesses()) {
             return new Tuple2<>(Status.Lose, previousGuess);
         }
 
+        // Filters out invalid permutations that do not align with the response feedback
         reducePermutations(response);
+        // Finds the next guess using the findNextGuess method
         final Code nextGuess = findNextGuess(getAttempts());
         previousGuess = nextGuess;
 
-        return new Tuple2<>(Status.Continue, nextGuess);
+        return new Tuple2<>(Status.Continue, nextGuess); // returns the next guess
     }
 
 }
