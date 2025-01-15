@@ -26,6 +26,8 @@ public class Response {
      *                 - The second element represents the count of misplaced elements.
      */
     public Response(final Tuple2<Integer, Integer> response) {
+        // constructor to response, constructs a response object containing
+        // correct and misplaced elements (black and white pegs)
         this.response = response;
     }
 
@@ -43,33 +45,45 @@ public class Response {
      * @param guess the guessed code, represented as a sequence of colors
      */
     public Response(final Code code, final Code guess) {
+        // constructor to response, constructs a response object containing
+        // correct and misplaced elements (black and white pegs)
         int correctCount = 0;
         int misplacementCount = 0;
 
+        // create a hashmap to store the occurrences of each color in the code
         HashMap<Code.Color, Integer> codeColorOccurrences = code.getOccurrences();
 
-        //        count correct
+        // count correct placements
         for (int i = 0; i < Mastermind.CODE_LENGTH; ++i) {
+            // get the code color at index i
             final Code.Color codeColor = code.getColor(i);
+            // get the guess color at index i
             final Code.Color guessColor = guess.getColor(i);
 
+            // if the code color at index i is equal to the guess color at index i
+            // increment the correct count and decrement the occurrence of the guess color
             if (codeColor == guessColor) {
                 ++correctCount;
                 codeColorOccurrences.put(guessColor, codeColorOccurrences.get(guessColor) - 1);
             }
         }
 
-        //        count misplacements
+        // count misplacements
         for (int i = 0; i < Mastermind.CODE_LENGTH; ++i) {
+            // get the code color at index i
             final Code.Color codeColor = code.getColor(i);
+            // get the guess color at index i
             final Code.Color guessColor = guess.getColor(i);
 
+            // if the code color at index i is not equal to the guess color at index i
+            // and the occurrence of the guess color is greater than 0
             if (codeColor != guessColor && codeColorOccurrences.get(guessColor) > 0) {
                 ++misplacementCount;
                 codeColorOccurrences.put(guessColor, codeColorOccurrences.get(guessColor) - 1);
             }
         }
 
+        // set the response to a tuple containing the correct and misplaced counts
         response = new Tuple2<>(correctCount, misplacementCount);
     }
 
@@ -99,16 +113,22 @@ public class Response {
      */
     @Override
     public boolean equals(Object obj) {
+        // check if the two objects are equal: returns true if yes
         if (this == obj) {
             return true;
         }
 
+        // check if the object is null or if the class differs from this class
+        // returns false if either condition is true
         if (obj == null || obj.getClass() != this.getClass()) {
             return false;
         }
 
+        // cast the object to a Response object
         final Response otherResponse = (Response) obj;
 
+        // compare the response field of the two Response objects and returns
+        // the boolean result
         return this.response.equals(otherResponse.response);
     }
 
