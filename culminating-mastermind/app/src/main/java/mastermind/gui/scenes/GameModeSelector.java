@@ -45,24 +45,44 @@ public class GameModeSelector extends Scene {
      * @param frame The JFrame to which the game mode selection UI components will be added.
      */
     public GameModeSelector(final JFrame frame) {
+        // Call the superclass constructor with the provided frame
         super(frame);
 
+        // Log the creation of the GameModeSelector scene
         Log.info("Creating GameModeSelector scene");
 
+        // Define constants for layout spacing
         final int LINE_SEPARATOR = 20;
         final int CENTER_ALIGNMENT = 130;
+
+        // Add a rigid area to the frame for vertical spacing
         frame.add(Box.createRigidArea(new Dimension(10,CENTER_ALIGNMENT)));
+
+        // Draw the welcome message on the frame
         drawWelcomeMessage();
+
+        // Add another rigid area to the frame for vertical spacing
         frame.add(Box.createRigidArea(new Dimension(10,LINE_SEPARATOR)));
+
+        // Draw the selector panel containing the game mode options
         drawSelectorPanel();
+
+        // Draw the proceed button on the frame
         drawProceedButton();
 
+        // Add the selector panel to the frame
         frame.add(selectorPanel);
+
+        // Add the proceed button to the frame
         frame.add(proceedButton);
 
+        // Draw the help button on the frame
         Help.drawHelpButton(frame);
+
+        // Register event handlers for the help button
         Help.registerHelpHandlers();
 
+        // Refresh the frame to display the updated components
         refreshFrame();
     }
 
@@ -74,9 +94,16 @@ public class GameModeSelector extends Scene {
      * The label is centrally aligned within the frame.
      */
     private void drawWelcomeMessage() {
+        // Create a label with the welcome message text
         final JLabel welcomeMessage = new JLabel("WELCOME TO MASTERMIND!");
+
+        // Set the font of the welcome message label
         welcomeMessage.setFont(new Font("Default", Font.BOLD, 20));
+
+        // Center align the welcome message label
         welcomeMessage.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        // Add the welcome message label to the frame
         frame.add(welcomeMessage);
     }
 
@@ -94,15 +121,28 @@ public class GameModeSelector extends Scene {
      * with a centered alignment, and labeled with a titled border named "Game Modes".
      */
     private void drawSelectorPanel() {
+        // Set the layout of the selector panel to a vertical box layout
         selectorPanel.setLayout(new BoxLayout(selectorPanel, BoxLayout.Y_AXIS));
+
+        // Center align the selector panel
         selectorPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        // Set a titled border for the selector panel
         selectorPanel.setBorder(BorderFactory.createTitledBorder("Game Modes"));
 
+        // Add the Code Breaker radio button to the selector panel
         selectorPanel.add(codeBreakerButton);
+
+        // Add the Code Maker radio button to the selector panel
         selectorPanel.add(codeMakerButton);
 
+        // Create a button group to ensure only one radio button can be selected at a time
         final ButtonGroup gameModeButtonGroup = new ButtonGroup();
+
+        // Add the Code Breaker radio button to the button group
         gameModeButtonGroup.add(codeBreakerButton);
+
+        // Add the Code Maker radio button to the button group
         gameModeButtonGroup.add(codeMakerButton);
     }
 
@@ -114,25 +154,38 @@ public class GameModeSelector extends Scene {
      * The button's action listener determines which game mode has been selected
      * by the user (Code Breaker or Code Maker) and performs the appropriate action:
      * - If the "Code Breaker" mode is selected, a new instance of `CodeBreakerSelector` is created.
-     * - If the "Code Maker" mode is selected, a new instance of `CodeMaker` is created.
+     * - If the "Code Maker" mode is selected, a new instance of `CodeMakerSelector` is created.
      * - If no mode is selected, an `IllegalArgumentException` is thrown.
      *
      * <p>
      * The "Proceed" button is aligned to the center for consistency with the overall UI design.
      */
     private void drawProceedButton() {
+        // Set the alignment of the proceed button to the center
         proceedButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        // Add an action listener to the proceed button to handle click events
         proceedButton.addActionListener(event -> {
+            // Log the trace message indicating the proceed button was pressed
             Log.trace("Proceed button pressed");
 
+            // Check if the Code Breaker game mode is selected
             if (codeBreakerButton.isSelected()) {
+                // Log the debug message indicating the Code Breaker mode is selected
                 Log.debug("Code breaker mode selected");
 
+                // Create a new instance of CodeBreakerSelector and pass the frame to it
                 new CodeBreakerSelector(frame);
+
+            // Check if the Code Maker game mode is selected
             } else if (codeMakerButton.isSelected()) {
+                // Log the debug message indicating the Code Maker mode is selected
                 Log.debug("Code maker mode selected");
 
+                // Create a new instance of CodeMakerSelector and pass the frame to it
                 new CodeMakerSelector(frame);
+
+            // If no game mode is selected, log a fatal error message
             } else {
                 Log.fatal("No game mode selected");
             }
