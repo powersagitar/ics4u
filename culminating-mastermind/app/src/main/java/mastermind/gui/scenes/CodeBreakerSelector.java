@@ -37,7 +37,8 @@ public class CodeBreakerSelector extends Scene {
     /**
      * The radio button representing the Donald Knuth 5-Guess Algorithm.
      */
-    private final JRadioButton donaldKnuthButton = new JRadioButton("Donald Knuth 5-Guess Algorithm", true);
+    private final JRadioButton donaldKnuthButton = new JRadioButton("Donald " +
+        "Knuth 5-Guess Algorithm - Hard", true);
 
     /**
      * The radio buttons representing the medium algorithm.
