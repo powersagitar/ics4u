@@ -109,7 +109,7 @@ public class Help {
         // Add an action listener to the help button
         HELP_BUTTON.addActionListener(event -> {
             // Set the size of the popup frame
-            POPUP_FRAME.setSize(400, 500);
+            POPUP_FRAME.setSize(400, 600);
 
             // Set the default close operation of the popup frame
             POPUP_FRAME.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
