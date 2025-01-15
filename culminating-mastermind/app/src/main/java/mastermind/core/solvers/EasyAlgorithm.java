@@ -47,17 +47,21 @@ public class EasyAlgorithm extends MastermindAlgorithm {
      */
     @Override
     public Code guess() {
+        // Check if guess() is called for not the initial guess: should not
+        // occur and throws exception
         if (!isInitialGuess()) {
             throw new IllegalCallerException("guess() is meant for the first guess.");
         }
 
+        // Check if the maximum number of guesses has been exceeded
         hasExceededMaxGuesses();
 
+        // Generate a random guess that has not been made before
         Code nextGuess = findNextGuess();
         previousGuess = nextGuess;
         previousGuesses.add(previousGuess);
 
-        return nextGuess;
+        return nextGuess; // return the generated guess
     }
 
     /**
@@ -75,22 +79,27 @@ public class EasyAlgorithm extends MastermindAlgorithm {
      *                                guess.
      */
     public Tuple2<Status, Code> guess(final Response response) {
+        // checks if guess(Response) is called for the initial guess: should
+        // not occur
         if (isInitialGuess()) {
             throw new IllegalCallerException("guess(Response) is meant for subsequent guesses.");
         }
 
-        final Tuple2<Integer, Integer> validation = response.getResponse();
-        final int correctCount = validation.first();
+        final Tuple2<Integer, Integer> validation = response.getResponse(); // get the response to the previous guess
+        final int correctCount = validation.first(); // get the number of correct colors in the correct positions
 
+        // check if the game has been won or lost and return the appropriate status
         if (correctCount >= Mastermind.CODE_LENGTH) {
             return new Tuple2<>(Status.Win, previousGuess);
         } else if (hasExceededMaxGuesses()) {
             return new Tuple2<>(Status.Lose, previousGuess);
         }
 
+        // generate the next guess
         final Code nextGuess = findNextGuess();
         previousGuess = nextGuess;
 
+        // return the status of the game and the next guess to be made
         return new Tuple2<>(Status.Continue, nextGuess);
     }
 
@@ -101,6 +110,7 @@ public class EasyAlgorithm extends MastermindAlgorithm {
      * @return The next guess to be made by the algorithm.
      */
     private Code findNextGuess() {
+        // Generate a random guess that has not been made before
         Code code;
         do {
             code = CodeFactory.fromColorIndices(new ArrayList<>(List.of(
@@ -109,7 +119,9 @@ public class EasyAlgorithm extends MastermindAlgorithm {
                 getRandomNumber(0, 5),
                 getRandomNumber(0, 5))));
         } while (previousGuesses.contains(code));
+        // add the generated guess to the set of previous guesses
         previousGuesses.add(code);
+        // return the generated guess
         return code;
 
     }
@@ -122,6 +134,6 @@ public class EasyAlgorithm extends MastermindAlgorithm {
      * @return A random number within the specified range.
      */
     private int getRandomNumber(final int low, final int high) {
-        return (int) (Math.random() * (high - low + 1) + low);
+        return (int) (Math.random() * (high - low + 1) + low); // generate a random number within the specified range
     }
 }
