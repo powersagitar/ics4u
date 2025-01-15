@@ -147,38 +147,55 @@ public class CodeMaker extends Scene {
      * - The game flow transitions smoothly between turns or to an end condition.
      */
     private void registerProceedHandlers() {
+        // Add an action listener to the proceed button
         proceedButton.addActionListener(event -> {
+            // Check if the current guess is incomplete
             if (nextGuess.size() < Mastermind.CODE_LENGTH) {
+                // Log a warning about the incomplete guess
                 Log.warning("User submitted incomplete guess: " + nextGuess);
 
+                // Show a dialog to inform the user about the incomplete guess
                 JOptionPane.showMessageDialog(
                     frame,
                     "Please choose all 4 colors for your guess",
                     "Incomplete Guess",
-                    JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.ERROR_MESSAGE
+                );
 
+                // Exit the event handler early
                 return;
             }
 
+            // Create a new Code object from the selected colors
             final Code guess = CodeFactory.fromColorIndices(nextGuess);
+            // Clear the next guess list
             nextGuess.clear();
 
+            // Get the current attempt number from the solver
             final int attempt = solver.getAttempts();
 
+            // Process the guess using the solver and get the result
             final Tuple2<Status, Response> result = solver.guess(guess);
+            // Extract the status and response from the result
             final Status status = result.first();
             final Response response = result.second();
 
+            // Log the user's submission, response, and status
             Log.info("User submission(" + attempt + "): " + guess);
             Log.info("Response: " + response);
             Log.info("Status: " + status);
 
+            // Check if the game should continue
             if (status == Status.Continue) {
+                // Update the game board with the response hints
                 gameBoard.updateHints(attempt, response);
+                // Exit the event handler early
                 return;
             }
 
+            // Display the result dialog if the game ends (win or loss)
             new CodeMakerResult(frame, status, secretCode);
         });
     }
 }
+
