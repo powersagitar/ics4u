@@ -54,15 +54,17 @@ public class Mastermind {
     /**
      * Initializes the logger.
      * <p>
-     * The default log lever is INFO, and the log messages are written to stdout
+     * The default log level is INFO, and the log messages are written to stdout
      * and "mastermind.log".
      */
     private static void initializeLogger() {
         try {
-            final FileOutputStream logFile = new FileOutputStream("mastermind" +
-                ".log", true);
+            // Attempt to create a FileOutputStream for the log file in append mode
+            final FileOutputStream logFile = new FileOutputStream("mastermind.log", true);
+            // Add the FileOutputStream as a sink to the logger
             Log.addSink(logFile);
         } catch (final FileNotFoundException e) {
+            // Log an error message if the log file cannot be opened
             Log.error("Failed to open log file output stream: " + e.getMessage());
         }
     }
@@ -73,16 +75,21 @@ public class Mastermind {
      * @param args Command line arguments (unused).
      */
     public static void main(String[] args) {
+        // Initialize the logger
         initializeLogger();
 
+        // Log the start of the game with a separator line
         Log.info("=".repeat(80));
         Log.info("Starting Mastermind");
+        // Log the game configuration details
         Log.debug("Total colors: " + TOTAL_COLORS);
         Log.debug("Code length: " + CODE_LENGTH);
         Log.debug("Max guesses: " + MAX_GUESSES);
         Log.debug("Canvas dimension: " + CANVAS_DIMENSION);
 
+        // Create the main game window (JFrame) using the default scene
         final JFrame frame = Scene.createDefaultScene();
+        // Initialize the game mode selector with the main game window
         new GameModeSelector(frame);
     }
 }
