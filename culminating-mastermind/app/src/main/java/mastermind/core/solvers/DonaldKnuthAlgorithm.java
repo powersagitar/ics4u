@@ -39,16 +39,23 @@ public class DonaldKnuthAlgorithm extends MastermindAlgorithm {
      * Generates all possible permutations of the secret code.
      */
     private void generatePermutations() {
-        final int possibilities = (int) Math.pow(Mastermind.TOTAL_COLORS, Mastermind.CODE_LENGTH);
-        permutations = new HashSet<>(possibilities);
+        final int possibilities = (int) Math.pow(Mastermind.TOTAL_COLORS,
+            Mastermind.CODE_LENGTH); // number of possible permutations
+        permutations = new HashSet<>(possibilities); // initialize
+        // permutations to size of possibilities
 
-        for (int i = 0; i < possibilities; ++i) {
+        for (int i = 0; i < possibilities; ++i) { // iterate through all
+            // possible permutations and store in ArrayList colorIndices
             final ArrayList<Integer> colorIndices =
-                MathUtil.digitsFromBase(i, Mastermind.TOTAL_COLORS, Mastermind.CODE_LENGTH);
+                MathUtil.digitsFromBase(i, Mastermind.TOTAL_COLORS,
+                    Mastermind.CODE_LENGTH); // color indices: stores a
+            // possible permutation of the secret code, and calls
+            // digitsFromBase to generate permutations
 
-            permutations.add(CodeFactory.fromColorIndices(colorIndices));
+            permutations.add(CodeFactory.fromColorIndices(colorIndices)); //
+            // adds a code object to permutations
         }
-    }
+    } // end of generatePermutations
 
     /**
      * Determines the initial guess for the Mastermind game.
@@ -58,17 +65,20 @@ public class DonaldKnuthAlgorithm extends MastermindAlgorithm {
      *                                guesses.
      */
     @Override
-    public Code guess() {
-        if (!isInitialGuess()) {
-            throw new IllegalCallerException("guess() is meant for the first guess.");
+    public Code guess() { // guess method for initial guess
+        if (!isInitialGuess()) { // if not initial guess: should not be
+            // called: throws exception
+            throw new IllegalCallerException("guess() is meant for the first " +
+                "guess."); // error message
         }
 
-        hasExceededMaxGuesses();
+        hasExceededMaxGuesses(); // checks if max guesses exceeded
 
-        final Code nextGuess = CodeFactory.fromColorIndices(List.of(0, 0, 1, 1));
-        previousGuess = nextGuess;
+        final Code nextGuess = CodeFactory.fromColorIndices(List.of(0, 0, 1,
+            1)); // initial guess: 0011
+        previousGuess = nextGuess; // sets previousGuess to nextGuess
 
-        return nextGuess;
+        return nextGuess; // returns initial guess
     }
 
     /**
@@ -116,35 +126,46 @@ public class DonaldKnuthAlgorithm extends MastermindAlgorithm {
     @SuppressWarnings("DuplicatedCode")
     @Override
     public Tuple2<Status, Code> guess(final Response response)
-        throws InvalidHintsException {
-        if (isInitialGuess()) {
-            throw new IllegalCallerException("guess(Response) is meant for subsequent guesses.");
+        throws InvalidHintsException { // guess method for subsequent guesses
+        if (isInitialGuess()) { // if initial guess: should not be called:
+            // invalid
+            throw new IllegalCallerException("guess(Response) is meant for " +
+                "subsequent guesses."); // error message: throws exception
         }
 
         final Tuple2<Integer, Integer> validation = response.getResponse();
-        final int correctCount = validation.first();
+        // Tuple storing number of black and white key pegs
+        final int correctCount = validation.first(); // number of black key pegs
 
+        // check if the player has won or lost and return accordingly
         if (correctCount >= Mastermind.CODE_LENGTH) {
             return new Tuple2<>(Status.Win, previousGuess);
         } else if (hasExceededMaxGuesses()) {
             return new Tuple2<>(Status.Lose, previousGuess);
         }
 
+        // reduce possible permutations based on the response
         reducePermutations(response);
 
-        final Code nextGuess = findNextGuess();
+
+        final Code nextGuess = findNextGuess(); // find the next best guess
+        // and store in Code nextGuess
         previousGuess = nextGuess;
 
-        return new Tuple2<>(Status.Continue, nextGuess);
+        return new Tuple2<>(Status.Continue, nextGuess); // return the next
+        // guess and status
     }
 
     /**
      * Remove from permutations any code that would not give that response of colored and white pegs.
      */
     private void reducePermutations(final Response response) {
+        // if the response is not equal to the response of the secret code and
+        // the previous guess remove the code from permutations
         this.permutations.removeIf(permutation -> {
             final Response testResponse = new Response(permutation, this.previousGuess);
-            return !testResponse.equals(response);
+            return !testResponse.equals(response); // remove if response is not
+            // equal to the response of the secret code and the previous guess
         });
     }
 
@@ -183,38 +204,55 @@ public class DonaldKnuthAlgorithm extends MastermindAlgorithm {
      * @throws InvalidHintsException If the algorithm encounters an invalid hint during the process.
      */
     private Code findNextGuess() {
-        TreeMap<Integer, Code> guessScores = new TreeMap<>();
+        TreeMap<Integer, Code> guessScores = new TreeMap<>(); // TreeMap to
+        // store the "guess scores" for each remaining code in sorted order
 
-        for (final Code guess : this.permutations) {
-            HashMap<Response, Tuple2<Code, Integer>> responses = new HashMap<>();
+        for (final Code guess : this.permutations) { // for each permutation
+            HashMap<Response, Tuple2<Code, Integer>> responses =
+                new HashMap<>(); // HashMap to store the responses for each
+            // permutation and the number of occurrences
 
+            // for each assumed code, generate a response and store the possible
+            // occurrence of that response
             for (final Code assumedCode : this.permutations) {
                 final Response response = new Response(assumedCode, guess);
                 final int prevOccurrence = responses.getOrDefault(response, new Tuple2<>(null, 0)).second();
                 responses.put(response, new Tuple2<>(assumedCode, prevOccurrence + 1));
             }
 
-            int maxOccurrence = Integer.MIN_VALUE;
-            Code codeWithMaxOccurrence = null;
 
+            int maxOccurrence = Integer.MIN_VALUE; // initialize
+            // maxOccurrence, maximum occurrence of a response
+            Code codeWithMaxOccurrence = null; // initialize
+            // codeWithMaxOccurrence, code with maximum occurrence of a response
+
+            // for each response, find the response with the maximum
+            // occurrence - the most optimal guess
             for (final Response response : responses.keySet()) {
+                // get the code and number of  occurrences of the response
                 final Tuple2<Code, Integer> codeAndOccurrence = responses.get(response);
+                // get the code of the response
                 final Code code = codeAndOccurrence.first();
+                // get the number of occurrences of the response
                 final int occurrence = codeAndOccurrence.second();
 
+                // if the occurrence is greater than the maximum occurrence
+                // set it as the maxOccurence
                 if (occurrence > maxOccurrence) {
                     maxOccurrence = occurrence;
                     codeWithMaxOccurrence = code;
                 }
             }
 
+            // store the guess and the maximum occurrence in the TreeMap
             guessScores.put(maxOccurrence, codeWithMaxOccurrence);
         }
 
+        // return the first guess in the TreeMap, which is the most optimal guess
         try {
             return guessScores.firstEntry().getValue();
         } catch (final NullPointerException e) {
-            throw new InvalidHintsException(e.getMessage());
+            throw new InvalidHintsException(e.getMessage()); // throw exception
         }
     }
 }
