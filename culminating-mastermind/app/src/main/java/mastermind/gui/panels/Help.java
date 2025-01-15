@@ -142,6 +142,9 @@ public class Help {
         // Remove all components from the popup panel
         POPUP_PANEL.removeAll();
 
+        JLabel instructionsTitle = new JLabel("Navigation Instructions", SwingConstants.CENTER);
+        instructionsTitle.setFont(new Font("Default", Font.BOLD, 20));
+
         // Create a label with the navigation instructions text
         JLabel instructionsLabel = new JLabel("<html>" + getNavigationInstructionsText() + "</html>", SwingConstants.CENTER);
 
@@ -156,6 +159,8 @@ public class Help {
 
         // Set the layout of the popup panel to BorderLayout
         POPUP_PANEL.setLayout(new BorderLayout());
+
+        POPUP_PANEL.add(instructionsTitle, BorderLayout.NORTH);
 
         // Add the instructions label to the center of the popup panel
         POPUP_PANEL.add(instructionsLabel, BorderLayout.CENTER);
@@ -175,6 +180,10 @@ public class Help {
         // Remove all components from the popup panel
         POPUP_PANEL.removeAll();
 
+        JLabel instructionsTitle = new JLabel("Gameplay Instructions",
+            SwingConstants.CENTER);
+        instructionsTitle.setFont(new Font("Default", Font.BOLD, 20));
+
         // Create a label with the gameplay instructions text
         JLabel instructionsLabel = new JLabel("<html>" + getGameplayInstructionsText() + "</html>", SwingConstants.CENTER);
 
@@ -189,6 +198,8 @@ public class Help {
 
         // Set the layout of the popup panel to BorderLayout
         POPUP_PANEL.setLayout(new BorderLayout());
+
+        POPUP_PANEL.add(instructionsTitle, BorderLayout.NORTH);
 
         // Add the instructions label to the center of the popup panel
         POPUP_PANEL.add(instructionsLabel, BorderLayout.CENTER);
