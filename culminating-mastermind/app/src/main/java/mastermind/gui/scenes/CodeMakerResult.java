@@ -33,30 +33,41 @@ public class CodeMakerResult extends Scene {
     public CodeMakerResult(final JFrame frame, Status status, final Code correctCode) {
         super(frame);
 
+        // Log the creation of the CodeMakerResult scene
         Log.info("Creating CodeMakerResult scene.");
 
+        // Initialize the correct code
         this.correctCode = correctCode;
 
+        // Check the game status and draw the appropriate screen
         if (status == Status.Win) {
             drawWinScreen();
         } else if (status == Status.Lose) {
             drawLoseScreen();
         } else {
+            // Log a fatal error if the status is neither win nor lose
             Log.fatal("Status other than win and lose provided to CodeMakerResult.");
         }
 
+        // Draw the correct code on the screen
         drawCorrectCode();
 
+        // Draw the "Proceed" button
         drawProceedButton();
 
+        // Draw the home button
         HomeButton.drawHomeButton(frame);
 
+        // Register handlers for the home button
         HomeButton.registerHomeHandlers(frame);
 
+        // Draw the help button
         Help.drawHelpButton(frame);
 
+        // Register handlers for the help button
         Help.registerHelpHandlers();
 
+        // Refresh the frame to display the updated components
         refreshFrame();
     }
 
@@ -66,8 +77,11 @@ public class CodeMakerResult extends Scene {
      * The label is centrally aligned within the frame.
      */
     private void drawWinScreen() {
+        // Create a label indicating the code breaker wins
         final JLabel title = new JLabel("The code breaker wins!");
+        // Center align the label
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        // Add the label to the frame
         frame.add(title);
     }
 
@@ -78,8 +92,11 @@ public class CodeMakerResult extends Scene {
      * The label is centrally aligned within the frame.
      */
     private void drawLoseScreen() {
+        // Create a label indicating the code breaker did not guess the code in the maximum attempts
         final JLabel title = new JLabel("The code breaker did not guess the code in " + Mastermind.MAX_GUESSES + " attempts.");
+        // Center align the label
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        // Add the label to the frame
         frame.add(title);
     }
 
@@ -95,21 +112,32 @@ public class CodeMakerResult extends Scene {
      * are centrally aligned to match the layout of the scene.
      */
     private void drawCorrectCode() {
+        // Create a label indicating the correct code
         final JLabel correctCodeLabel = new JLabel("The correct code was:");
+        // Center align the label
         correctCodeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        // Add the label to the frame
         frame.add(correctCodeLabel);
 
+        // Create a panel to display the correct code
         final JPanel correctCodePanel = new JPanel(new FlowLayout());
+        // Center align the panel
         correctCodePanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        // Add the panel to the frame
         frame.add(correctCodePanel);
 
+        // Create a list to store the AWT colors of the correct code
         final ArrayList<Color> codeAwtColors = new ArrayList<>(Mastermind.CODE_LENGTH);
 
+        // Loop through each color in the correct code
         for (final Code.Color codeColor : correctCode.getColors()) {
+            // Map the code color to its corresponding AWT color
             final Color awtColor = GameBoard.CODE_COLOR_TO_AWT_COLOR.get(codeColor);
+            // Add the AWT color to the list
             codeAwtColors.add(awtColor);
         }
 
+        // Draw the correct code using the GameBoard's drawGuess method
         GameBoard.drawGuess(correctCodePanel, codeAwtColors);
     }
 
@@ -122,10 +150,14 @@ public class CodeMakerResult extends Scene {
      * by instantiating a new {@code GameModeSelector} with the current frame.
      */
     private void drawProceedButton() {
+        // Create a "Proceed" button
         final JButton proceedButton = new JButton("Proceed");
+        // Center align the button
         proceedButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        // Add the button to the frame
         frame.add(proceedButton);
 
+        // Add an action listener to the button to handle click events
         proceedButton.addActionListener(event -> new GameModeSelector(frame));
     }
 }
