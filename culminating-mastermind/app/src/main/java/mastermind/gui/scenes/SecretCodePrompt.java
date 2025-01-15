@@ -4,11 +4,7 @@ import mastermind.Mastermind;
 import mastermind.core.Code;
 import mastermind.core.Response;
 import mastermind.core.solvers.Status;
-import mastermind.gui.panels.CodeCircle;
-import mastermind.gui.panels.CodeInput;
-import mastermind.gui.panels.GameBoard;
-import mastermind.gui.panels.HomeButton;
-import mastermind.gui.panels.Help;
+import mastermind.gui.panels.*;
 import mastermind.utils.Log;
 
 import javax.swing.*;
@@ -134,6 +130,8 @@ public class SecretCodePrompt extends Scene {
 
         proceedButton.addActionListener(e -> {
             if (secretCode == null) {
+                Log.warning("Trying to proceed with invalid secret code");
+
                 JOptionPane.showMessageDialog(frame,
                     "Please choose all 4 colors for the correct code",
                     "Incomplete Code",
@@ -142,6 +140,7 @@ public class SecretCodePrompt extends Scene {
                 return;
             }
 
+            Log.info("Secret code entered: " + secretCode);
             new CodeBreakerResult(frame, status, secretCode, guesses, responses);
         });
 
